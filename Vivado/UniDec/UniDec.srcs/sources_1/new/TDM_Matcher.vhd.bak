@@ -1,0 +1,95 @@
+---------------------------------------
+-- Engineer:	CitRus
+-- Data:		12.10.2023
+-- Project:		UniDec
+---------------------------------------
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.numeric_std.all;
+
+library work;
+use work.UniDec_Package.all;
+
+
+entity TDM_Matcher is
+	generic(
+		NumInps		: integer		-- 4
+	);
+	port(
+		Clk			: in std_logic;
+		
+		Sel			: in std_logic;
+		
+		InTV		: in DV_Bus(1 to NumInps);
+		InSignal	: in DDS_Array(1 to NumInps);
+		
+		OutTV		: out DV_Bus(1 to NumInps/2);
+		OutSignal	: out DDS_Array(1 to NumInps/2)
+	);
+end TDM_Matcher;
+
+architecture Behavioral of TDM_Matcher is
+
+	signal InTV_w1		: DV_Bus(1 to NumInps/2)	:= (others => '0');
+	signal InXor		: DV_Bus(1 to NumInps/2)	:= (others => '0');
+	
+	signal InSignal_w1	: DDS_Array(1 to NumInps/2)	:= (others => (others => '0'));
+	signal InSignal_d	: DDS_Array(1 to NumInps/2)	:= (others => (others => '0'));
+
+begin
+
+	-- delay for even channels
+	process(Clk) begin
+		if rising_edge(Clk) then
+			for i in 1 to NumInps/2 loop
+				InTV_w1(i)	<= InTV(NumInps/2*i);
+				InSignal_w1(i) 		<= InSignal(NumInps/2*i);
+			end loop;
+		end if;
+	end process;
+	
+	
+	-- or for TV
+	process(Clk) begin
+		if rising_edge(Clk) then
+			for i in 1 to NumInps/2 loop
+				OutTV(i) <= InTV((i-1)*NumInps/2 + 1) or InTV((i-1)*NumInps/2 + 2) or InTV_w1(i);
+			end loop;
+		end if;
+	end process;
+	
+	
+	-- xors
+	process(InTV) begin
+		for i in 1 to NumInps/2 loop
+			InXor(i)	<= InTV((i-1)*NumInps/2 + 1) xor InTV((i-1)*NumInps/2 + 2);
+		end loop;
+	end process;
+	
+	
+	-- mux for InXor
+	process(InSignal, InSignal_w1, InXor) begin
+		for i in 1 to NumInps/2 loop
+			if InXor(i)	= '1' then
+				InSignal_d(i)	<= InSignal(2*i);
+			else
+				InSignal_d(i)	<= InSignal_w1(i);
+			end if;
+		end loop;
+	end process;
+	
+	-- mux for OutSignal
+	process(Clk) begin
+		if rising_edge(Clk) then
+			for i in 1 to NumInps/2 loop
+				if 		Sel = '0' then
+					OutSignal(i) <= InSignal((i-1)*2 + 1);
+				else
+					OutSignal(i) <= InSignal_d(i);
+				end if;
+			end loop;
+		end if;
+	end process;	
+
+end Behavioral;

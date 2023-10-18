@@ -1,0 +1,155 @@
+----------------------------------------------------------------------------------
+-- Company: 		NTT
+-- Engineer: 		Citaishvili R.A.
+-- 
+-- Create Date: 	26.09.2023 12:43:27
+-- Design Name: 	UniDec
+-- Module Name: 	testbench - Behavioral
+-- Project Name: 	UniDec
+-- Target Devices:	
+-- Tool Versions: 	
+-- Description: 	
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.std_logic_arith.ALL;
+library STD;
+use STD.textio.all;
+use STD.env.finish;
+
+library work;
+use work.UniDec_Package.all;
+
+entity DDS_2_TB is
+--  Port ( );
+end DDS_2_TB;
+
+architecture Behavioral of DDS_2_TB is
+
+    component DDS_2 is
+		generic(
+			Num_Signals	: integer := 80					-- TDM (10 = 80/8)
+			);
+		port(
+			Clk 			: in std_logic;						
+			
+			FCW				: in std_logic_vector(23 downto 0);
+			Channel_Addr	: in std_logic_vector(6 downto 0);		-- 7 bits to cover 80 dds modules
+			TVALID_IN		: in std_logic;
+			
+			Selector		: in std_logic_vector(2 downto 0);		-- 3 bits for 8 signals
+			
+			TVALID_OUT		: out DV_Bus(1 to Num_Signals/8);
+			Output_I		: out SinCos_Array(1 to Num_Signals/8);
+			Output_Q		: out SinCos_Array(1 to Num_Signals/8)
+			);
+	end component;
+	
+	component BitReversedCounter_8 is
+		port(
+			Clk 		: in std_logic;									-- System Clock 88 MHz
+			BitRvsCntr	: out std_logic_vector(7 downto 0)
+		);
+	end component;
+	
+	-- Constants
+	constant Num80				: integer := 80;
+	
+	-- Clk
+	constant PERIOD				: time := 11.363636364 ns;	-- 88 MHz
+	signal Clk					: std_logic := '0';
+	
+	-- Cntr_8 signals
+	signal mBitRvsCntr			: std_logic_vector(7 downto 0) 		:= (others => '0');
+	
+	-- DDS signals
+	signal mFCW					: std_logic_vector(23 downto 0) 	:= (others => '0');
+	signal mChanAddr			: std_logic_vector(6 downto 0) 		:= (others => '0');
+	signal mDDS_TV				: std_logic := '0';
+	
+	signal mTV_Out				: DV_Bus(1 to Num80/8)		:= (others => '0');
+	signal mOutput_I, mOutput_Q	: SinCos_Array(1 to Num80/8)	:= (others => (others => '0'));
+	
+	signal Chan0_I, Chan0_Q	    : SinCos_Array(1 to Num80/8)	:= (others => (others => '0'));
+	signal Chan1_I, Chan1_Q	    : SinCos_Array(1 to Num80/8)	:= (others => (others => '0'));
+	signal Chan2_I, Chan2_Q	    : SinCos_Array(1 to Num80/8)	:= (others => (others => '0'));
+	signal Chan3_I, Chan3_Q	    : SinCos_Array(1 to Num80/8)	:= (others => (others => '0'));
+	signal Chan4_I, Chan4_Q	    : SinCos_Array(1 to Num80/8)	:= (others => (others => '0'));
+	signal Chan5_I, Chan5_Q	    : SinCos_Array(1 to Num80/8)	:= (others => (others => '0'));
+	signal Chan6_I, Chan6_Q	    : SinCos_Array(1 to Num80/8)	:= (others => (others => '0'));
+	signal Chan7_I, Chan7_Q	    : SinCos_Array(1 to Num80/8)	:= (others => (others => '0'));
+	
+begin
+
+	Clk 	<= not Clk after PERIOD/2;	
+	
+	
+	-- first - change Addr, then - FCW
+	-- TVALID_IN set to '0' when change Addr; set to '1' in 1 PERIOD after FCW change
+	-- Frequencies to set are:
+	
+	dds_input: process begin
+		
+		for i in 1 to Num80 loop
+			wait for PERIOD;
+			if i = 1 then
+				mChanAddr	<= "0000000";
+				mDDS_TV		<= '0';
+				wait for 1 ns;
+				mFCW		<= x"020000";
+			else
+				mChanAddr	<= unsigned(mChanAddr) + 1;
+				mDDS_TV		<= '0';
+				wait for 1 ns;
+				mFCW		<= unsigned(mFCW) + 2000000;
+			end if;
+			wait for PERIOD;
+			mDDS_TV		<= '1';
+			wait for 10*PERIOD;
+		end loop;
+		
+		wait;
+	end process;
+	
+	
+	--------------------------------------------
+	cnt_8: BitReversedCounter_8
+	port map (	Clk 		=> Clk,
+				BitRvsCntr 	=> mBitRvsCntr
+			);
+	
+	
+	dds_inst: DDS_2
+	generic map (Num_Signals	=> Num80)
+	port map (	Clk 			=> Clk,
+				FCW				=> mFCW,
+				Channel_Addr	=> mChanAddr,
+				TVALID_IN		=> mDDS_TV,
+				Selector		=> mBitRvsCntr(7 downto 5),
+				TVALID_OUT		=> mTV_Out,
+				Output_I		=> mOutput_I,
+				Output_Q		=> mOutput_Q
+			);
+	
+	select_chans: process (mBitRvsCntr) begin
+		if mBitRvsCntr(7) = '1' then
+			Chan0_I	<= mOutput_I;
+			Chan0_Q	<= mOutput_Q;
+		else
+			Chan1_I	<= mOutput_I;
+			Chan1_Q	<= mOutput_Q;
+		end if;
+	end process;
+	
+	
+	
+end Behavioral;

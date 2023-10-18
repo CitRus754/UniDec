@@ -1,0 +1,116 @@
+----------------------------------------------------------------------------------
+-- Company: 		NTT
+-- Engineer: 		Citaishvili R.A.
+-- 
+-- Create Date: 	19.07.2023 12:43:27
+-- Design Name: 	PlOb
+-- Module Name: 	testbench - Behavioral
+-- Project Name: 	PlOb
+-- Target Devices:	
+-- Tool Versions: 	
+-- Description: 	Testbench for Channel_One Module
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.std_logic_arith.ALL;
+library STD;
+use STD.textio.all;
+use STD.env.finish;
+
+entity FIR_TB is
+--  Port ( );
+end FIR_TB;
+
+architecture Behavioral of FIR_TB is
+
+    component fir_compiler_2 is
+		PORT (
+			aclk : IN STD_LOGIC;
+			s_axis_data_tvalid : IN STD_LOGIC;
+			s_axis_data_tready : OUT STD_LOGIC;
+			s_axis_data_tdata : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+			m_axis_data_tvalid : OUT STD_LOGIC;
+			m_axis_data_tdata : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+			);
+	end component;
+	
+	constant PERIOD			: time := 11.36363636 ns;
+	
+	signal Clk				: std_logic;
+	signal Input_DV			: std_logic := '1';
+	signal TREADY			: std_logic := '0';
+	
+	signal Din_I1, Din_Q1 	: std_logic_vector(15 downto 0) := (others => '0');
+	signal Din_I2, Din_Q2 	: std_logic_vector(15 downto 0) := (others => '0');
+	signal Chan1, Chan2		: std_logic_vector(31 downto 0) := (others => '0');
+	signal Sel				: std_logic := '0';
+	signal FIR_Input		: std_logic_vector(31 downto 0) := (others => '0');
+	
+	signal Output_DV		: std_logic := '0';
+	signal FIR_Output		: std_logic_vector(31 downto 0) := (others => '0');
+	signal Dout_I1, Dout_Q1 : std_logic_vector(15 downto 0) := (others => '0');
+	signal Dout_I2, Dout_Q2 : std_logic_vector(15 downto 0) := (others => '0');
+
+begin
+
+	gen_clk: process begin
+		loop
+			Clk <= '0';
+			wait for PERIOD/2;
+			Clk <= '1';
+			wait for PERIOD/2;
+		end loop;
+	end process;
+	
+	
+	gen_data: process begin
+		Din_I1 <= x"2000";
+		Din_I2 <= x"4000";
+		Din_Q1 <= x"8000";
+		Din_Q2 <= x"AAAA";
+		wait for 10 us;
+		Din_I1 <= x"FF89";
+		Din_I2 <= x"AAAA";
+		Din_Q1 <= x"3456";
+		Din_Q2 <= x"7890";
+		wait for 10 us;
+		finish;
+	end process;
+	
+	Chan1 <= Din_I1 & Din_Q1;
+	Chan2 <= Din_I2 & Din_Q2;
+	
+	process(Clk) begin
+		if rising_edge(Clk) then
+			Sel <= not Sel;
+			if Sel = '0' then
+				FIR_Input 	<= Chan2;
+				Dout_I1		<= FIR_Output(31 downto 16);
+				Dout_Q1		<= FIR_Output(15 downto 0);
+			else
+				FIR_Input   <= Chan1;
+				Dout_I2		<= FIR_Output(31 downto 16);
+				Dout_Q2		<= FIR_Output(15 downto 0);
+			end if;
+		end if;
+	end process;
+	
+	FIR: fir_compiler_2
+	port map (	aclk 				=> Clk,
+				s_axis_data_tvalid 	=> Input_DV,
+				s_axis_data_tready 	=> TREADY,
+				s_axis_data_tdata 	=> FIR_Input,
+				m_axis_data_tvalid 	=> Output_DV,
+				m_axis_data_tdata 	=> FIR_Output
+			);
+	
+end Behavioral;

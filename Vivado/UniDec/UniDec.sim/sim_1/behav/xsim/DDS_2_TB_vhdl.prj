@@ -1,0 +1,14 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../UniDec.gen/sources_1/ip/dds_compiler_2/sim/dds_compiler_2.vhd" \
+"../../../../UniDec.srcs/sources_1/new/BitReversedCounter_8.vhd" \
+
+vhdl2008 xil_defaultlib  \
+"../../../../UniDec.srcs/sources_1/new/UniDec_Package.vhd" \
+
+vhdl xil_defaultlib  \
+"../../../../UniDec.srcs/sources_1/new/DDS_2.vhd" \
+"../../../../UniDec.srcs/sources_1/new/DDS_2_TB.vhd" \
+
+# Do not sort compile order
+nosort

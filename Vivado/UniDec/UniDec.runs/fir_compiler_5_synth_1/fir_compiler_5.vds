@@ -1,0 +1,323 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Thu Oct 12 13:03:26 2023
+# Process ID: 6412
+# Current directory: E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/fir_compiler_5_synth_1
+# Command line: vivado.exe -log fir_compiler_5.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source fir_compiler_5.tcl
+# Log file: E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/fir_compiler_5_synth_1/fir_compiler_5.vds
+# Journal file: E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/fir_compiler_5_synth_1\vivado.jou
+#-----------------------------------------------------------
+source fir_compiler_5.tcl -notrace
+Command: synth_design -top fir_compiler_5 -part xczu9eg-ffvb1156-2-e -mode out_of_context
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xczu9eg'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xczu9eg'
+INFO: [Device 21-403] Loading part xczu9eg-ffvb1156-2-e
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 12940
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1704.711 ; gain = 117.324
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'fir_compiler_5' [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_5/synth/fir_compiler_5.vhd:70]
+	Parameter C_XDEVICEFAMILY bound to: zynquplus - type: string 
+	Parameter C_ELABORATION_DIR bound to: ./ - type: string 
+	Parameter C_COMPONENT_NAME bound to: fir_compiler_5 - type: string 
+	Parameter C_COEF_FILE bound to: fir_compiler_5.mif - type: string 
+	Parameter C_COEF_FILE_LINES bound to: 4 - type: integer 
+	Parameter C_FILTER_TYPE bound to: 7 - type: integer 
+	Parameter C_INTERP_RATE bound to: 1 - type: integer 
+	Parameter C_DECIM_RATE bound to: 2 - type: integer 
+	Parameter C_ZERO_PACKING_FACTOR bound to: 1 - type: integer 
+	Parameter C_SYMMETRY bound to: 1 - type: integer 
+	Parameter C_NUM_FILTS bound to: 1 - type: integer 
+	Parameter C_NUM_TAPS bound to: 11 - type: integer 
+	Parameter C_NUM_CHANNELS bound to: 80 - type: integer 
+	Parameter C_CHANNEL_PATTERN bound to: fixed - type: string 
+	Parameter C_ROUND_MODE bound to: 4 - type: integer 
+	Parameter C_COEF_RELOAD bound to: 0 - type: integer 
+	Parameter C_NUM_RELOAD_SLOTS bound to: 1 - type: integer 
+	Parameter C_COL_MODE bound to: 1 - type: integer 
+	Parameter C_COL_PIPE_LEN bound to: 4 - type: integer 
+	Parameter C_COL_CONFIG bound to: 1 - type: string 
+	Parameter C_OPTIMIZATION bound to: 0 - type: integer 
+	Parameter C_DATA_PATH_WIDTHS bound to: 16,16 - type: string 
+	Parameter C_DATA_IP_PATH_WIDTHS bound to: 16,16 - type: string 
+	Parameter C_DATA_PX_PATH_WIDTHS bound to: 16,16 - type: string 
+	Parameter C_DATA_WIDTH bound to: 16 - type: integer 
+	Parameter C_COEF_PATH_WIDTHS bound to: 16,16 - type: string 
+	Parameter C_COEF_WIDTH bound to: 16 - type: integer 
+	Parameter C_DATA_PATH_SRC bound to: 0,1 - type: string 
+	Parameter C_COEF_PATH_SRC bound to: 0,0 - type: string 
+	Parameter C_PX_PATH_SRC bound to: 0,1 - type: string 
+	Parameter C_DATA_PATH_SIGN bound to: 0,0 - type: string 
+	Parameter C_COEF_PATH_SIGN bound to: 0,0 - type: string 
+	Parameter C_ACCUM_PATH_WIDTHS bound to: 32,32 - type: string 
+	Parameter C_OUTPUT_WIDTH bound to: 16 - type: integer 
+	Parameter C_OUTPUT_PATH_WIDTHS bound to: 16,16 - type: string 
+	Parameter C_ACCUM_OP_PATH_WIDTHS bound to: 32,32 - type: string 
+	Parameter C_EXT_MULT_CNFG bound to: none - type: string 
+	Parameter C_DATA_PATH_PSAMP_SRC bound to: 0 - type: string 
+	Parameter C_OP_PATH_PSAMP_SRC bound to: 0 - type: string 
+	Parameter C_NUM_MADDS bound to: 1 - type: integer 
+	Parameter C_OPT_MADDS bound to: none - type: string 
+	Parameter C_OVERSAMPLING_RATE bound to: 4 - type: integer 
+	Parameter C_INPUT_RATE bound to: 5 - type: integer 
+	Parameter C_OUTPUT_RATE bound to: 10 - type: integer 
+	Parameter C_DATA_MEMTYPE bound to: 1 - type: integer 
+	Parameter C_COEF_MEMTYPE bound to: 2 - type: integer 
+	Parameter C_IPBUFF_MEMTYPE bound to: 1 - type: integer 
+	Parameter C_OPBUFF_MEMTYPE bound to: 0 - type: integer 
+	Parameter C_DATAPATH_MEMTYPE bound to: 1 - type: integer 
+	Parameter C_MEM_ARRANGEMENT bound to: 1 - type: integer 
+	Parameter C_DATA_MEM_PACKING bound to: 1 - type: integer 
+	Parameter C_COEF_MEM_PACKING bound to: 0 - type: integer 
+	Parameter C_FILTS_PACKED bound to: 0 - type: integer 
+	Parameter C_LATENCY bound to: 22 - type: integer 
+	Parameter C_HAS_ARESETn bound to: 0 - type: integer 
+	Parameter C_HAS_ACLKEN bound to: 0 - type: integer 
+	Parameter C_DATA_HAS_TLAST bound to: 0 - type: integer 
+	Parameter C_S_DATA_HAS_FIFO bound to: 1 - type: integer 
+	Parameter C_S_DATA_HAS_TUSER bound to: 0 - type: integer 
+	Parameter C_S_DATA_TDATA_WIDTH bound to: 32 - type: integer 
+	Parameter C_S_DATA_TUSER_WIDTH bound to: 1 - type: integer 
+	Parameter C_M_DATA_HAS_TREADY bound to: 0 - type: integer 
+	Parameter C_M_DATA_HAS_TUSER bound to: 0 - type: integer 
+	Parameter C_M_DATA_TDATA_WIDTH bound to: 32 - type: integer 
+	Parameter C_M_DATA_TUSER_WIDTH bound to: 1 - type: integer 
+	Parameter C_HAS_CONFIG_CHANNEL bound to: 0 - type: integer 
+	Parameter C_CONFIG_SYNC_MODE bound to: 0 - type: integer 
+	Parameter C_CONFIG_PACKET_SIZE bound to: 0 - type: integer 
+	Parameter C_CONFIG_TDATA_WIDTH bound to: 1 - type: integer 
+	Parameter C_RELOAD_TDATA_WIDTH bound to: 1 - type: integer 
+INFO: [Synth 8-3491] module 'fir_compiler_v7_2_15' declared at 'e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_5/hdl/fir_compiler_v7_2_vh_rfs.vhd:67113' bound to instance 'U0' of component 'fir_compiler_v7_2_15' [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_5/synth/fir_compiler_5.vhd:198]
+INFO: [Synth 8-256] done synthesizing module 'fir_compiler_5' (15#1) [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_5/synth/fir_compiler_5.vhd:70]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 1868.051 ; gain = 280.664
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1889.934 ; gain = 302.547
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1889.934 ; gain = 302.547
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.112 . Memory (MB): peak = 1901.980 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 2 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_5/fir_compiler_5_ooc.xdc] for cell 'U0'
+Finished Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_5/fir_compiler_5_ooc.xdc] for cell 'U0'
+Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_5/constraints/fir_compiler_v7_2.xdc] for cell 'U0'
+Finished Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_5/constraints/fir_compiler_v7_2.xdc] for cell 'U0'
+Parsing XDC File [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/fir_compiler_5_synth_1/dont_touch.xdc]
+Finished Parsing XDC File [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/fir_compiler_5_synth_1/dont_touch.xdc]
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1988.871 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 2 instances were transformed.
+  DSP48E2 => DSP48E2 (DSP_ALU, DSP_A_B_DATA, DSP_C_DATA, DSP_MULTIPLIER, DSP_M_DATA, DSP_OUTPUT, DSP_PREADD, DSP_PREADD_DATA): 2 instances
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.122 . Memory (MB): peak = 1989.852 ; gain = 0.980
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:21 ; elapsed = 00:00:21 . Memory (MB): peak = 1989.852 ; gain = 402.465
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xczu9eg-ffvb1156-2-e
+INFO: [Synth 8-6742] Reading net delay rules and data
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:21 ; elapsed = 00:00:21 . Memory (MB): peak = 1989.852 ; gain = 402.465
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+Applied set_property KEEP_HIERARCHY = SOFT for U0. (constraint file  E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/fir_compiler_5_synth_1/dont_touch.xdc, line 9).
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:21 ; elapsed = 00:00:21 . Memory (MB): peak = 1989.852 ; gain = 402.465
+---------------------------------------------------------------------------------
+INFO: [Synth 8-5779] Default cascade height of 1 will be used for BRAM '"dpr_mem:/gen_bram.gen_write_first.gen_double_reg.ram_reg"'.
+INFO: [Synth 8-7030] Implemented Non-Cascaded Block Ram (cascade_height = 1) of width 32 for RAM "dpr_mem:/gen_bram.gen_write_first.gen_double_reg.ram_reg"
+INFO: [Synth 8-5779] Default cascade height of 1 will be used for BRAM '"dpr_mem__parameterized0:/gen_bram.gen_write_first.gen_double_reg.ram_reg"'.
+INFO: [Synth 8-7030] Implemented Non-Cascaded Block Ram (cascade_height = 1) of width 32 for RAM "dpr_mem__parameterized0:/gen_bram.gen_write_first.gen_double_reg.ram_reg"
+INFO: [Synth 8-5779] Default cascade height of 1 will be used for BRAM '"dpt_mem:/gen_bram.gen_write_first.gen_double_reg.ram_reg"'.
+INFO: [Synth 8-7030] Implemented Non-Cascaded Block Ram (cascade_height = 1) of width 16 for RAM "dpt_mem:/gen_bram.gen_write_first.gen_double_reg.ram_reg"
+INFO: [Synth 8-3971] The signal "dpt_mem:/gen_bram.gen_write_first.gen_double_reg.ram_reg" was recognized as a true dual port RAM template.
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 1989.852 ; gain = 402.465
+---------------------------------------------------------------------------------
+INFO: [Synth 8-223] decloning instance 'U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_cntrl_signals[0].i_delay' (delay__parameterized5) to 'U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_cntrl_signals[1].i_delay'
+INFO: [Synth 8-223] decloning instance 'U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_cntrl_signals[4].i_delay' (delay__parameterized6) to 'U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_cntrl_signals[5].i_delay'
+INFO: [Synth 8-223] decloning instance 'U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_cntrl_signals[8].i_delay' (delay__parameterized8) to 'U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_cntrl_signals[9].i_delay'
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 2520 (col length:168)
+BRAMs: 1824 (col length: RAMB18 168 RAMB36 84)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+INFO: [Synth 8-5779] Default cascade height of 1 will be used for BRAM '"U0/i_synth/\g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_ipbuff.i_ipbuff /gen_bram.gen_write_first.gen_double_reg.ram_reg"'.
+INFO: [Synth 8-7030] Implemented Non-Cascaded Block Ram (cascade_height = 1) of width 32 for RAM "U0/i_synth/\g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_ipbuff.i_ipbuff /gen_bram.gen_write_first.gen_double_reg.ram_reg"
+INFO: [Synth 8-5779] Default cascade height of 1 will be used for BRAM '"U0/i_synth/\g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.i_phase_buff /gen_bram.gen_write_first.gen_double_reg.ram_reg"'.
+INFO: [Synth 8-7030] Implemented Non-Cascaded Block Ram (cascade_height = 1) of width 32 for RAM "U0/i_synth/\g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.i_phase_buff /gen_bram.gen_write_first.gen_double_reg.ram_reg"
+INFO: [Synth 8-5779] Default cascade height of 1 will be used for BRAM '"U0/i_synth/\g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_paths[0].g_mem_array[0].i_mem/g_packed.g_true_dual_port.i_mem /gen_bram.gen_write_first.gen_double_reg.ram_reg"'.
+INFO: [Synth 8-7030] Implemented Non-Cascaded Block Ram (cascade_height = 1) of width 16 for RAM "U0/i_synth/\g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_paths[0].g_mem_array[0].i_mem/g_packed.g_true_dual_port.i_mem /gen_bram.gen_write_first.gen_double_reg.ram_reg"
+INFO: [Synth 8-3971] The signal "U0/i_synth/\g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_paths[0].g_mem_array[0].i_mem/g_packed.g_true_dual_port.i_mem /gen_bram.gen_write_first.gen_double_reg.ram_reg" was recognized as a true dual port RAM template.
+INFO: [Synth 8-5779] Default cascade height of 1 will be used for BRAM '"U0/i_synth/\g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_paths[1].g_mem_array[0].i_mem/g_packed.g_true_dual_port.i_mem /gen_bram.gen_write_first.gen_double_reg.ram_reg"'.
+INFO: [Synth 8-7030] Implemented Non-Cascaded Block Ram (cascade_height = 1) of width 16 for RAM "U0/i_synth/\g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_paths[1].g_mem_array[0].i_mem/g_packed.g_true_dual_port.i_mem /gen_bram.gen_write_first.gen_double_reg.ram_reg"
+INFO: [Synth 8-3971] The signal "U0/i_synth/\g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_paths[1].g_mem_array[0].i_mem/g_packed.g_true_dual_port.i_mem /gen_bram.gen_write_first.gen_double_reg.ram_reg" was recognized as a true dual port RAM template.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1989.852 ; gain = 402.465
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:34 ; elapsed = 00:00:35 . Memory (MB): peak = 2454.848 ; gain = 867.461
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:35 ; elapsed = 00:00:36 . Memory (MB): peak = 2482.020 ; gain = 894.633
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:35 ; elapsed = 00:00:37 . Memory (MB): peak = 2493.789 ; gain = 906.402
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:38 ; elapsed = 00:00:39 . Memory (MB): peak = 2493.789 ; gain = 906.402
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:38 ; elapsed = 00:00:39 . Memory (MB): peak = 2493.789 ; gain = 906.402
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:38 ; elapsed = 00:00:39 . Memory (MB): peak = 2493.789 ; gain = 906.402
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:38 ; elapsed = 00:00:40 . Memory (MB): peak = 2493.789 ; gain = 906.402
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:38 ; elapsed = 00:00:40 . Memory (MB): peak = 2493.789 ; gain = 906.402
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:38 ; elapsed = 00:00:40 . Memory (MB): peak = 2493.789 ; gain = 906.402
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+----------------+------+
+|      |Cell            |Count |
++------+----------------+------+
+|1     |CARRY8          |     7|
+|2     |DSP_ALU         |     2|
+|3     |DSP_A_B_DATA    |     2|
+|4     |DSP_C_DATA      |     2|
+|5     |DSP_MULTIPLIER  |     2|
+|6     |DSP_M_DATA      |     2|
+|7     |DSP_OUTPUT      |     2|
+|8     |DSP_PREADD      |     2|
+|9     |DSP_PREADD_DATA |     2|
+|10    |LUT1            |    16|
+|11    |LUT2            |    40|
+|12    |LUT3            |    47|
+|13    |LUT4            |    15|
+|14    |LUT5            |    11|
+|15    |LUT6            |    18|
+|16    |MUXF7           |    64|
+|17    |MUXF8           |    32|
+|18    |RAMB18E2        |     2|
+|19    |RAMB36E2        |     2|
+|20    |SRL16E          |    27|
+|21    |SRLC32E         |   224|
+|22    |FDRE            |   366|
+|23    |FDSE            |     1|
++------+----------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:38 ; elapsed = 00:00:40 . Memory (MB): peak = 2493.789 ; gain = 906.402
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:21 ; elapsed = 00:00:32 . Memory (MB): peak = 2493.789 ; gain = 806.484
+Synthesis Optimization Complete : Time (s): cpu = 00:00:38 ; elapsed = 00:00:40 . Memory (MB): peak = 2493.789 ; gain = 906.402
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.023 . Memory (MB): peak = 2493.789 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 105 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2522.641 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 2 instances were transformed.
+  DSP48E2 => DSP48E2 (DSP_ALU, DSP_A_B_DATA, DSP_C_DATA, DSP_MULTIPLIER, DSP_M_DATA, DSP_OUTPUT, DSP_PREADD, DSP_PREADD_DATA): 2 instances
+
+INFO: [Common 17-83] Releasing license: Synthesis
+40 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:45 ; elapsed = 00:00:49 . Memory (MB): peak = 2522.641 ; gain = 1396.379
+INFO: [Common 17-1381] The checkpoint 'E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/fir_compiler_5_synth_1/fir_compiler_5.dcp' has been generated.
+WARNING: [Common 17-576] 'use_project_ipc' is deprecated. This option is deprecated and no longer used.
+INFO: [Coretcl 2-1648] Added synthesis output to IP cache for IP fir_compiler_5, cache-ID = 424c3b892a781251
+INFO: [Coretcl 2-1174] Renamed 35 cell refs.
+INFO: [Common 17-1381] The checkpoint 'E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/fir_compiler_5_synth_1/fir_compiler_5.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file fir_compiler_5_utilization_synth.rpt -pb fir_compiler_5_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Thu Oct 12 13:04:23 2023...

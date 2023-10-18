@@ -1,0 +1,213 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
+| Date         : Thu Sep 21 12:43:48 2023
+| Host         : DESKTOP-CITRUS running 64-bit major release  (build 9200)
+| Command      : report_drc -file Main_drc_opted.rpt -pb Main_drc_opted.pb -rpx Main_drc_opted.rpx
+| Design       : Main
+| Device       : xczu9eg-ffvb1156-2-e
+| Speed File   : -2
+| Design State : Synthesized
+---------------------------------------------------------------------------------------------------
+
+Report DRC
+
+Table of Contents
+-----------------
+1. REPORT SUMMARY
+2. REPORT DETAILS
+
+1. REPORT SUMMARY
+-----------------
+            Netlist: netlist
+          Floorplan: design_1
+      Design limits: <entire design considered>
+           Ruledeck: default
+             Max violations: <unlimited>
+             Violations found: 34
++--------+------------------+----------------------------+------------+
+| Rule   | Severity         | Description                | Violations |
++--------+------------------+----------------------------+------------+
+| NSTD-1 | Critical Warning | Unspecified I/O Standard   | 1          |
+| UCIO-1 | Critical Warning | Unconstrained Logical Port | 1          |
+| DPIP-2 | Warning          | Input pipelining           | 24         |
+| DPOP-3 | Warning          | PREG Output pipelining     | 8          |
++--------+------------------+----------------------------+------------+
+
+2. REPORT DETAILS
+-----------------
+NSTD-1#1 Critical Warning
+Unspecified I/O Standard  
+96 out of 96 logical ports use I/O standard (IOSTANDARD) value 'DEFAULT', instead of a user assigned specific value. This may cause I/O contention or incompatibility with the board power or connectivity affecting performance, signal integrity or in extreme cases cause damage to the device or the components to which it is connected. To correct this violation, specify all I/O standards. This design will fail to generate a bitstream unless all logical ports have a user specified I/O standard value defined. To allow bitstream creation with unspecified I/O standard values (not recommended), use this command: set_property SEVERITY {Warning} [get_drc_checks NSTD-1].  NOTE: When using the Vivado Runs infrastructure (e.g. launch_runs Tcl command), add this command to a .tcl file and add that file as a pre-hook for write_bitstream step for the implementation run. Problem ports: Clk, DDS_DV_IN[1:8], DDS_DV_OUT[1:8], FIR_DV_IN[1:4], FIR_DV_OUT[1:2],
+FIR_TR_1[1:4], FIR_TR_2[1:2], Input_I[15:0], Input_Q[15:0], OutMux[2:0],
+Output_I[15:0], Output_Q[15:0].
+Related violations: <none>
+
+UCIO-1#1 Critical Warning
+Unconstrained Logical Port  
+96 out of 96 logical ports have no user assigned specific location constraint (LOC). This may cause I/O contention or incompatibility with the board power or connectivity affecting performance, signal integrity or in extreme cases cause damage to the device or the components to which it is connected. To correct this violation, specify all pin locations. This design will fail to generate a bitstream unless all logical ports have a user specified site LOC constraint defined.  To allow bitstream creation with unspecified pin locations (not recommended), use this command: set_property SEVERITY {Warning} [get_drc_checks UCIO-1].  NOTE: When using the Vivado Runs infrastructure (e.g. launch_runs Tcl command), add this command to a .tcl file and add that file as a pre-hook for write_bitstream step for the implementation run.  Problem ports: Clk, DDS_DV_IN[1:8], DDS_DV_OUT[1:8], FIR_DV_IN[1:4], FIR_DV_OUT[1:2],
+FIR_TR_1[1:4], FIR_TR_2[1:2], Input_I[15:0], Input_Q[15:0], OutMux[2:0],
+Output_I[15:0], Output_Q[15:0].
+Related violations: <none>
+
+DPIP-2#1 Warning
+Input pipelining  
+DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum4_reg input Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum4_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-2#2 Warning
+Input pipelining  
+DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum5_reg input Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum5_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-2#3 Warning
+Input pipelining  
+DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum5_reg input Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum5_reg/C[47:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-2#4 Warning
+Input pipelining  
+DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum4_reg input Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum4_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-2#5 Warning
+Input pipelining  
+DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum5_reg input Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum5_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-2#6 Warning
+Input pipelining  
+DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum5_reg input Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum5_reg/C[47:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-2#7 Warning
+Input pipelining  
+DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum4_reg input Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum4_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-2#8 Warning
+Input pipelining  
+DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum5_reg input Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum5_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-2#9 Warning
+Input pipelining  
+DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum5_reg input Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum5_reg/C[47:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-2#10 Warning
+Input pipelining  
+DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum4_reg input Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum4_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-2#11 Warning
+Input pipelining  
+DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum5_reg input Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum5_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-2#12 Warning
+Input pipelining  
+DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum5_reg input Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum5_reg/C[47:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-2#13 Warning
+Input pipelining  
+DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum4_reg input Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum4_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-2#14 Warning
+Input pipelining  
+DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum5_reg input Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum5_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-2#15 Warning
+Input pipelining  
+DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum5_reg input Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum5_reg/C[47:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-2#16 Warning
+Input pipelining  
+DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum4_reg input Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum4_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-2#17 Warning
+Input pipelining  
+DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum5_reg input Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum5_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-2#18 Warning
+Input pipelining  
+DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum5_reg input Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum5_reg/C[47:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-2#19 Warning
+Input pipelining  
+DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum4_reg input Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum4_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-2#20 Warning
+Input pipelining  
+DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum5_reg input Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum5_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-2#21 Warning
+Input pipelining  
+DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum5_reg input Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum5_reg/C[47:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-2#22 Warning
+Input pipelining  
+DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum4_reg input Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum4_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-2#23 Warning
+Input pipelining  
+DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum5_reg input Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum5_reg/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-2#24 Warning
+Input pipelining  
+DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum5_reg input Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum5_reg/C[47:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPOP-3#1 Warning
+PREG Output pipelining  
+DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Prod1_reg output Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Prod1_reg/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-3#2 Warning
+PREG Output pipelining  
+DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Prod1_reg output Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Prod1_reg/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-3#3 Warning
+PREG Output pipelining  
+DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Prod1_reg output Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Prod1_reg/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-3#4 Warning
+PREG Output pipelining  
+DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Prod1_reg output Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Prod1_reg/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-3#5 Warning
+PREG Output pipelining  
+DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Prod1_reg output Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Prod1_reg/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-3#6 Warning
+PREG Output pipelining  
+DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Prod1_reg output Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Prod1_reg/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-3#7 Warning
+PREG Output pipelining  
+DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Prod1_reg output Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Prod1_reg/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+DPOP-3#8 Warning
+PREG Output pipelining  
+DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Prod1_reg output Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Prod1_reg/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+Related violations: <none>
+
+

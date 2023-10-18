@@ -1,0 +1,124 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 18.09.2023 15:50:32
+-- Design Name: 
+-- Module Name: CORE_1 - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity CORE_3 is
+	port(
+		Clk 			: in std_logic;
+		
+		Input_I_1		: in std_logic_vector(15 downto 0);
+		Input_Q_1		: in std_logic_vector(15 downto 0);		
+		Input_I_2		: in std_logic_vector(15 downto 0);
+		Input_Q_2		: in std_logic_vector(15 downto 0);		
+		Input_I_3		: in std_logic_vector(15 downto 0);
+		Input_Q_3		: in std_logic_vector(15 downto 0);		
+		Input_I_4		: in std_logic_vector(15 downto 0);
+		Input_Q_4		: in std_logic_vector(15 downto 0);		
+		Input_I_5		: in std_logic_vector(15 downto 0);
+		Input_Q_5		: in std_logic_vector(15 downto 0);		
+		Input_I_6		: in std_logic_vector(15 downto 0);
+		Input_Q_6		: in std_logic_vector(15 downto 0);		
+		Input_I_7		: in std_logic_vector(15 downto 0);
+		Input_Q_7		: in std_logic_vector(15 downto 0);		
+		Input_I_8		: in std_logic_vector(15 downto 0);
+		Input_Q_8		: in std_logic_vector(15 downto 0);
+				
+		FCW_1			: in std_logic_vector(23 downto 0);
+		FCW_2			: in std_logic_vector(23 downto 0);
+		FCW_3			: in std_logic_vector(23 downto 0);
+		FCW_4			: in std_logic_vector(23 downto 0);
+		FCW_5			: in std_logic_vector(23 downto 0);
+		FCW_6			: in std_logic_vector(23 downto 0);
+		FCW_7			: in std_logic_vector(23 downto 0);
+		FCW_8			: in std_logic_vector(23 downto 0);
+		
+		Output_I_1		: out std_logic_vector(15 downto 0);
+		Output_Q_1		: out std_logic_vector(15 downto 0);		
+		Output_I_2		: out std_logic_vector(15 downto 0);
+		Output_Q_2		: out std_logic_vector(15 downto 0);		
+		Output_I_3		: out std_logic_vector(15 downto 0);
+		Output_Q_3		: out std_logic_vector(15 downto 0);		
+		Output_I_4		: out std_logic_vector(15 downto 0);
+		Output_Q_4		: out std_logic_vector(15 downto 0);		
+		Output_I_5		: out std_logic_vector(15 downto 0);
+		Output_Q_5		: out std_logic_vector(15 downto 0);		
+		Output_I_6		: out std_logic_vector(15 downto 0);
+		Output_Q_6		: out std_logic_vector(15 downto 0);		
+		Output_I_7		: out std_logic_vector(15 downto 0);
+		Output_Q_7		: out std_logic_vector(15 downto 0);		
+		Output_I_8		: out std_logic_vector(15 downto 0);
+		Output_Q_8		: out std_logic_vector(15 downto 0);
+		
+		DataOut_DV		: out std_logic							-- Common DV signal
+	);
+end CORE_3;
+
+architecture Behavioral of CORE_3 is
+	
+	signal FIR_DataIn					: std_logic_vector(127 downto 0) := (others => '0');	
+	signal FIR_S_DATA_TREADY  	    	: std_logic:= '1';	
+	signal FIR_DataOut              	: std_logic_vector(127 downto 0) := (others => '0');
+	
+	component fir_compiler_1 is				-- IP core
+		PORT (
+			aclk 				: IN STD_LOGIC;
+			s_axis_data_tvalid 	: IN STD_LOGIC;
+			s_axis_data_tready 	: OUT STD_LOGIC;
+			s_axis_data_tdata 	: IN STD_LOGIC_VECTOR(127 DOWNTO 0);
+			m_axis_data_tvalid 	: OUT STD_LOGIC;
+			m_axis_data_tdata 	: OUT STD_LOGIC_VECTOR(127 DOWNTO 0)
+		);
+	end component;	
+
+begin
+	
+	FIR_DataIn <= Input_Q_4 & Input_I_4 & Input_Q_3 & Input_I_3 & Input_Q_2 & Input_I_2 & Input_Q_1 & Input_I_1;
+	
+	fir_inst: fir_compiler_1
+	port map (	aclk 					=> Clk,
+				s_axis_data_tvalid 		=> DataIn_DV,
+				s_axis_data_tready 		=> FIR_S_DATA_TREADY,
+				s_axis_data_tdata 		=> FIR_DataIn,
+				m_axis_data_tvalid 		=> DataOut_DV,
+				m_axis_data_tdata 		=> FIR_DataOut
+			);
+	
+	Output_I_1 <= FIR_DataOut (15 downto 0);
+	Output_Q_1 <= FIR_DataOut (31 downto 16);
+	Output_I_2 <= FIR_DataOut (47 downto 32);
+	Output_Q_2 <= FIR_DataOut (63 downto 48);
+	Output_I_3 <= FIR_DataOut (79 downto 64);
+	Output_Q_3 <= FIR_DataOut (95 downto 80);
+	Output_I_4 <= FIR_DataOut (111 downto 96);
+	Output_Q_4 <= FIR_DataOut (127 downto 112);
+	
+end Behavioral;

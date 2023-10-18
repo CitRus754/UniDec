@@ -1,0 +1,155 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
+| Date         : Thu Sep 21 12:44:18 2023
+| Host         : DESKTOP-CITRUS running 64-bit major release  (build 9200)
+| Command      : report_control_sets -verbose -file Main_control_sets_placed.rpt
+| Design       : Main
+| Device       : xczu9eg
+------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Total control sets                                       |    77 |
+|    Minimum number of control sets                        |    77 |
+|    Addition due to synthesis replication                 |     0 |
+|    Addition due to physical synthesis replication        |     0 |
+| Unused register locations in slices containing registers |    16 |
++----------------------------------------------------------+-------+
+* Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
+** Run report_qor_suggestions for automated merging and remapping suggestions
+
+
+2. Histogram
+------------
+
++--------------------+-------+
+|       Fanout       | Count |
++--------------------+-------+
+| Total control sets |    77 |
+| >= 0 to < 4        |     8 |
+| >= 4 to < 6        |    12 |
+| >= 6 to < 8        |     0 |
+| >= 8 to < 10       |     0 |
+| >= 10 to < 12      |     0 |
+| >= 12 to < 14      |     0 |
+| >= 14 to < 16      |     0 |
+| >= 16              |    57 |
++--------------------+-------+
+* Control sets can be remapped at either synth_design or opt_design
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |            4444 |          747 |
+| No           | No                    | Yes                    |               0 |            0 |
+| No           | Yes                   | No                     |               0 |            0 |
+| Yes          | No                    | No                     |            3704 |          556 |
+| Yes          | No                    | Yes                    |               0 |            0 |
+| Yes          | Yes                   | No                     |               0 |            0 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++----------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------+------------------+----------------+--------------+
+|  Clock Signal  |                                                                                    Enable Signal                                                                                    | Set/Reset Signal | Slice Load Count | Bel Load Count | Bels / Slice |
++----------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------+------------------+----------------+--------------+
+|  Clk_IBUF_BUFG | DDS_DV_IN_IBUF[1]_inst/O                                                                                                                                                            |                  |                1 |              3 |         3.00 |
+|  Clk_IBUF_BUFG | DDS_DV_IN_IBUF[3]_inst/O                                                                                                                                                            |                  |                1 |              3 |         3.00 |
+|  Clk_IBUF_BUFG | DDS_DV_IN_IBUF[4]_inst/O                                                                                                                                                            |                  |                1 |              3 |         3.00 |
+|  Clk_IBUF_BUFG | DDS_DV_IN_IBUF[5]_inst/O                                                                                                                                                            |                  |                1 |              3 |         3.00 |
+|  Clk_IBUF_BUFG | DDS_DV_IN_IBUF[2]_inst/O                                                                                                                                                            |                  |                1 |              3 |         3.00 |
+|  Clk_IBUF_BUFG | DDS_DV_IN_IBUF[6]_inst/O                                                                                                                                                            |                  |                1 |              3 |         3.00 |
+|  Clk_IBUF_BUFG | DDS_DV_IN_IBUF[8]_inst/O                                                                                                                                                            |                  |                1 |              3 |         3.00 |
+|  Clk_IBUF_BUFG | DDS_DV_IN_IBUF[7]_inst/O                                                                                                                                                            |                  |                1 |              3 |         3.00 |
+|  Clk_IBUF_BUFG | Core_1_Inst[3].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.i_phase_buff_read/gen_dly.gen_shiftreg.gen_rtl_delay.delay_bus_reg[4] |                  |                1 |              4 |         4.00 |
+|  Clk_IBUF_BUFG | Core_2_Inst[2].Core2/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/sel                                                                                            |                  |                1 |              4 |         4.00 |
+|  Clk_IBUF_BUFG | Core_2_Inst[1].Core2/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/base_en_px_cntrl                                                                               |                  |                1 |              4 |         4.00 |
+|  Clk_IBUF_BUFG | Core_1_Inst[2].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.i_phase_buff_read/gen_dly.gen_shiftreg.gen_rtl_delay.delay_bus_reg[4] |                  |                1 |              4 |         4.00 |
+|  Clk_IBUF_BUFG | Core_1_Inst[1].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.ipbuff_addr_out[3]_i_1_n_0                                            |                  |                1 |              4 |         4.00 |
+|  Clk_IBUF_BUFG | Core_2_Inst[2].Core2/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/base_en_px_cntrl                                                                               |                  |                2 |              4 |         2.00 |
+|  Clk_IBUF_BUFG | Core_1_Inst[1].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.i_phase_buff_read/gen_dly.gen_shiftreg.gen_rtl_delay.delay_bus_reg[4] |                  |                1 |              4 |         4.00 |
+|  Clk_IBUF_BUFG | Core_2_Inst[1].Core2/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/sel                                                                                            |                  |                1 |              4 |         4.00 |
+|  Clk_IBUF_BUFG | Core_1_Inst[3].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.ipbuff_addr_out[3]_i_1_n_0                                            |                  |                1 |              4 |         4.00 |
+|  Clk_IBUF_BUFG | Core_1_Inst[2].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.ipbuff_addr_out[3]_i_1_n_0                                            |                  |                1 |              4 |         4.00 |
+|  Clk_IBUF_BUFG | Core_1_Inst[4].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.i_phase_buff_read/gen_dly.gen_shiftreg.gen_rtl_delay.delay_bus_reg[4] |                  |                1 |              4 |         4.00 |
+|  Clk_IBUF_BUFG | Core_1_Inst[4].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.ipbuff_addr_out[3]_i_1_n_0                                            |                  |                1 |              4 |         4.00 |
+|  Clk_IBUF_BUFG | Core_1_Inst[4].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.i_latch_op/latch_op                                                   |                  |               11 |             64 |         5.82 |
+|  Clk_IBUF_BUFG | Core_1_Inst[2].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_s_data_chan_fifo.i_s_data_chan_fifo/wr_enable                       |                  |                4 |             64 |        16.00 |
+|  Clk_IBUF_BUFG | Core_1_Inst[2].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.i_latch_op/latch_op                                                   |                  |               17 |             64 |         3.76 |
+|  Clk_IBUF_BUFG | Core_1_Inst[3].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_s_data_chan_fifo.i_s_data_chan_fifo/wr_enable                       |                  |                4 |             64 |        16.00 |
+|  Clk_IBUF_BUFG | Core_1_Inst[3].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.i_latch_op/latch_op                                                   |                  |               13 |             64 |         4.92 |
+|  Clk_IBUF_BUFG | Core_1_Inst[1].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/cntrl[1]_8[8]                                                                                  |                  |               22 |             64 |         2.91 |
+|  Clk_IBUF_BUFG | Core_1_Inst[3].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/cntrl[1]_8[8]                                                                                  |                  |               25 |             64 |         2.56 |
+|  Clk_IBUF_BUFG | Core_1_Inst[1].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.i_latch_op/latch_op                                                   |                  |               18 |             64 |         3.56 |
+|  Clk_IBUF_BUFG | Core_1_Inst[1].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_s_data_chan_fifo.i_s_data_chan_fifo/wr_enable                       |                  |                4 |             64 |        16.00 |
+|  Clk_IBUF_BUFG | Core_1_Inst[2].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/cntrl[1]_8[8]                                                                                  |                  |               27 |             64 |         2.37 |
+|  Clk_IBUF_BUFG | Core_1_Inst[4].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_s_data_chan_fifo.i_s_data_chan_fifo/wr_enable                       |                  |                4 |             64 |        16.00 |
+|  Clk_IBUF_BUFG | Core_1_Inst[4].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/cntrl[1]_8[8]                                                                                  |                  |               26 |             64 |         2.46 |
+|  Clk_IBUF_BUFG | Core_2_Inst[2].Core2/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_cntrl_signals[9].i_delay/gen_dly.gen_regs.delay_bus_reg[0][0]_0     |                  |               26 |            128 |         4.92 |
+|  Clk_IBUF_BUFG | Core_2_Inst[1].Core2/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_s_data_chan_fifo.i_s_data_chan_fifo/wr_enable                       |                  |                8 |            128 |        16.00 |
+|  Clk_IBUF_BUFG | Core_2_Inst[1].Core2/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.i_latch_op/gen_dly.gen_shiftreg.gen_rtl_delay.delay_bus_reg[8]        |                  |               38 |            128 |         3.37 |
+|  Clk_IBUF_BUFG | Core_2_Inst[2].Core2/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/ipbuff_rate_enable                                                                             |                  |                8 |            128 |        16.00 |
+|  Clk_IBUF_BUFG | Core_2_Inst[1].Core2/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_cntrl_signals[9].i_delay/gen_dly.gen_regs.delay_bus_reg[0][0]_0     |                  |               25 |            128 |         5.12 |
+|  Clk_IBUF_BUFG | Core_2_Inst[1].Core2/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_cntrl_signals[7].i_delay/CNTRL_IN[0]                                |                  |                8 |            128 |        16.00 |
+|  Clk_IBUF_BUFG | Core_1_Inst[4].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_cntrl_signals[6].i_delay/cntrl[0]_9[0]                              |                  |                4 |            128 |        32.00 |
+|  Clk_IBUF_BUFG | Core_1_Inst[1].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_cntrl_signals[7].i_delay/D[0]                                       |                  |               17 |            128 |         7.53 |
+|  Clk_IBUF_BUFG | Core_1_Inst[1].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.i_cntrl_src/D[0]                                                      |                  |               28 |            128 |         4.57 |
+|  Clk_IBUF_BUFG | Core_1_Inst[1].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_cntrl_signals[6].i_delay/cntrl[0]_9[0]                              |                  |                4 |            128 |        32.00 |
+|  Clk_IBUF_BUFG | Core_1_Inst[1].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/cntrl[1]_8[7]                                                                                  |                  |               22 |            128 |         5.82 |
+|  Clk_IBUF_BUFG | Core_1_Inst[1].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/cntrl[1]_8[3]                                                                                  |                  |               32 |            128 |         4.00 |
+|  Clk_IBUF_BUFG | Core_1_Inst[2].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_cntrl_signals[7].i_delay/D[0]                                       |                  |               16 |            128 |         8.00 |
+|  Clk_IBUF_BUFG | Core_1_Inst[2].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_cntrl_signals[6].i_delay/cntrl[0]_9[0]                              |                  |                4 |            128 |        32.00 |
+|  Clk_IBUF_BUFG | Core_1_Inst[3].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/cntrl[1]_8[7]                                                                                  |                  |               30 |            128 |         4.27 |
+|  Clk_IBUF_BUFG | Core_1_Inst[3].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/cntrl[1]_8[3]                                                                                  |                  |               32 |            128 |         4.00 |
+|  Clk_IBUF_BUFG | Core_1_Inst[4].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_cntrl_signals[7].i_delay/D[0]                                       |                  |               17 |            128 |         7.53 |
+|  Clk_IBUF_BUFG | Core_1_Inst[2].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/cntrl[1]_8[3]                                                                                  |                  |               29 |            128 |         4.41 |
+|  Clk_IBUF_BUFG | Core_1_Inst[2].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/cntrl[1]_8[7]                                                                                  |                  |               30 |            128 |         4.27 |
+|  Clk_IBUF_BUFG | Core_1_Inst[2].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.i_cntrl_src/D[0]                                                      |                  |               25 |            128 |         5.12 |
+|  Clk_IBUF_BUFG | Core_1_Inst[3].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_cntrl_signals[7].i_delay/D[0]                                       |                  |               17 |            128 |         7.53 |
+|  Clk_IBUF_BUFG | Core_1_Inst[3].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_cntrl_signals[6].i_delay/cntrl[0]_9[0]                              |                  |                4 |            128 |        32.00 |
+|  Clk_IBUF_BUFG | Core_1_Inst[3].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.i_cntrl_src/D[0]                                                      |                  |               29 |            128 |         4.41 |
+|  Clk_IBUF_BUFG | Core_2_Inst[1].Core2/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/ipbuff_rate_enable                                                                             |                  |                8 |            128 |        16.00 |
+|  Clk_IBUF_BUFG | Core_1_Inst[4].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.i_cntrl_src/D[0]                                                      |                  |               22 |            128 |         5.82 |
+|  Clk_IBUF_BUFG | Core_2_Inst[2].Core2/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_s_data_chan_fifo.i_s_data_chan_fifo/wr_enable                       |                  |                8 |            128 |        16.00 |
+|  Clk_IBUF_BUFG | Core_2_Inst[2].Core2/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.i_latch_op/gen_dly.gen_shiftreg.gen_rtl_delay.delay_bus_reg[8]        |                  |               36 |            128 |         3.56 |
+|  Clk_IBUF_BUFG | Core_2_Inst[2].Core2/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.g_cntrl_signals[7].i_delay/CNTRL_IN[0]                                |                  |                8 |            128 |        16.00 |
+|  Clk_IBUF_BUFG | Core_1_Inst[4].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/cntrl[1]_8[7]                                                                                  |                  |               25 |            128 |         5.12 |
+|  Clk_IBUF_BUFG | Core_1_Inst[4].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/cntrl[1]_8[3]                                                                                  |                  |               31 |            128 |         4.13 |
+|  Clk_IBUF_BUFG | Core_1_Inst[1].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/ip_buff_we                                                                                     |                  |                9 |            132 |        14.67 |
+|  Clk_IBUF_BUFG | Core_1_Inst[3].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/ip_buff_we                                                                                     |                  |               10 |            132 |        13.20 |
+|  Clk_IBUF_BUFG | Core_1_Inst[3].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/we_buff_allign                                                                                 |                  |               10 |            132 |        13.20 |
+|  Clk_IBUF_BUFG | Core_2_Inst[1].Core2/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.i_cntrl_src/cntrl_src_4                                               |                  |               10 |            132 |        13.20 |
+|  Clk_IBUF_BUFG | Core_1_Inst[1].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/we_buff_allign                                                                                 |                  |                9 |            132 |        14.67 |
+|  Clk_IBUF_BUFG | Core_2_Inst[2].Core2/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/g_semi_parallel_and_smac.i_cntrl_src/cntrl_src_4                                               |                  |                9 |            132 |        14.67 |
+|  Clk_IBUF_BUFG | Core_1_Inst[4].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/ip_buff_we                                                                                     |                  |                9 |            132 |        14.67 |
+|  Clk_IBUF_BUFG | Core_1_Inst[4].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/we_buff_allign                                                                                 |                  |               10 |            132 |        13.20 |
+|  Clk_IBUF_BUFG | Core_1_Inst[2].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/ip_buff_we                                                                                     |                  |                9 |            132 |        14.67 |
+|  Clk_IBUF_BUFG | Core_1_Inst[2].Core1/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/we_buff_allign                                                                                 |                  |                9 |            132 |        14.67 |
+|  Clk_IBUF_BUFG | Core_2_Inst[1].Core2/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/ip_buff_we                                                                                     |                  |               17 |            260 |        15.29 |
+|  Clk_IBUF_BUFG | Core_2_Inst[2].Core2/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/ip_buff_we                                                                                     |                  |               17 |            260 |        15.29 |
+|  Clk_IBUF_BUFG | Core_2_Inst[2].Core2/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/we_buff_allign                                                                                 |                  |               17 |            260 |        15.29 |
+|  Clk_IBUF_BUFG | Core_2_Inst[1].Core2/FIR_Inst/U0/i_synth/g_halfband_decimation.i_halfband_decimation/we_buff_allign                                                                                 |                  |               18 |            260 |        14.44 |
+|  Clk_IBUF_BUFG |                                                                                                                                                                                     |                  |              747 |           4508 |         6.03 |
++----------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------+------------------+----------------+--------------+
+
+

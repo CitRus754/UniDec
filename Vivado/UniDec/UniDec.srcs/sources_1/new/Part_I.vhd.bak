@@ -1,0 +1,662 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 26.09.2023 16:51:03
+-- Design Name: 
+-- Module Name: Main - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.numeric_std.all;
+
+library work;
+use work.UniDec_Package.all;
+
+entity Part_I is
+	generic(
+		Num_Signals	: integer := 8
+		);
+	port(
+		Clk 			: in std_logic;						
+		
+		Start			: in std_logic;
+		
+		Input_I			: in std_logic_vector(15 downto 0);		-- Input Signal
+		Input_Q			: in std_logic_vector(15 downto 0);
+		
+		FCW_1			: in std_logic_vector(23 downto 0);		-- For Part_I
+		Channel_Addr_1	: in std_logic_vector(2 downto 0);
+		DDS_TVALID_1	: in std_logic;
+		
+		BitRvsCntr		: in std_logic_vector(2 downto 0);		-- bit-reversed counter (3 MSB bits)
+				
+		-- Debug!
+		-- Chan0_I, Chan0_Q: out IQ_Array(1 to Num_Signals/2);
+		-- Chan1_I, Chan1_Q: out IQ_Array(1 to Num_Signals/2);
+		
+		-- Stages 1-2 outputs
+		Stage1_Channels	: out DDS_Array(1 to Num_Signals);
+		Stage2_Channels	: out DDS_Array(1 to Num_Signals);
+		FIR2_TVALID		: out std_logic
+		
+		
+
+		);
+end Part_I;
+
+architecture Behavioral of Part_I is
+
+	-- Part_I module consists of CORE_1 (x4), fir_compiler_1 (x2) and DDS
+	
+	component CORE_1 is
+		port(
+			Clk 			: in std_logic;							-- 88 MHz
+			
+			Input_I			: in std_logic_vector(15 downto 0);		-- Input Signal
+			Input_Q			: in std_logic_vector(15 downto 0);
+			
+			DDS_Ena			: in std_logic;
+			DDS_I			: in std_logic_vector(11 downto 0);
+			DDS_Q			: in std_logic_vector(11 downto 0);		
+		
+			FIR_TVALID		: out std_logic;
+			FIR_Output		: out std_logic_vector(31 downto 0)		-- Output Signal
+			
+			);
+	end component;
+	
+	component DDS is
+		generic(
+			Num_Signals	: integer := 8					-- TDM (4 = 8/2)
+			);
+		port(
+			Clk 			: in std_logic;						
+			
+			Start			: in std_logic;
+			
+			FCW				: in std_logic_vector(23 downto 0);
+			Channel_Addr	: in std_logic_vector(2 downto 0);
+			TVALID_IN		: in std_logic;
+			
+			-- Selector		: in std_logic;
+			
+			TVALID_OUT		: out DV_Bus(1 to Num_Signals/2);
+			Output_I		: out SinCos_Array(1 to Num_Signals/2);
+			Output_Q		: out SinCos_Array(1 to Num_Signals/2)
+			);
+	end component;
+	
+	component TDM_Matcher is
+		generic(
+			NumInps		: integer		-- 4
+		);
+		port(
+            Clk			: in std_logic;
+            
+            Sel			: in std_logic;
+            
+            InTV		: in DV_Bus(1 to NumInps);
+            InSignal	: in DDS_Array(1 to NumInps);
+            
+            OutTV		: out DV_Bus(1 to NumInps/2);
+            OutSignal	: out DDS_Array(1 to NumInps/2)
+        );
+	end component;
+	
+	component TDM_Matcher_2 is
+		port(
+            Clk			: in std_logic;
+            
+            Sel			: in std_logic;
+            
+            InTV		: in DV_Bus(1 to 2);
+            InSignal	: in DDS_Array(1 to 2);
+            
+            OutTV		: out std_logic;
+            OutSignal	: out std_logic_vector(31 downto 0)
+        );
+	end component;
+	
+	component fir_compiler_1 is
+		PORT (
+			aclk : IN STD_LOGIC;
+			s_axis_data_tvalid : IN STD_LOGIC;
+			s_axis_data_tready : OUT STD_LOGIC;
+			s_axis_data_tdata : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+			m_axis_data_tvalid : OUT STD_LOGIC;
+			m_axis_data_tdata : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+			);
+	end component;
+		
+	-- Cntr signals
+	signal Sel1					: std_logic 		:= '0';
+	signal Sel1_w1              : std_logic 		:= '0';
+	
+	
+	signal Sel_0	: std_logic	:= '0';
+	signal Sel_1	: std_logic_vector(1 downto 0)	:= "00";
+	signal Cntr_1	: std_logic_vector(1 downto 0)	:= "00";
+	
+	signal Sel_w1, Sel_w2		: std_logic_vector(1 downto 0) 		:= "00";
+	-- signal Sel2					: std_logic_vector(1 downto 0) 		:= "00";
+	
+	-- DDS signals
+	signal DDS_TV_out 			: DV_Bus(1 to Num_Signals/2) 		:= (others => '0');
+	signal DDS_Cos				: SinCos_Array(1 to Num_Signals/2) 	:= (others => (others => '0'));
+	signal DDS_Sin				: SinCos_Array(1 to Num_Signals/2) 	:= (others => (others => '0'));	
+	
+	-- CORE_1 signals
+	signal FIR1_OutTV			: DV_Bus(1 to Num_Signals/2) 		:= (others => '0');
+	-- signal FIR1_OutTV_w1		: DV_Bus(1 to Num_Signals/4) 		:= (others => '0');
+	-- signal FIR1_xor				: DV_Bus(1 to Num_Signals/4) 		:= (others => '0');
+	
+	signal FIR1_Out				: DDS_Array(1 to Num_Signals/2) 	:= (others => (others => '0'));
+	-- signal FIR1_Out_w1			: DDS_Array(1 to Num_Signals/4) 	:= (others => (others => '0'));
+	-- signal FIR1_Out_d			: DDS_Array(1 to Num_Signals/4) 	:= (others => (others => '0'));
+	
+	signal Stage1_Out			: std_logic_vector(31 downto 0)		:= (others => '0');
+	signal Stage1_I				: std_logic_vector(15 downto 0)		:= (others => '0');
+	signal Stage1_Q				: std_logic_vector(15 downto 0)		:= (others => '0');	
+	
+	
+	-- for Dbg!
+	signal DDS_Cos0, DDS_Cos1	: SinCos_Array(1 to Num_Signals/2) 	:= (others => (others => '0'));
+	signal DDS_Sin0, DDS_Sin1	: SinCos_Array(1 to Num_Signals/2) 	:= (others => (others => '0'));
+	
+	signal FIR10_I, FIR10_Q		: IQ_Array(1 to Num_Signals/2) 	:= (others => (others => '0'));
+	signal FIR11_I, FIR11_Q		: IQ_Array(1 to Num_Signals/2) 	:= (others => (others => '0'));
+	
+	-- signal Dbg0_I, Dbg0_Q       : IQ_Array(1 to Num_Signals/2) 	:= (others => (others => '0'));
+	-- signal Dbg1_I, Dbg1_Q       : IQ_Array(1 to Num_Signals/2) 	:= (others => (others => '0'));
+	-------------------
+		
+	signal FIR2_In0_I, FIR2_In1_I, FIR2_In2_I, FIR2_In3_I  : std_logic_vector(15 downto 0)		:= (others => '0');
+	signal FIR2_In0_Q, FIR2_In1_Q, FIR2_In2_Q, FIR2_In3_Q  : std_logic_vector(15 downto 0)		:= (others => '0');
+	
+	
+	signal FIR2_InTV			: DV_Bus(1 to Num_Signals/4) 		:= (others => '0');
+	signal FIR2_Input			: DDS_Array(1 to Num_Signals/4) 	:= (others => (others => '0'));
+	
+	signal FIR1_Channels		: DDS_Array(1 to Num_Signals) 		:= (others => (others => '0'));
+	
+	-- fir_compiler signals
+	signal fir2_tr              : DV_Bus(1 to Num_Signals/4) 		:= (others => '0');
+	
+	signal FIR2_OutTV			: DV_Bus(1 to Num_Signals/4) 		:= (others => '0');
+--	signal FIR2_OutTV_w1        : std_logic := '0';
+--	signal FIR2_xor				: std_logic := '0';
+	
+	signal FIR2_Out				: DDS_Array(1 to Num_Signals/4) 	:= (others => (others => '0'));
+--	signal FIR2_Out_w1			: std_logic_vector(31 downto 0)		:= (others => '0');
+--	signal FIR2_Out_d			: std_logic_vector(31 downto 0)		:= (others => '0');
+	
+	signal FIR2_TV				: std_logic 						:= '0';
+	signal FIR2_Output			: std_logic_vector(31 downto 0)		:= (others => '0');
+	
+	signal FIR2_Channels		: DDS_Array(1 to Num_Signals) 		:= (others => (others => '0'));
+	
+begin
+	
+	-- Dbg!
+--	process(Clk) begin
+--	   if rising_edge(Clk) then
+--           if Sel2 = "00" then
+--                FIR10_I(1)	<= FIR1_Out(1)(15 downto 0);
+--				FIR10_I(2)	<= FIR1_Out_d(1)(15 downto 0);
+--				FIR10_I(3)	<= FIR1_Out(3)(15 downto 0);
+--				FIR10_I(4)	<= FIR1_Out_d(2)(15 downto 0);
+				
+--				FIR10_Q(1)	<= FIR1_Out(1)(31 downto 16);
+--				FIR10_Q(2)	<= FIR1_Out_d(1)(31 downto 16);
+--				FIR10_Q(3)	<= FIR1_Out(3)(31 downto 16);
+--				FIR10_Q(4)	<= FIR1_Out_d(2)(31 downto 16);
+--            else
+--				FIR11_I(1)	<= FIR1_Out(1)(15 downto 0);
+--				FIR11_I(2)	<= FIR1_Out_d(1)(15 downto 0);
+--				FIR11_I(3)	<= FIR1_Out(3)(15 downto 0);
+--				FIR11_I(4)	<= FIR1_Out_d(2)(15 downto 0);
+				
+--				FIR11_Q(1)	<= FIR1_Out(1)(31 downto 16);
+--				FIR11_Q(2)	<= FIR1_Out_d(1)(31 downto 16);
+--				FIR11_Q(3)	<= FIR1_Out(3)(31 downto 16);
+--				FIR11_Q(4)	<= FIR1_Out_d(2)(31 downto 16);
+--            end if;
+--          end if;
+--	end process;
+	
+	-- selectors
+--	process(Clk) begin
+--		if rising_edge(Clk) then
+--			Sel1_w1	<= BitRvsCntr(2);
+--			Sel1	<= Sel1_w1;
+--		end if;
+--	end process;
+	Sel1 	<= BitRvsCntr(2);
+	
+--	process(Clk) begin
+--		if rising_edge(Clk) then
+--			Sel_w1	<= BitRvsCntr(2 downto 1);
+--			Sel_w2	<= Sel_w1;
+--			Sel2	<= Sel_w2;
+--		end if;
+--	end process;
+	
+	-- Sel2   <= BitRvsCntr(2 downto 1);
+	
+	-- dds instantiation
+	dds_inst: DDS
+	generic map(Num_Signals => 8)
+	port map(
+		Clk				=> Clk,
+		Start			=> Start,
+		FCW				=> FCW_1,
+		Channel_Addr	=> Channel_Addr_1,
+		TVALID_IN		=> DDS_TVALID_1,
+		-- Selector		=> Sel1,
+		TVALID_OUT		=> DDS_TV_out,
+		Output_I		=> DDS_Cos,
+		Output_Q		=> DDS_Sin
+		);
+	
+	
+	
+	---------only for Debug!------
+	-- queue: Chan0-Chan1-Chan0-Chan1-...
+	-- Selector:
+	-- '1' - for DDS
+	-- '0' - for Mix
+	process(Clk) begin
+		if rising_edge(Clk) then
+			if Sel1 = '0' then
+				DDS_Cos0	<= DDS_Cos;
+				DDS_Sin0	<= DDS_Sin;
+			else
+				DDS_Cos1	<= DDS_Cos;
+				DDS_Sin1	<= DDS_Sin;
+			end if;
+		end if;
+	end process;
+	-------------------------------
+	
+	
+	
+	-- core_1 instantiation
+	core_1_inst: for i in 1 to Num_Signals/2 generate core: CORE_1
+		port map(
+			Clk 		=> Clk,			
+			Input_I		=> Input_I,
+			Input_Q		=> Input_Q,			
+			DDS_Ena		=> DDS_TV_out(i),
+			DDS_I		=> DDS_Cos(i),
+			DDS_Q		=> DDS_Sin(i),					
+			FIR_TVALID	=> FIR1_OutTV(i),
+			FIR_Output	=> FIR1_Out(i)
+			);
+	end generate core_1_inst;	
+	
+	
+	-- Select separate channels from FIR TDM outputs
+	-- Clk is 88 MHz, output Fs = 22 MHz
+	-- Designations: Sk(i) - k-th sample of i-th channel
+	-- FIR output is 4 channels: 2 parallel (Q-I) and 2 interleaved
+	-- Clk Period	|	1	|	2	|	3	|	4	|	5	|	6	|	7	|	8	|	9	|	10	|	11	|	12	|	13	|	14	|	15	|
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- FIR1_Out_1	|	  S1(0)  	|	  S1(1)  	|	  S2(0)  	|	  S2(1)  	|	  S3(0)  	|	  S3(1)  	|	  S4(0)  	|	  S4(1)
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- FIR1_Out_2_w			|	  S1(2)  	|	  S1(3)  	|	  S2(2)  	|	  S2(3)  	|	  S3(2)  	|	  S3(3)  	|	  S4(2)  	|
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- FIR1_Out_3	|	  S1(4)  	|	  S1(5)  	|	  S2(4)  	|	  S2(5)  	|	  S3(4)  	|	  S3(5)  	|	  S4(4)  	|	  S4(5)
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- FIR1_Out_4_w			|	  S1(6)  	|	  S1(7)  	|	  S2(6)  	|	  S2(7)  	|	  S3(6)  	|	  S3(7)  	|	  S4(6)  	|
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- FIR2_In_1	| S1(0) | S1(2) | S1(1) | S1(3) | S2(0) | S2(2) | S2(1) | S2(3) | S3(0) | S3(2) | S3(1) | S3(3) | S4(0) | S4(2) | S4(1) |
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- FIR2_In_2	| S1(4) | S1(6) | S1(5) | S1(7) | S2(4) | S2(6) | S2(5) | S2(7) | S3(4) | S3(6) | S3(5) | S3(7) | S4(4) | S4(6) | S4(5) |
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- Sel2			|	0	|	2	|	1	|	3	|	0	|	2	|	1	|	3	|	0	|	2	|	1	|	3	|	0	|	2	|	1	|
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- St1_Ch_0 ----|	  	  	   S1(0)	  		|	  	  	   S2(0)	  		|	  	  	   S3(0)	  		|	  	  	   S4(0)	 
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- St1_Ch_4 ----|	  	  	   S1(4)	  		|	  	  	   S2(4)	  		|	  	  	   S3(4)	  		|	  	  	   S4(4)	 
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- St1_Ch_2 ------------|	  	  	   S1(2)	  		|	  	  	   S2(2)	  		|	  	  	   S3(2)	  		|	  	  	S4(2)
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- St1_Ch_6 ------------|	  	  	   S1(6)	  		|	  	  	   S2(6)	  		|	  	  	   S3(6)	  		|	  	  	S4(6)
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- St1_Ch_1 --------------------|	  	  	   S1(1)	  		|	  	  	   S2(1)	  		|	  	  	   S3(1)	  		|	S4(1)
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- St1_Ch_5 --------------------|	  	  	   S1(5)	  		|	  	  	   S2(5)	  		|	  	  	   S3(5)	  		|	S4(5)
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- St1_Ch_3 ----------------------------|	  	  	   S1(3)	  		|	  	  	   S2(3)	  		|	  	  	   S3(3)	  		|
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- St1_Ch_7 ----------------------------|	  	  	   S1(7)	  		|	  	  	   S2(7)	  		|	  	  	   S3(7)	  		|
+	
+	
+	tdm_inst1: TDM_Matcher
+	generic map(NumInps	=> Num_Signals/2)
+	port map(
+			Clk			=> Clk,
+			Sel			=> Sel1,
+			InTV		=> FIR1_OutTV,
+			InSignal	=> FIR1_Out,
+			OutTV		=> FIR2_InTV,
+			OutSignal	=> FIR2_Input
+	);
+	
+	
+	
+	/* -- delay for even channels
+	process(Clk) begin
+		if rising_edge(Clk) then
+			for i in 1 to Num_Signals/4 loop
+				FIR1_OutTV_w1(i)	<= FIR1_OutTV(Num_Signals/4*i);
+				FIR1_Out_w1(i) 		<= FIR1_Out(Num_Signals/4*i);
+			end loop;
+		end if;
+	end process;
+	
+	
+	-- or for TV
+	process(Clk) begin
+		if rising_edge(Clk) then
+			for i in 1 to Num_Signals/4 loop
+				FIR2_InTV(i) <= FIR1_OutTV((i-1)*Num_Signals/4 + 1) or FIR1_OutTV((i-1)*Num_Signals/4 + 2) or FIR1_OutTV_w1(i);
+			end loop;
+		end if;
+	end process;
+	
+	FIR1_xor(1)	<= FIR1_OutTV(1) xor FIR1_OutTV(2);
+	FIR1_xor(2)	<= FIR1_OutTV(3) xor FIR1_OutTV(4);
+	
+	-- mux for FIR_xor
+	process(FIR1_Out_w1, FIR1_Out, FIR1_xor) begin
+--		if rising_edge(Clk) then
+			for i in 1 to Num_Signals/4 loop
+				if FIR1_xor(i)	= '1' then
+					FIR1_Out_d(i)	<= FIR1_Out(2*i);
+				else
+					FIR1_Out_d(i)	<= FIR1_Out_w1(i);
+				end if;
+			end loop;
+--		end if;
+	end process;
+	
+	-- mux for FIR2 Input
+	process(Clk) begin
+		if rising_edge(Clk) then
+			for i in 1 to Num_Signals/4 loop
+				if 		Sel1 = '0' then
+					FIR2_Input(i) <= FIR1_Out((i-1)*Num_Signals/4 + 1);
+				else
+					FIR2_Input(i) <= FIR1_Out_d(i);
+				end if;
+			end loop;
+		end if;
+	end process;	 */
+	
+	
+	-- FIR2_inpDbg!
+    -- process(Clk) begin
+		-- if rising_edge(Clk) then
+            -- if 		Sel2 = "00" then
+                -- FIR2_In0_I <= FIR2_Input(1)(15 downto 0);
+            -- elsif	Sel2 = "10" then
+                -- FIR2_In1_I <= FIR2_Input(1)(15 downto 0);
+            -- elsif	Sel2 = "01" then
+                -- FIR2_In2_I <= FIR2_Input(1)(15 downto 0);
+            -- else
+                -- FIR2_In3_I <= FIR2_Input(1)(15 downto 0);
+            -- end if;
+		-- end if;
+	-- end process;
+	
+	
+	
+	
+	-- Stage 1 outputs; bit-reversed order in array FIR1_Channels
+	-- array index:		1-2-3-4		5-6-7-8
+	-- channel number:	0-2-1-3		4-6-5-7
+	
+	
+	
+	-- for FIR2_Input selection
+	Sel_0	<= Channel_Addr_1(0);	
+	Sel_1	<= Channel_Addr_1(2 downto 1);
+	Cntr_1	<= BitRvsCntr(2 downto 1);
+	
+	process(Clk) begin
+		if rising_edge(Clk) then
+			if Sel_0 = '0' then
+				if 		Cntr_1 = "00" then
+					FIR1_Channels(0 + 1)	<= FIR2_Input(1);
+				elsif	Cntr_1 = "10" then
+					FIR1_Channels(1 + 1)	<= FIR2_Input(1);
+				elsif	Cntr_1 = "01" then
+					FIR1_Channels(2 + 1)	<= FIR2_Input(1);
+				else
+					FIR1_Channels(3 + 1)	<= FIR2_Input(1);
+				end if;
+			else
+				if 		Cntr_1 = "00" then
+					FIR1_Channels(4 + 1)	<= FIR2_Input(2);
+				elsif	Cntr_1 = "10" then
+					FIR1_Channels(5 + 1)	<= FIR2_Input(2);
+				elsif	Cntr_1 = "01" then
+					FIR1_Channels(6 + 1)	<= FIR2_Input(2);
+				else
+					FIR1_Channels(7 + 1)	<= FIR2_Input(2);
+				end if;
+			end if;
+		end if;
+	end process;
+	
+	
+	-- Stage_1 mux
+	process(Clk) begin
+		if rising_edge(Clk) then
+			if Sel_0 = '0' then
+				if 		Sel_1 = "00" then
+					Stage1_Out	<= FIR1_Channels(0 + 1);
+				elsif	Sel_1 = "01" then
+					Stage1_Out	<= FIR1_Channels(2 + 1);	-- bit-reversed order!
+				elsif	Sel_1 = "10" then
+					Stage1_Out	<= FIR1_Channels(1 + 1);	-- bit-reversed order!
+				else
+					Stage1_Out	<= FIR1_Channels(3 + 1);
+				end if;
+			else
+				if 		Sel_1 = "00" then
+					Stage1_Out	<= FIR1_Channels(4 + 1);
+				elsif	Sel_1 = "01" then
+					Stage1_Out	<= FIR1_Channels(6 + 1);	-- bit-reversed order!
+				elsif	Sel_1 = "10" then
+					Stage1_Out	<= FIR1_Channels(5 + 1);	-- bit-reversed order!
+				else
+					Stage1_Out	<= FIR1_Channels(7 + 1);
+				end if;
+			end if;
+		end if;
+	end process;
+	
+	Stage1_I	<= Stage1_Out(15 downto 0);
+	Stage1_Q	<= Stage1_Out(31 downto 16);
+	
+	-- process(Clk) begin
+		-- if rising_edge(Clk) then
+			-- for i in 1 to Num_Signals/4 loop
+				-- if 		Sel2 = "00" then
+					-- FIR1_Channels((i-1)*Num_Signals/2 + 1) <= FIR2_Input(i);
+				-- elsif	Sel2 = "10" then
+					-- FIR1_Channels((i-1)*Num_Signals/2 + 2) <= FIR2_Input(i);
+				-- elsif	Sel2 = "01" then
+					-- FIR1_Channels((i-1)*Num_Signals/2 + 3) <= FIR2_Input(i);
+				-- else
+					-- FIR1_Channels((i-1)*Num_Signals/2 + 4) <= FIR2_Input(i);
+				-- end if;
+			-- end loop;
+		-- end if;
+	-- end process;
+	
+	Stage1_Channels <= FIR1_Channels;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	fir_inst: for i in 1 to Num_Signals/4 generate FIRs: fir_compiler_1
+		port map(
+			aclk 				=> Clk,
+			s_axis_data_tvalid 	=> FIR2_InTV(i),
+			s_axis_data_tready 	=> fir2_tr(i),
+			s_axis_data_tdata 	=> FIR2_Input(i),
+			m_axis_data_tvalid 	=> FIR2_OutTV(i),
+			m_axis_data_tdata 	=> FIR2_Out(i)
+		);
+	end generate fir_inst;
+	
+	
+	-- Select separate channels from FIR TDM outputs
+	-- Clk is 88 MHz, output Fs = 11 MHz
+	-- Designations: Sk(i) - k-th sample of i-th channel
+	-- FIR output is 8 channels: 2 parallel (Q-I) and 4 interleaved
+	-- Clk Period	|	1	|	2	|	3	|	4	|	5	|	6	|	7	|	8	|	9	|	10	|	11	|	12	|	13	|	14	|	15	|
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- FIR2_Out_1	|	  S1(0)  	|	  S1(2)  	|	  S1(1)  	|	  S1(3)  	|	  S2(0)  	|	  S2(2)  	|	  S2(1)  	|	  S2(3)
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- FIR2_Out_2_w			|	  S1(4)  	|	  S1(6)  	|	  S1(5)  	|	  S1(7)  	|	  S2(4)  	|	  S2(6)  	|	  S2(5)  	|
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- FIR2_Output	| S1(0) | S1(4) | S1(2) | S1(6) | S1(1) | S1(5) | S1(3) | S1(7) | S2(0) | S2(4) | S2(2) | S2(6) | S2(1) | S2(5) | S2(3) |
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- BitRvsCntr	|	0	|	4	|	2	|	6	|	1	|	5	|	3	|	7	|	0	|	4	|	2	|	6	|	1	|	5	|	3	|
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- St1_Ch_0 ----|						  S1(0)  						|						  S2(0)  						|	S3(0)
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- St1_Ch_4 ------------|						  S1(4)  						|						  S2(4)  						|
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- St1_Ch_2 --------------------|						  S1(2)  						|						  S2(2)  				
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- St1_Ch_6 ----------------------------|						  S1(6)  						|						  S2(6)  		
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- St1_Ch_1 ------------------------------------|						  S1(1)  						|						  S2(1)  
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- St1_Ch_5 --------------------------------------------|						  S1(5)  						|					S2(5)
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- St1_Ch_3 ----------------------------------------------------|						  S1(3)  						|			S2(3)
+	-----------------------------------------------------------------------------------------------------------------------------------------
+	-- St1_Ch_7 ------------------------------------------------------------|						  S1(7)  						|	S2(7)
+	
+	
+	tdm_inst2: TDM_Matcher_2
+	port map(
+			Clk			=> Clk,
+			Sel			=> Sel1,
+			InTV		=> FIR2_OutTV,
+			InSignal	=> FIR2_Out,
+			OutTV		=> FIR2_TV,
+			OutSignal	=> FIR2_Output
+	);
+	
+	
+	
+--	-- delay for even channel
+--	process(Clk) begin
+--		if rising_edge(Clk) then
+--			FIR2_OutTV_w1	<= FIR2_OutTV(2);
+--			FIR2_Out_w1 <= FIR2_Out(2);
+--		end if;
+--	end process;
+	
+	
+--	-- or for TV
+--	process(Clk) begin
+--		if rising_edge(Clk) then
+--			FIR2_TV <= FIR2_OutTV(1) or FIR2_OutTV(2) or FIR2_OutTV_w1;
+--		end if;
+--	end process;
+	
+	FIR2_TVALID		<= FIR2_TV;
+	
+	
+--	FIR2_xor	<= FIR2_OutTV(1) xor FIR2_OutTV(2);
+	
+	
+--	-- mux for FIR_xor
+--	process(FIR2_Out_w1, FIR2_Out, FIR2_xor) begin
+--		if FIR2_xor	= '1' then
+--			FIR2_Out_d	<= FIR2_Out(2);
+--		else
+--			FIR2_Out_d	<= FIR2_Out_w1;
+--		end if;
+--	end process;
+	
+--	-- mux for FIR2 Output
+--	process(Clk) begin
+--		if rising_edge(Clk) then
+--			if 		Sel1 = '0' then
+--				FIR2_Output <= FIR2_Out(1);
+--			else
+--				FIR2_Output <= FIR2_Out_d;
+--			end if;
+--		end if;
+--	end process;
+	
+	
+	-- Stage 2 outputs; bit-reversed order in array FIR2_Channels
+	process(Clk) begin
+		if rising_edge(Clk) then
+			if 		BitRvsCntr = "000" then
+				FIR2_Channels(1) <= FIR2_Output;
+			elsif	BitRvsCntr = "100" then
+				FIR2_Channels(2) <= FIR2_Output;
+			elsif	BitRvsCntr = "010" then
+				FIR2_Channels(3) <= FIR2_Output;
+			elsif 	BitRvsCntr = "110" then
+				FIR2_Channels(4) <= FIR2_Output;
+			elsif	BitRvsCntr = "001" then
+				FIR2_Channels(5) <= FIR2_Output;
+			elsif	BitRvsCntr = "101" then
+				FIR2_Channels(6) <= FIR2_Output;
+			elsif	BitRvsCntr = "011" then
+				FIR2_Channels(7) <= FIR2_Output;
+			else
+				FIR2_Channels(8) <= FIR2_Output;
+			end if;
+		end if;
+	end process;
+	
+	Stage2_Channels <= FIR2_Channels;
+	
+end Behavioral;

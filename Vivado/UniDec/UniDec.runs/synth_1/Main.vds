@@ -1,0 +1,527 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Thu Sep 21 12:41:41 2023
+# Process ID: 16364
+# Current directory: E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/synth_1
+# Command line: vivado.exe -log Main.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source Main.tcl
+# Log file: E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/synth_1/Main.vds
+# Journal file: E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source Main.tcl -notrace
+Command: synth_design -top Main -part xczu9eg-ffvb1156-2-e
+Starting synth_design
+WARNING: [Vivado_Tcl 4-393] The 'Synthesis' target of the following IPs are stale, please generate the output products using the generate_target or synth_ip command before running synth_design.
+E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/ip/dds_compiler_0/dds_compiler_0.xci
+E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/ip/fir_compiler_0/fir_compiler_0.xci
+E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/ip/fir_compiler_1/fir_compiler_1.xci
+
+INFO: [IP_Flow 19-2162] IP 'dds_compiler_0' is locked:
+* Current project part 'xczu9eg-ffvb1156-2-e' and the part 'xc7k160tfbg484-3' used to customize the IP 'dds_compiler_0' do not match.
+INFO: [IP_Flow 19-2162] IP 'fir_compiler_0' is locked:
+* Current project part 'xczu9eg-ffvb1156-2-e' and the part 'xc7k160tfbg484-3' used to customize the IP 'fir_compiler_0' do not match.
+INFO: [IP_Flow 19-2162] IP 'fir_compiler_1' is locked:
+* Current project part 'xczu9eg-ffvb1156-2-e' and the part 'xc7k160tfbg484-3' used to customize the IP 'fir_compiler_1' do not match.
+Attempting to get a license for feature 'Synthesis' and/or device 'xczu9eg'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xczu9eg'
+INFO: [Device 21-403] Loading part xczu9eg-ffvb1156-2-e
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 9812
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:03 . Memory (MB): peak = 1703.535 ; gain = 116.824
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'Main' [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/Main.vhd:63]
+	Parameter Num_Inputs bound to: 8 - type: integer 
+	Parameter Num_Signals bound to: 2 - type: integer 
+INFO: [Synth 8-3491] module 'CORE_1' declared at 'E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/CORE_1.vhd:37' bound to instance 'Core1' of component 'CORE_1' [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/Main.vhd:123]
+INFO: [Synth 8-638] synthesizing module 'CORE_1' [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/CORE_1.vhd:60]
+	Parameter Num_Signals bound to: 2 - type: integer 
+INFO: [Synth 8-3491] module 'dds_compiler_0' declared at 'E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/synth_1/.Xil/Vivado-16364-DESKTOP-CITRUS/realtime/dds_compiler_0_stub.vhdl:5' bound to instance 'DDS' of component 'dds_compiler_0' [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/CORE_1.vhd:76]
+INFO: [Synth 8-638] synthesizing module 'dds_compiler_0' [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/synth_1/.Xil/Vivado-16364-DESKTOP-CITRUS/realtime/dds_compiler_0_stub.vhdl:16]
+INFO: [Synth 8-3491] module 'dds_compiler_0' declared at 'E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/synth_1/.Xil/Vivado-16364-DESKTOP-CITRUS/realtime/dds_compiler_0_stub.vhdl:5' bound to instance 'DDS' of component 'dds_compiler_0' [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/CORE_1.vhd:76]
+INFO: [Synth 8-3491] module 'Mixer_1' declared at 'E:/NTT/WorkingDirectory/07.23/PlOb.srcs/sources_1/new/Mixer_1.vhd:26' bound to instance 'Mixers' of component 'Mixer_1' [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/CORE_1.vhd:87]
+INFO: [Synth 8-638] synthesizing module 'Mixer_1' [E:/NTT/WorkingDirectory/07.23/PlOb.srcs/sources_1/new/Mixer_1.vhd:41]
+INFO: [Synth 8-256] done synthesizing module 'Mixer_1' (1#1) [E:/NTT/WorkingDirectory/07.23/PlOb.srcs/sources_1/new/Mixer_1.vhd:41]
+INFO: [Synth 8-3491] module 'Mixer_1' declared at 'E:/NTT/WorkingDirectory/07.23/PlOb.srcs/sources_1/new/Mixer_1.vhd:26' bound to instance 'Mixers' of component 'Mixer_1' [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/CORE_1.vhd:87]
+INFO: [Synth 8-3491] module 'fir_compiler_0' declared at 'E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/synth_1/.Xil/Vivado-16364-DESKTOP-CITRUS/realtime/fir_compiler_0_stub.vhdl:5' bound to instance 'FIR_Inst' of component 'fir_compiler_0' [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/CORE_1.vhd:102]
+INFO: [Synth 8-638] synthesizing module 'fir_compiler_0' [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/synth_1/.Xil/Vivado-16364-DESKTOP-CITRUS/realtime/fir_compiler_0_stub.vhdl:17]
+INFO: [Synth 8-256] done synthesizing module 'CORE_1' (2#1) [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/CORE_1.vhd:60]
+	Parameter Num_Signals bound to: 2 - type: integer 
+INFO: [Synth 8-3491] module 'CORE_1' declared at 'E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/CORE_1.vhd:37' bound to instance 'Core1' of component 'CORE_1' [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/Main.vhd:123]
+	Parameter Num_Signals bound to: 2 - type: integer 
+INFO: [Synth 8-3491] module 'CORE_1' declared at 'E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/CORE_1.vhd:37' bound to instance 'Core1' of component 'CORE_1' [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/Main.vhd:123]
+	Parameter Num_Signals bound to: 2 - type: integer 
+INFO: [Synth 8-3491] module 'CORE_1' declared at 'E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/CORE_1.vhd:37' bound to instance 'Core1' of component 'CORE_1' [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/Main.vhd:123]
+	Parameter Num_Signals bound to: 4 - type: integer 
+INFO: [Synth 8-3491] module 'CORE_2' declared at 'E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/CORE_2.vhd:37' bound to instance 'Core2' of component 'CORE_2' [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/Main.vhd:148]
+INFO: [Synth 8-638] synthesizing module 'CORE_2' [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/CORE_2.vhd:56]
+	Parameter Num_Signals bound to: 4 - type: integer 
+INFO: [Synth 8-3491] module 'fir_compiler_1' declared at 'E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/synth_1/.Xil/Vivado-16364-DESKTOP-CITRUS/realtime/fir_compiler_1_stub.vhdl:5' bound to instance 'FIR_Inst' of component 'fir_compiler_1' [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/CORE_2.vhd:66]
+INFO: [Synth 8-638] synthesizing module 'fir_compiler_1' [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/synth_1/.Xil/Vivado-16364-DESKTOP-CITRUS/realtime/fir_compiler_1_stub.vhdl:17]
+INFO: [Synth 8-256] done synthesizing module 'CORE_2' (3#1) [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/CORE_2.vhd:56]
+	Parameter Num_Signals bound to: 4 - type: integer 
+INFO: [Synth 8-3491] module 'CORE_2' declared at 'E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/CORE_2.vhd:37' bound to instance 'Core2' of component 'CORE_2' [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/Main.vhd:148]
+INFO: [Synth 8-256] done synthesizing module 'Main' (4#1) [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/Main.vhd:63]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:04 . Memory (MB): peak = 1756.617 ; gain = 169.906
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1774.543 ; gain = 187.832
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1774.543 ; gain = 187.832
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.046 . Memory (MB): peak = 1774.543 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/dds_compiler_0/dds_compiler_0/dds_compiler_0_in_context.xdc] for cell 'Core_1_Inst[1].Core1/DDS_Inst[1].DDS'
+Finished Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/dds_compiler_0/dds_compiler_0/dds_compiler_0_in_context.xdc] for cell 'Core_1_Inst[1].Core1/DDS_Inst[1].DDS'
+Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/dds_compiler_0/dds_compiler_0/dds_compiler_0_in_context.xdc] for cell 'Core_1_Inst[1].Core1/DDS_Inst[2].DDS'
+Finished Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/dds_compiler_0/dds_compiler_0/dds_compiler_0_in_context.xdc] for cell 'Core_1_Inst[1].Core1/DDS_Inst[2].DDS'
+Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/dds_compiler_0/dds_compiler_0/dds_compiler_0_in_context.xdc] for cell 'Core_1_Inst[2].Core1/DDS_Inst[1].DDS'
+Finished Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/dds_compiler_0/dds_compiler_0/dds_compiler_0_in_context.xdc] for cell 'Core_1_Inst[2].Core1/DDS_Inst[1].DDS'
+Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/dds_compiler_0/dds_compiler_0/dds_compiler_0_in_context.xdc] for cell 'Core_1_Inst[2].Core1/DDS_Inst[2].DDS'
+Finished Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/dds_compiler_0/dds_compiler_0/dds_compiler_0_in_context.xdc] for cell 'Core_1_Inst[2].Core1/DDS_Inst[2].DDS'
+Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/dds_compiler_0/dds_compiler_0/dds_compiler_0_in_context.xdc] for cell 'Core_1_Inst[3].Core1/DDS_Inst[1].DDS'
+Finished Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/dds_compiler_0/dds_compiler_0/dds_compiler_0_in_context.xdc] for cell 'Core_1_Inst[3].Core1/DDS_Inst[1].DDS'
+Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/dds_compiler_0/dds_compiler_0/dds_compiler_0_in_context.xdc] for cell 'Core_1_Inst[3].Core1/DDS_Inst[2].DDS'
+Finished Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/dds_compiler_0/dds_compiler_0/dds_compiler_0_in_context.xdc] for cell 'Core_1_Inst[3].Core1/DDS_Inst[2].DDS'
+Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/dds_compiler_0/dds_compiler_0/dds_compiler_0_in_context.xdc] for cell 'Core_1_Inst[4].Core1/DDS_Inst[1].DDS'
+Finished Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/dds_compiler_0/dds_compiler_0/dds_compiler_0_in_context.xdc] for cell 'Core_1_Inst[4].Core1/DDS_Inst[1].DDS'
+Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/dds_compiler_0/dds_compiler_0/dds_compiler_0_in_context.xdc] for cell 'Core_1_Inst[4].Core1/DDS_Inst[2].DDS'
+Finished Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/dds_compiler_0/dds_compiler_0/dds_compiler_0_in_context.xdc] for cell 'Core_1_Inst[4].Core1/DDS_Inst[2].DDS'
+Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_0/fir_compiler_0/fir_compiler_0_in_context.xdc] for cell 'Core_1_Inst[1].Core1/FIR_Inst'
+Finished Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_0/fir_compiler_0/fir_compiler_0_in_context.xdc] for cell 'Core_1_Inst[1].Core1/FIR_Inst'
+Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_0/fir_compiler_0/fir_compiler_0_in_context.xdc] for cell 'Core_1_Inst[2].Core1/FIR_Inst'
+Finished Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_0/fir_compiler_0/fir_compiler_0_in_context.xdc] for cell 'Core_1_Inst[2].Core1/FIR_Inst'
+Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_0/fir_compiler_0/fir_compiler_0_in_context.xdc] for cell 'Core_1_Inst[3].Core1/FIR_Inst'
+Finished Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_0/fir_compiler_0/fir_compiler_0_in_context.xdc] for cell 'Core_1_Inst[3].Core1/FIR_Inst'
+Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_0/fir_compiler_0/fir_compiler_0_in_context.xdc] for cell 'Core_1_Inst[4].Core1/FIR_Inst'
+Finished Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_0/fir_compiler_0/fir_compiler_0_in_context.xdc] for cell 'Core_1_Inst[4].Core1/FIR_Inst'
+Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_1/fir_compiler_1/fir_compiler_1_in_context.xdc] for cell 'Core_2_Inst[1].Core2/FIR_Inst'
+Finished Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_1/fir_compiler_1/fir_compiler_1_in_context.xdc] for cell 'Core_2_Inst[1].Core2/FIR_Inst'
+Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_1/fir_compiler_1/fir_compiler_1_in_context.xdc] for cell 'Core_2_Inst[2].Core2/FIR_Inst'
+Finished Parsing XDC File [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_1/fir_compiler_1/fir_compiler_1_in_context.xdc] for cell 'Core_2_Inst[2].Core2/FIR_Inst'
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1903.953 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.016 . Memory (MB): peak = 1903.953 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1903.953 ; gain = 317.242
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xczu9eg-ffvb1156-2-e
+INFO: [Synth 8-6742] Reading net delay rules and data
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1903.953 ; gain = 317.242
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+Applied set_property KEEP_HIERARCHY = SOFT for \Core_1_Inst[1].Core1 /\DDS_Inst[1].DDS . (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for \Core_1_Inst[2].Core1 /\DDS_Inst[1].DDS . (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for \Core_1_Inst[3].Core1 /\DDS_Inst[1].DDS . (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for \Core_1_Inst[4].Core1 /\DDS_Inst[1].DDS . (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for \Core_1_Inst[1].Core1 /\DDS_Inst[2].DDS . (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for \Core_1_Inst[2].Core1 /\DDS_Inst[2].DDS . (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for \Core_1_Inst[3].Core1 /\DDS_Inst[2].DDS . (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for \Core_1_Inst[4].Core1 /\DDS_Inst[2].DDS . (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for \Core_1_Inst[1].Core1 /FIR_Inst. (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for \Core_1_Inst[2].Core1 /FIR_Inst. (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for \Core_1_Inst[3].Core1 /FIR_Inst. (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for \Core_1_Inst[4].Core1 /FIR_Inst. (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for \Core_2_Inst[1].Core2 /FIR_Inst. (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for \Core_2_Inst[2].Core2 /FIR_Inst. (constraint file  auto generated constraint).
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 1903.953 ; gain = 317.242
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1903.953 ; gain = 317.242
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   16 Bit       Adders := 16    
++---Registers : 
+	               16 Bit    Registers := 18    
+	               12 Bit    Registers := 8     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 2520 (col length:168)
+BRAMs: 1824 (col length: RAMB18 168 RAMB36 84)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+DSP Report: Generating DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Prod1_reg, operation Mode is: ((D+A)*B2)'.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Input_I_w1_reg is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Prod1_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Prod1_reg is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Prod1_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum1_reg is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Prod1_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/multOp is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Prod1_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/plusOp is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Prod1_reg.
+DSP Report: Generating DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum4_reg, operation Mode is: (PCIN-((D+A)*B2)')'.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/DDS_Q_w1_reg is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum4_reg is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Prod2_reg is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum2_reg is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/minusOp is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/multOp is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/plusOp is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: Generating DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum5_reg, operation Mode is: (C+((D-A)*B2)')'.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/DDS_I_w1_reg is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum5_reg is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Prod3_reg is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum3_reg is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/plusOp is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/multOp is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/minusOp is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: Generating DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Prod1_reg, operation Mode is: ((D+A)*B2)'.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Input_I_w1_reg is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Prod1_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Prod1_reg is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Prod1_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum1_reg is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Prod1_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/multOp is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Prod1_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/plusOp is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Prod1_reg.
+DSP Report: Generating DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum4_reg, operation Mode is: (PCIN-((D+A)*B2)')'.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/DDS_Q_w1_reg is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum4_reg is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Prod2_reg is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum2_reg is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/minusOp is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/multOp is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/plusOp is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: Generating DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum5_reg, operation Mode is: (C+((D-A)*B2)')'.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/DDS_I_w1_reg is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum5_reg is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Prod3_reg is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum3_reg is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/plusOp is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/multOp is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/minusOp is absorbed into DSP Core_1_Inst[1].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: Generating DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Prod1_reg, operation Mode is: ((D+A)*B2)'.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Input_I_w1_reg is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Prod1_reg.
+DSP Report: register Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Prod1_reg is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Prod1_reg.
+DSP Report: register Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum1_reg is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Prod1_reg.
+DSP Report: operator Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/multOp is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Prod1_reg.
+DSP Report: operator Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/plusOp is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Prod1_reg.
+DSP Report: Generating DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum4_reg, operation Mode is: (PCIN-((D+A)*B2)')'.
+DSP Report: register Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/DDS_Q_w1_reg is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: register Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum4_reg is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: register Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Prod2_reg is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum2_reg is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: operator Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/minusOp is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: operator Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/multOp is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/plusOp is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: Generating DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum5_reg, operation Mode is: (C+((D-A)*B2)')'.
+DSP Report: register Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/DDS_I_w1_reg is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: register Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum5_reg is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: register Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Prod3_reg is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum3_reg is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: operator Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/plusOp is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: operator Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/multOp is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/minusOp is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: Generating DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Prod1_reg, operation Mode is: ((D+A)*B2)'.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Input_I_w1_reg is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Prod1_reg.
+DSP Report: register Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Prod1_reg is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Prod1_reg.
+DSP Report: register Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum1_reg is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Prod1_reg.
+DSP Report: operator Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/multOp is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Prod1_reg.
+DSP Report: operator Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/plusOp is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Prod1_reg.
+DSP Report: Generating DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum4_reg, operation Mode is: (PCIN-((D+A)*B2)')'.
+DSP Report: register Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/DDS_Q_w1_reg is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: register Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum4_reg is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: register Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Prod2_reg is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum2_reg is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: operator Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/minusOp is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: operator Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/multOp is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/plusOp is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: Generating DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum5_reg, operation Mode is: (C+((D-A)*B2)')'.
+DSP Report: register Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/DDS_I_w1_reg is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: register Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum5_reg is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: register Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Prod3_reg is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum3_reg is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: operator Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/plusOp is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: operator Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/multOp is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/minusOp is absorbed into DSP Core_1_Inst[2].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: Generating DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Prod1_reg, operation Mode is: ((D+A)*B2)'.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Input_I_w1_reg is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Prod1_reg.
+DSP Report: register Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Prod1_reg is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Prod1_reg.
+DSP Report: register Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum1_reg is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Prod1_reg.
+DSP Report: operator Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/multOp is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Prod1_reg.
+DSP Report: operator Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/plusOp is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Prod1_reg.
+DSP Report: Generating DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum4_reg, operation Mode is: (PCIN-((D+A)*B2)')'.
+DSP Report: register Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/DDS_Q_w1_reg is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: register Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum4_reg is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: register Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Prod2_reg is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum2_reg is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: operator Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/minusOp is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: operator Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/multOp is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/plusOp is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: Generating DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum5_reg, operation Mode is: (C+((D-A)*B2)')'.
+DSP Report: register Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/DDS_I_w1_reg is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: register Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum5_reg is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: register Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Prod3_reg is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum3_reg is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: operator Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/plusOp is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: operator Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/multOp is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/minusOp is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: Generating DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Prod1_reg, operation Mode is: ((D+A)*B2)'.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Input_I_w1_reg is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Prod1_reg.
+DSP Report: register Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Prod1_reg is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Prod1_reg.
+DSP Report: register Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum1_reg is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Prod1_reg.
+DSP Report: operator Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/multOp is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Prod1_reg.
+DSP Report: operator Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/plusOp is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Prod1_reg.
+DSP Report: Generating DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum4_reg, operation Mode is: (PCIN-((D+A)*B2)')'.
+DSP Report: register Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/DDS_Q_w1_reg is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: register Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum4_reg is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: register Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Prod2_reg is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum2_reg is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: operator Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/minusOp is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: operator Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/multOp is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/plusOp is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: Generating DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum5_reg, operation Mode is: (C+((D-A)*B2)')'.
+DSP Report: register Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/DDS_I_w1_reg is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: register Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum5_reg is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: register Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Prod3_reg is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum3_reg is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: operator Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/plusOp is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: operator Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/multOp is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/minusOp is absorbed into DSP Core_1_Inst[3].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: Generating DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Prod1_reg, operation Mode is: ((D+A)*B2)'.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Input_I_w1_reg is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Prod1_reg.
+DSP Report: register Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Prod1_reg is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Prod1_reg.
+DSP Report: register Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum1_reg is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Prod1_reg.
+DSP Report: operator Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/multOp is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Prod1_reg.
+DSP Report: operator Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/plusOp is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Prod1_reg.
+DSP Report: Generating DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum4_reg, operation Mode is: (PCIN-((D+A)*B2)')'.
+DSP Report: register Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/DDS_Q_w1_reg is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: register Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum4_reg is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: register Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Prod2_reg is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum2_reg is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: operator Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/minusOp is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: operator Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/multOp is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/plusOp is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum4_reg.
+DSP Report: Generating DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum5_reg, operation Mode is: (C+((D-A)*B2)')'.
+DSP Report: register Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/DDS_I_w1_reg is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: register Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum5_reg is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: register Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Prod3_reg is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum3_reg is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: operator Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/plusOp is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: operator Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/multOp is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/minusOp is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[1].Mixers/Sum5_reg.
+DSP Report: Generating DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Prod1_reg, operation Mode is: ((D+A)*B2)'.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Input_I_w1_reg is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Prod1_reg.
+DSP Report: register Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Prod1_reg is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Prod1_reg.
+DSP Report: register Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum1_reg is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Prod1_reg.
+DSP Report: operator Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/multOp is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Prod1_reg.
+DSP Report: operator Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/plusOp is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Prod1_reg.
+DSP Report: Generating DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum4_reg, operation Mode is: (PCIN-((D+A)*B2)')'.
+DSP Report: register Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/DDS_Q_w1_reg is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: register Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum4_reg is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: register Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Prod2_reg is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum2_reg is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: operator Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/minusOp is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: operator Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/multOp is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/plusOp is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum4_reg.
+DSP Report: Generating DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum5_reg, operation Mode is: (C+((D-A)*B2)')'.
+DSP Report: register Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/DDS_I_w1_reg is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: register Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum5_reg is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: register Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Prod3_reg is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: register Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/Sum3_reg is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: operator Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/plusOp is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: operator Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/multOp is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+DSP Report: operator Core_1_Inst[1].Core1/Mix_Inst[1].Mixers/minusOp is absorbed into DSP Core_1_Inst[4].Core1/Mix_Inst[2].Mixers/Sum5_reg.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:13 ; elapsed = 00:00:13 . Memory (MB): peak = 1903.953 ; gain = 317.242
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+DSP: Preliminary Mapping	Report (see note below)
++------------+---------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name | DSP Mapping         | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++------------+---------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Mixer_1     | ((D+A)*B2)'         | 12     | 16     | -      | 12     | 29     | 0    | 1    | -    | 0    | 1     | 1    | 0    | 
+|Mixer_1     | (PCIN-((D+A)*B2)')' | 16     | 12     | -      | 16     | 30     | 0    | 1    | -    | 0    | 1     | 1    | 1    | 
+|Mixer_1     | (C+((D-A)*B2)')'    | 16     | 12     | 29     | 16     | 30     | 0    | 1    | 0    | 0    | 1     | 1    | 1    | 
+|Mixer_1     | ((D+A)*B2)'         | 12     | 16     | -      | 12     | 29     | 0    | 1    | -    | 0    | 1     | 1    | 0    | 
+|Mixer_1     | (PCIN-((D+A)*B2)')' | 16     | 12     | -      | 16     | 30     | 0    | 1    | -    | 0    | 1     | 1    | 1    | 
+|Mixer_1     | (C+((D-A)*B2)')'    | 16     | 12     | 29     | 16     | 30     | 0    | 1    | 0    | 0    | 1     | 1    | 1    | 
+|Mixer_1     | ((D+A)*B2)'         | 12     | 16     | -      | 12     | 29     | 0    | 1    | -    | 0    | 1     | 1    | 0    | 
+|Mixer_1     | (PCIN-((D+A)*B2)')' | 16     | 12     | -      | 16     | 30     | 0    | 1    | -    | 0    | 1     | 1    | 1    | 
+|Mixer_1     | (C+((D-A)*B2)')'    | 16     | 12     | 29     | 16     | 30     | 0    | 1    | 0    | 0    | 1     | 1    | 1    | 
+|Mixer_1     | ((D+A)*B2)'         | 12     | 16     | -      | 12     | 29     | 0    | 1    | -    | 0    | 1     | 1    | 0    | 
+|Mixer_1     | (PCIN-((D+A)*B2)')' | 16     | 12     | -      | 16     | 30     | 0    | 1    | -    | 0    | 1     | 1    | 1    | 
+|Mixer_1     | (C+((D-A)*B2)')'    | 16     | 12     | 29     | 16     | 30     | 0    | 1    | 0    | 0    | 1     | 1    | 1    | 
+|Mixer_1     | ((D+A)*B2)'         | 12     | 16     | -      | 12     | 29     | 0    | 1    | -    | 0    | 1     | 1    | 0    | 
+|Mixer_1     | (PCIN-((D+A)*B2)')' | 16     | 12     | -      | 16     | 30     | 0    | 1    | -    | 0    | 1     | 1    | 1    | 
+|Mixer_1     | (C+((D-A)*B2)')'    | 16     | 12     | 29     | 16     | 30     | 0    | 1    | 0    | 0    | 1     | 1    | 1    | 
+|Mixer_1     | ((D+A)*B2)'         | 12     | 16     | -      | 12     | 29     | 0    | 1    | -    | 0    | 1     | 1    | 0    | 
+|Mixer_1     | (PCIN-((D+A)*B2)')' | 16     | 12     | -      | 16     | 30     | 0    | 1    | -    | 0    | 1     | 1    | 1    | 
+|Mixer_1     | (C+((D-A)*B2)')'    | 16     | 12     | 29     | 16     | 30     | 0    | 1    | 0    | 0    | 1     | 1    | 1    | 
+|Mixer_1     | ((D+A)*B2)'         | 12     | 16     | -      | 12     | 29     | 0    | 1    | -    | 0    | 1     | 1    | 0    | 
+|Mixer_1     | (PCIN-((D+A)*B2)')' | 16     | 12     | -      | 16     | 30     | 0    | 1    | -    | 0    | 1     | 1    | 1    | 
+|Mixer_1     | (C+((D-A)*B2)')'    | 16     | 12     | 29     | 16     | 30     | 0    | 1    | 0    | 0    | 1     | 1    | 1    | 
+|Mixer_1     | ((D+A)*B2)'         | 12     | 16     | -      | 12     | 29     | 0    | 1    | -    | 0    | 1     | 1    | 0    | 
+|Mixer_1     | (PCIN-((D+A)*B2)')' | 16     | 12     | -      | 16     | 30     | 0    | 1    | -    | 0    | 1     | 1    | 1    | 
+|Mixer_1     | (C+((D-A)*B2)')'    | 16     | 12     | 29     | 16     | 30     | 0    | 1    | 0    | 0    | 1     | 1    | 1    | 
++------------+---------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+Note: The table above is a preliminary report that shows the DSPs inferred at the current stage of the synthesis flow. Some DSP may be reimplemented as non DSP primitives later in the synthesis flow. Multiple instantiated DSPs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 2447.027 ; gain = 860.316
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 2447.027 ; gain = 860.316
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:24 ; elapsed = 00:00:24 . Memory (MB): peak = 2460.121 ; gain = 873.410
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:26 ; elapsed = 00:00:27 . Memory (MB): peak = 2467.965 ; gain = 881.254
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:26 ; elapsed = 00:00:27 . Memory (MB): peak = 2467.965 ; gain = 881.254
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:27 ; elapsed = 00:00:27 . Memory (MB): peak = 2467.965 ; gain = 881.254
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:27 ; elapsed = 00:00:27 . Memory (MB): peak = 2467.965 ; gain = 881.254
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:27 ; elapsed = 00:00:27 . Memory (MB): peak = 2467.965 ; gain = 881.254
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:27 ; elapsed = 00:00:27 . Memory (MB): peak = 2467.965 ; gain = 881.254
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++------+---------------+----------+
+|      |BlackBox name  |Instances |
++------+---------------+----------+
+|1     |dds_compiler_0 |         8|
+|2     |fir_compiler_0 |         4|
+|3     |fir_compiler_1 |         2|
++------+---------------+----------+
+
+Report Cell Usage: 
++------+-----------------------+------+
+|      |Cell                   |Count |
++------+-----------------------+------+
+|1     |dds_compiler_0_bbox    |     1|
+|2     |dds_compiler_0_bbox_1_ |     3|
+|5     |dds_compiler_0_bbox    |     1|
+|6     |dds_compiler_0_bbox_2_ |     3|
+|9     |fir_compiler_0_bbox    |     1|
+|10    |fir_compiler_0_bbox_3_ |     3|
+|13    |fir_compiler_1_bbox    |     1|
+|14    |fir_compiler_1_bbox_4_ |     1|
+|15    |BUFG                   |     1|
+|16    |CARRY8                 |    32|
+|17    |DSP_ALU                |    24|
+|18    |DSP_A_B_DATA           |    24|
+|19    |DSP_C_DATA             |    24|
+|21    |DSP_MULTIPLIER         |    24|
+|22    |DSP_M_DATA             |    24|
+|23    |DSP_OUTPUT             |    24|
+|25    |DSP_PREADD             |    24|
+|26    |DSP_PREADD_DATA        |    24|
+|27    |LUT2                   |    18|
+|28    |LUT6                   |    64|
+|29    |MUXF7                  |    32|
+|30    |FDRE                   |   288|
+|31    |IBUF                   |   240|
+|32    |OBUF                   |    48|
++------+-----------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:27 ; elapsed = 00:00:27 . Memory (MB): peak = 2467.965 ; gain = 881.254
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:20 ; elapsed = 00:00:25 . Memory (MB): peak = 2467.965 ; gain = 751.844
+Synthesis Optimization Complete : Time (s): cpu = 00:00:27 ; elapsed = 00:00:27 . Memory (MB): peak = 2467.965 ; gain = 881.254
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.034 . Memory (MB): peak = 2479.984 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 329 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2510.516 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 265 instances were transformed.
+  BUFG => BUFGCE: 1 instance 
+  DSP48E2 => DSP48E2 (DSP_ALU, DSP_A_B_DATA, DSP_C_DATA, DSP_MULTIPLIER, DSP_M_DATA, DSP_OUTPUT, DSP_PREADD, DSP_PREADD_DATA): 24 instances
+  IBUF => IBUF (IBUFCTRL, INBUF): 240 instances
+
+INFO: [Common 17-83] Releasing license: Synthesis
+41 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:34 ; elapsed = 00:00:37 . Memory (MB): peak = 2510.516 ; gain = 1384.348
+INFO: [Common 17-1381] The checkpoint 'E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/synth_1/Main.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file Main_utilization_synth.rpt -pb Main_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Thu Sep 21 12:42:25 2023...

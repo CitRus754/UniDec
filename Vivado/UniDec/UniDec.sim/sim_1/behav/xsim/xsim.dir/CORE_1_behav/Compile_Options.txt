@@ -1,0 +1,1 @@
+-wto "de36fb7299004e42b23a94efd1097c97" --incr --debug "typical" --relax --mt "2" -L "xil_defaultlib" -L "xbip_utils_v3_0_10" -L "axi_utils_v2_0_6" -L "fir_compiler_v7_2_15" -L "secureip" -L "xpm" --snapshot "CORE_1_behav" "xil_defaultlib.CORE_1" -log "elaborate.log" 

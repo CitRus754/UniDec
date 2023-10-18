@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Wed Oct  4 16:12:33 2023
+# Process ID: 2420
+# Current directory: E:/NTT/WorkingDirectory/09.23/Vivado/TESTBENCHES_ALL/TESTBENCHES_ALL.runs/dds_compiler_1_synth_1
+# Command line: vivado.exe -log dds_compiler_1.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source dds_compiler_1.tcl
+# Log file: E:/NTT/WorkingDirectory/09.23/Vivado/TESTBENCHES_ALL/TESTBENCHES_ALL.runs/dds_compiler_1_synth_1/dds_compiler_1.vds
+# Journal file: E:/NTT/WorkingDirectory/09.23/Vivado/TESTBENCHES_ALL/TESTBENCHES_ALL.runs/dds_compiler_1_synth_1\vivado.jou
+#-----------------------------------------------------------
+source dds_compiler_1.tcl -notrace
