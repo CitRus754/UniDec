@@ -1,7 +1,0 @@
-# compile vhdl design source files
-vhdl xil_defaultlib  \
-"../../../../TESTBENCHES_ALL.srcs/sources_1/new/BitReversedCounter_8.vhd" \
-"../../../../TESTBENCHES_ALL.srcs/sources_1/new/Cntr_TB.vhd" \
-
-# Do not sort compile order
-nosort
