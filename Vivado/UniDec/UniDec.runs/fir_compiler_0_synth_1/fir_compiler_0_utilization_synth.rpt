@@ -1,8 +1,8 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
-| Date         : Mon Oct  2 15:38:13 2023
-| Host         : DESKTOP-CITRUS running 64-bit major release  (build 9200)
+| Date         : Wed Oct 18 12:51:02 2023
+| Host         : PC-004970 running 64-bit major release  (build 9200)
 | Command      : report_utilization -file fir_compiler_0_utilization_synth.rpt -pb fir_compiler_0_utilization_synth.pb
 | Design       : fir_compiler_0
 | Device       : xczu9egffvb1156-2
@@ -31,13 +31,13 @@ Table of Contents
 +----------------------------+------+-------+-----------+-------+
 |          Site Type         | Used | Fixed | Available | Util% |
 +----------------------------+------+-------+-----------+-------+
-| CLB LUTs*                  |  391 |     0 |    274080 |  0.14 |
-|   LUT as Logic             |   30 |     0 |    274080 |  0.01 |
-|   LUT as Memory            |  361 |     0 |    144000 |  0.25 |
-|     LUT as Distributed RAM |  128 |     0 |           |       |
-|     LUT as Shift Register  |  233 |     0 |           |       |
-| CLB Registers              |  421 |     0 |    548160 |  0.08 |
-|   Register as Flip Flop    |  421 |     0 |    548160 |  0.08 |
+| CLB LUTs*                  |  550 |     0 |    274080 |  0.20 |
+|   LUT as Logic             |  157 |     0 |    274080 |  0.06 |
+|   LUT as Memory            |  393 |     0 |    144000 |  0.27 |
+|     LUT as Distributed RAM |  256 |     0 |           |       |
+|     LUT as Shift Register  |  137 |     0 |           |       |
+| CLB Registers              | 1282 |     0 |    548160 |  0.23 |
+|   Register as Flip Flop    | 1282 |     0 |    548160 |  0.23 |
 |   Register as Latch        |    0 |     0 |    548160 |  0.00 |
 | CARRY8                     |    0 |     0 |     34260 |  0.00 |
 | F7 Muxes                   |    0 |     0 |    137040 |  0.00 |
@@ -62,7 +62,7 @@ Table of Contents
 | 0     |          Yes |           - |          Set |
 | 0     |          Yes |           - |        Reset |
 | 2     |          Yes |         Set |            - |
-| 419   |          Yes |       Reset |            - |
+| 1280  |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -85,8 +85,8 @@ Table of Contents
 +----------------+------+-------+-----------+-------+
 |    Site Type   | Used | Fixed | Available | Util% |
 +----------------+------+-------+-----------+-------+
-| DSPs           |    4 |     0 |      2520 |  0.16 |
-|   DSP48E2 only |    4 |       |           |       |
+| DSPs           |    8 |     0 |      2520 |  0.32 |
+|   DSP48E2 only |    8 |       |           |       |
 +----------------+------+-------+-----------+-------+
 
 
@@ -155,17 +155,17 @@ Table of Contents
 +----------+------+---------------------+
 | Ref Name | Used | Functional Category |
 +----------+------+---------------------+
-| FDRE     |  419 |            Register |
-| SRL16E   |  233 |                 CLB |
-| RAMD32   |  128 |                 CLB |
-| LUT2     |   12 |                 CLB |
-| LUT4     |   10 |                 CLB |
-| LUT3     |   10 |                 CLB |
-| LUT6     |    5 |                 CLB |
-| DSP48E2  |    4 |          Arithmetic |
-| LUT5     |    3 |                 CLB |
-| LUT1     |    3 |                 CLB |
+| FDRE     | 1280 |            Register |
+| LUT3     |  264 |                 CLB |
+| RAMD32   |  256 |                 CLB |
+| SRL16E   |  137 |                 CLB |
+| LUT2     |   13 |                 CLB |
+| LUT4     |   11 |                 CLB |
+| DSP48E2  |    8 |          Arithmetic |
+| LUT1     |    5 |                 CLB |
+| LUT6     |    3 |                 CLB |
 | FDSE     |    2 |            Register |
+| LUT5     |    1 |                 CLB |
 +----------+------+---------------------+
 
 

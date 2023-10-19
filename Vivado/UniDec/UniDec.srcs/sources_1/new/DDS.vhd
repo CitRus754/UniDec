@@ -39,7 +39,7 @@ entity DDS is
 		
 		FCW				: in std_logic_vector(23 downto 0);
 		Channel_Addr	: in std_logic_vector(2 downto 0);
-		TVALID_IN		: in std_logic;
+		-- TVALID_IN		: in std_logic;
 		
 		TVALID_OUT		: out DV_Bus(1 to Num_Signals/2);
 		Output_I		: out SinCos_Array(1 to Num_Signals/2);
@@ -67,16 +67,18 @@ architecture Behavioral of DDS is
 	
 	-- Mux-demux signals
 	signal dmxFCW		: FCW_Array(1 to Num_Signals)	:= (others => (others => '0'));
-	signal dmxTV		: DV_Bus(1 to Num_Signals) 		:= (others => '0');
+	-- signal dmxTV		: DV_Bus(1 to Num_Signals) 		:= (others => '0');
 	
 	signal mxFCW		: FCW_Array(1 to Num_Signals/2) 			:= (others => (others => '1'));
-	signal mxTV			: DV_Bus(1 to Num_Signals/2) 			:= (others => '0');
-	signal mxTV_d		: DV_Bus(1 to Num_Signals/2) 			:= (others => '0');
-	signal mxTV_or		: DV_Bus(1 to Num_Signals/2) 			:= (others => '0');
+	-- signal mxTV			: DV_Bus(1 to Num_Signals/2) 			:= (others => '0');
+	-- signal mxTV_d		: DV_Bus(1 to Num_Signals/2) 			:= (others => '0');
+	-- signal mxTV_or		: DV_Bus(1 to Num_Signals/2) 			:= (others => '0');
 	
 	-- DDS signals
-	signal dds_tlast	: DV_Bus(1 to Num_Signals/2) 			:= (others => '0');
-	signal dds_tlast_d	: DV_Bus(1 to Num_Signals/2) 			:= (others => '0');
+	-- signal dds_tlast	: DV_Bus(1 to Num_Signals/2) 			:= (others => '0');
+	signal dds_tlast	: std_logic	:= '0';
+	-- signal dds_tlast_d	: DV_Bus(1 to Num_Signals/2) 			:= (others => '0');
+	signal dds_tlast_d	: std_logic	:= '0';
 	
 	signal dds_missing	: DV_Bus(1 to Num_Signals/2) 			:= (others => '0');
 	signal dds_unexp	: DV_Bus(1 to Num_Signals/2) 			:= (others => '0');
@@ -96,13 +98,13 @@ begin
 		end if;
 	end process;
 	
-	demux_18: process(Channel_Addr,FCW,TVALID_IN)
+	demux_18: process(Channel_Addr,FCW)
 		variable Addr	: integer;
 	begin
 	-- if rising_edge(Clk) then
 		Addr := to_integer(unsigned(Channel_Addr));
 		dmxFCW(Addr+1)	<= FCW;
-		dmxTV(Addr+1)	<= TVALID_IN;
+		-- dmxTV(Addr+1)	<= TVALID_IN;
 	-- end if;
 	end process;
 	
@@ -141,10 +143,10 @@ begin
 			for i in 1 to Num_Signals/2 loop
 				if Selector = '0' then
 					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/4 + 1);
-					mxTV(i)		<= dmxTV((i-1)*Num_Signals/4 + 1);
+					-- mxTV(i)		<= dmxTV((i-1)*Num_Signals/4 + 1);
 				else
 					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/4 + 2);
-					mxTV(i)		<= dmxTV((i-1)*Num_Signals/4 + 2);
+					-- mxTV(i)		<= dmxTV((i-1)*Num_Signals/4 + 2);
 				end if;
 			end loop;
 		end if;
@@ -152,29 +154,30 @@ begin
 	
 	
 	-- coupled TV
-	process(Clk) begin
-		if rising_edge(Clk) then
-			mxTV_d	<= mxTV;
-		end if;
-	end process;
+	-- process(Clk) begin
+	-- 	if rising_edge(Clk) then
+	-- 		mxTV_d	<= mxTV;
+	-- 	end if;
+	-- end process;
 	
 	-- or
-	process(mxTV,mxTV_d) begin
-		for i in 1 to Num_Signals/2 loop
-			mxTV_or(i)	<= mxTV(i) or mxTV_d(i);
-		end loop;
-	end process;
+	-- process(mxTV,mxTV_d) begin
+	-- 	for i in 1 to Num_Signals/2 loop
+	-- 		mxTV_or(i)	<= mxTV(i) or mxTV_d(i);
+	-- 	end loop;
+	-- end process;
 	
 	
 	-- dds tlast signals
 	process(Clk) begin
 		if rising_edge(Clk) then
 			for i in 1 to Num_Signals/2 loop
-				if mxTV_or(i) = '0' then
-					dds_tlast(i)	<= '0';
+				if Start = '0' then
+				-- if mxTV_or(i) = '0' then
+					dds_tlast	<= '0';
 				else
-					dds_tlast(i)	<= not dds_tlast(i);
-					dds_tlast_d(i)	<= dds_tlast(i);
+					dds_tlast	<= not dds_tlast;
+					dds_tlast_d	<= dds_tlast;
 				end if;
 			end loop;
 		end if;
@@ -186,7 +189,7 @@ begin
 			aclk							=> Clk,
 			s_axis_phase_tvalid				=> Start,
 			s_axis_phase_tdata				=> mxFCW(i),
-			s_axis_phase_tlast				=> dds_tlast(i),
+			s_axis_phase_tlast				=> dds_tlast,
 			m_axis_data_tvalid				=> ddsTV(i),
 			m_axis_data_tdata				=> ddsOut(i),
 			event_s_phase_tlast_missing		=> dds_missing(i),

@@ -33,7 +33,7 @@ entity Part_I is
 	port(
 		Clk 			: in std_logic;						
 		
-		AsyncStart			: in std_logic;
+		AsyncStart		: in std_logic;
 		
 		Input_I			: in std_logic_vector(15 downto 0);		-- Input Signal
 		Input_Q			: in std_logic_vector(15 downto 0);
@@ -41,21 +41,24 @@ entity Part_I is
 		FCW_1			: in std_logic_vector(23 downto 0);		-- For DDS_1
 		InChanAddr		: in std_logic_vector(2 downto 0);
 		OutChanAddr		: in std_logic_vector(2 downto 0);
-		DDS_TVALID_1	: in std_logic;
+		SwitchAddr		: in std_logic_vector(2 downto 0);
 		
 		BitRvsCntr		: in std_logic_vector(2 downto 0);		-- bit-reversed counter (3 MSB bits)
-				
-		-- Debug!
-		-- Chan0_I, Chan0_Q: out IQ_Array(1 to Num_Signals/2);
-		-- Chan1_I, Chan1_Q: out IQ_Array(1 to Num_Signals/2);
 		
-		-- Stages 1-2 outputs
+		-- Stages 1-2 outputs: only for debug!
 		Stage1_Channels	: out DDS_Array(1 to Num_Signals);
 		Stage2_Channels	: out DDS_Array(1 to Num_Signals);
+
+		Stage1_I	: out std_logic_vector(15 downto 0);
+		Stage1_Q	: out std_logic_vector(15 downto 0);
+
+		Stage2_I	: out std_logic_vector(15 downto 0);
+		Stage2_Q	: out std_logic_vector(15 downto 0);
+
+		SwitchSignal	: out std_logic_vector(31 downto 0);
+
 		FIR2_TVALID		: out std_logic
 		
-		
-
 		);
 end Part_I;
 
@@ -91,7 +94,7 @@ architecture Behavioral of Part_I is
 			
 			FCW				: in std_logic_vector(23 downto 0);
 			Channel_Addr	: in std_logic_vector(2 downto 0);
-			TVALID_IN		: in std_logic;
+			-- TVALID_IN		: in std_logic;
 			
 			-- Selector		: in std_logic;
 			
@@ -145,10 +148,11 @@ architecture Behavioral of Part_I is
 	
 	-- Synchronous signals
 	signal SyncStart			: std_logic 		:= '0';
+	signal sSwitchAddr			: std_logic_vector(2 downto 0);
 	signal sFCW_1				: std_logic_vector(23 downto 0);
 	signal sInChanAddr			: std_logic_vector(2 downto 0);
 	signal sOutChanAddr			: std_logic_vector(2 downto 0);
-	signal sDDS_TVALID_1		: std_logic;
+	-- signal sDDS_TVALID_1		: std_logic;
 	
 	signal CORE1_I, CORE1_Q		: std_logic_vector(15 downto 0)	:= (others => '0');
 
@@ -181,13 +185,8 @@ architecture Behavioral of Part_I is
 	-- signal FIR1_Out_w1			: DDS_Array(1 to Num_Signals/4) 	:= (others => (others => '0'));
 	-- signal FIR1_Out_d			: DDS_Array(1 to Num_Signals/4) 	:= (others => (others => '0'));
 	
-	signal Stage1_Out			: std_logic_vector(31 downto 0)		:= (others => '0');
-	signal Stage1_I				: std_logic_vector(15 downto 0)		:= (others => '0');
-	signal Stage1_Q				: std_logic_vector(15 downto 0)		:= (others => '0');
-	
+	signal Stage1_Out			: std_logic_vector(31 downto 0)		:= (others => '0');	
 	signal Stage2_Out			: std_logic_vector(31 downto 0)		:= (others => '0');
-	signal Stage2_I				: std_logic_vector(15 downto 0)		:= (others => '0');
-	signal Stage2_Q				: std_logic_vector(15 downto 0)		:= (others => '0');
 	
 	
 	-- for Dbg!
@@ -226,22 +225,23 @@ architecture Behavioral of Part_I is
 	
 	signal FIR2_Channels		: DDS_Array(1 to Num_Signals) 		:= (others => (others => '0'));
 	
+	signal ToSwitch				: std_logic_vector(31 downto 0)		:= (others => '0');
+
 begin
 	
-	-- async -> sync start
+	-- async -> sync signals
 	process(Clk) begin
 		if rising_edge(Clk) then
-			SyncStart		<= AsyncStart;
+			SyncStart	<= AsyncStart;
+			sSwitchAddr	<= SwitchAddr;
 			if SyncStart = '0' then
 				sFCW_1			<= (others => '0');
 				sInChanAddr		<= "000";
 				sOutChanAddr	<= "000";
-				sDDS_TVALID_1	<= '0';
 			else
 				sFCW_1			<= FCW_1;
 				sInChanAddr		<= InChanAddr;
 				sOutChanAddr	<= OutChanAddr;
-				sDDS_TVALID_1	<= DDS_TVALID_1;
 			end if;
 		end if;
 	end process;
@@ -312,23 +312,23 @@ begin
 		end if;
 	end process;
 
-	process(Clk) begin
-		if rising_edge(Clk) then
-			if SyncStart = '0' then
-				Sel3_w1	<= "000";
-				-- Sel3_w2	<= "000";
-				-- Sel3_w3	<= "000";
-				Sel3 	<= "000";
-			else
-				Sel3_w1	<= BitRvsCntr;
-				-- Sel3_w2	<= Sel3_w1;
-				-- Sel3_w3	<= Sel3_w2;
-				-- Sel3_w4	<= Sel3_w3;
-				-- Sel3_w5	<= Sel3_w4;
-				Sel3	<= Sel3_w1;
-			end if;
-		end if;
-	end process;
+	-- process(Clk) begin
+	-- 	if rising_edge(Clk) then
+	-- 		if SyncStart = '0' then
+	-- 			Sel3_w1	<= "000";
+	-- 			-- Sel3_w2	<= "000";
+	-- 			-- Sel3_w3	<= "000";
+	-- 			Sel3 	<= "000";
+	-- 		else
+	-- 			Sel3_w1	<= BitRvsCntr;
+	-- 			-- Sel3_w2	<= Sel3_w1;
+	-- 			-- Sel3_w3	<= Sel3_w2;
+	-- 			-- Sel3_w4	<= Sel3_w3;
+	-- 			-- Sel3_w5	<= Sel3_w4;
+	-- 			Sel3	<= Sel3_w1;
+	-- 		end if;
+	-- 	end if;
+	-- end process;
 
 	-- Sel2   <= BitRvsCntr(2 downto 1);
 	
@@ -340,7 +340,7 @@ begin
 		Start			=> SyncStart,
 		FCW				=> sFCW_1,
 		Channel_Addr	=> sInChanAddr,
-		TVALID_IN		=> sDDS_TVALID_1,
+		-- TVALID_IN		=> sDDS_TVALID_1,
 		-- Selector		=> Sel1,
 		TVALID_OUT		=> DDS_TV_out,
 		Output_I		=> DDS_Cos,
@@ -666,7 +666,8 @@ begin
 	FIR2_TVALID		<= FIR2_TV;
 	
 	-- for FIR2_Output selection
-	
+	Sel3	<= BitRvsCntr;
+
 	process(Clk) begin
 		if rising_edge(Clk) then
 			if 		Sel3 = "000" then
@@ -718,4 +719,29 @@ begin
 	
 	Stage2_Channels <= FIR2_Channels;
 	
+	-- switch mux
+	process(Clk) begin
+		if rising_edge(Clk) then
+			if 		sSwitchAddr = "000" then
+				ToSwitch	<= FIR2_Channels(0 + 1);
+			elsif	sSwitchAddr = "001" then
+				ToSwitch	<= FIR2_Channels(4 + 1);		-- bit-reversed order!
+			elsif	sSwitchAddr = "010" then
+				ToSwitch	<= FIR2_Channels(2 + 1);		-- bit-reversed order!
+			elsif	sSwitchAddr = "011" then
+				ToSwitch	<= FIR2_Channels(6 + 1);		-- bit-reversed order!
+			elsif	sSwitchAddr = "100" then
+				ToSwitch	<= FIR2_Channels(1 + 1);		-- bit-reversed order!
+			elsif	sSwitchAddr = "101" then
+				ToSwitch	<= FIR2_Channels(5 + 1);		-- bit-reversed order!
+			elsif	sSwitchAddr = "110" then
+				ToSwitch	<= FIR2_Channels(3 + 1);		-- bit-reversed order!
+			else
+			ToSwitch	<= FIR2_Channels(7 + 1);
+			end if;
+		end if;
+	end process;
+	
+	SwitchSignal	<= ToSwitch;
+
 end Behavioral;

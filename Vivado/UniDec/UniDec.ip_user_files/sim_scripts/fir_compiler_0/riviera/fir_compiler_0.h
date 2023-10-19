@@ -68,13 +68,13 @@
 // coeff_width: 16
 // coeff_fract_width: 15
 // chan_seq: 0
-// num_channels: 2
-// num_paths: 2
+// num_channels: 1
+// num_paths: 4
 // data_width: 16
-// data_fract_width: 15
+// data_fract_width: 12
 // output_rounding_mode: 4
 // output_width: 16
-// output_fract_width: 14
+// output_fract_width: 11
 // config_method: 0
 
 const double fir_compiler_0_coefficients[11] = {0.011306649026227244547726513701491057873,0,-0.061053507687467117870383503941411618143,0,0.300170216623796559662906702214968390763,0.5,0.300170216623796559662906702214968390763,0,-0.061053507687467117870383503941411618143,0,0.011306649026227244547726513701491057873};
@@ -99,14 +99,14 @@ static xip_fir_v7_2_config gen_fir_compiler_0_config() {
   config.coeff_width         = 16;
   config.coeff_fract_width   = 15;
   config.chan_seq            = XIP_FIR_BASIC_CHAN_SEQ;
-  config.num_channels        = 2;
+  config.num_channels        = 1;
   config.init_pattern        = fir_compiler_0_chanpats[0];
-  config.num_paths           = 2;
+  config.num_paths           = 4;
   config.data_width          = 16;
-  config.data_fract_width    = 15;
+  config.data_fract_width    = 12;
   config.output_rounding_mode= XIP_FIR_CONVERGENT_EVEN;
   config.output_width        = 16;
-  config.output_fract_width  = 14,
+  config.output_fract_width  = 11,
   config.config_method       = XIP_FIR_CONFIG_SINGLE;
   return config;
 }

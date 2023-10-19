@@ -1,0 +1,11 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../TESTBENCHES_ALL.gen/sources_1/ip/dds_compiler_0/sim/dds_compiler_0.vhd" \
+"../../../../TESTBENCHES_ALL.srcs/sources_1/new/Mixer_1.vhd" \
+"../../../../TESTBENCHES_ALL.srcs/sources_1/new/UniDec_Package.vhd" \
+"../../../../TESTBENCHES_ALL.srcs/sources_1/new/ReadFile.vhd" \
+"../../../../TESTBENCHES_ALL.srcs/sources_1/new/Write_DDS.vhd" \
+"../../../../TESTBENCHES_ALL.srcs/sources_1/new/Mixer_1_TB.vhd" \
+
+# Do not sort compile order
+nosort

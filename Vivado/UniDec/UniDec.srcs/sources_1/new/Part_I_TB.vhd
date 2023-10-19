@@ -64,30 +64,33 @@ architecture Behavioral of Part_I_TB is
 			Num_Signals	: integer := 8
 			);
             port(
-            Clk 			: in std_logic;						
-            
-			AsyncStart		: in std_logic;
-			
-            Input_I			: in std_logic_vector(15 downto 0);		-- Input Signal
-            Input_Q			: in std_logic_vector(15 downto 0);
-            
-            FCW_1			: in std_logic_vector(23 downto 0);		-- For DDS_1
-			InChanAddr		: in std_logic_vector(2 downto 0);
-			OutChanAddr		: in std_logic_vector(2 downto 0);
-			-- Channel_Addr_1	: in std_logic_vector(2 downto 0);
-			DDS_TVALID_1	: in std_logic;
-            
-            BitRvsCntr		: in std_logic_vector(2 downto 0);		-- bit-reversed counter (3 MSB bits)
-                    
-            -- Debug!
-            -- Chan0_I, Chan0_Q: out IQ_Array(1 to Num_Signals/2);
-            -- Chan1_I, Chan1_Q: out IQ_Array(1 to Num_Signals/2);
-            
-            -- Stages 1-2 outputs
-            Stage1_Channels	: out DDS_Array(1 to Num_Signals);
-            Stage2_Channels	: out DDS_Array(1 to Num_Signals);
-            FIR2_TVALID		: out std_logic
-            
+				Clk 			: in std_logic;						
+				
+				AsyncStart		: in std_logic;
+				
+				Input_I			: in std_logic_vector(15 downto 0);		-- Input Signal
+				Input_Q			: in std_logic_vector(15 downto 0);
+				
+				FCW_1			: in std_logic_vector(23 downto 0);		-- For DDS_1
+				InChanAddr		: in std_logic_vector(2 downto 0);
+				OutChanAddr		: in std_logic_vector(2 downto 0);
+				SwitchAddr		: in std_logic_vector(2 downto 0);
+				
+				BitRvsCntr		: in std_logic_vector(2 downto 0);		-- bit-reversed counter (3 MSB bits)
+				
+				-- Stages 1-2 outputs: only for debug!
+				Stage1_Channels	: out DDS_Array(1 to Num_Signals);
+				Stage2_Channels	: out DDS_Array(1 to Num_Signals);
+
+				Stage1_I	: out std_logic_vector(15 downto 0);
+				Stage1_Q	: out std_logic_vector(15 downto 0);
+
+				Stage2_I	: out std_logic_vector(15 downto 0);
+				Stage2_Q	: out std_logic_vector(15 downto 0);
+
+				SwitchSignal	: out std_logic_vector(31 downto 0);
+
+				FIR2_TVALID		: out std_logic
             
 			);
 	end component;
@@ -136,8 +139,16 @@ architecture Behavioral of Part_I_TB is
 	signal mFCW				: std_logic_vector(23 downto 0) := (others => '0');
 	signal mChanAddr		: std_logic_vector(2 downto 0) 	:= (others => '0');
 	signal tbOutChanAddr	: std_logic_vector(2 downto 0) 	:= (others => '0');
-	signal mDDS_TV			: std_logic := '0';
+	signal tbSwAddr			: std_logic_vector(2 downto 0) 	:= (others => '0');
 	
+	-- Stages outputs
+	signal tbStage1_I		: std_logic_vector(15 downto 0) := (others => '0');
+	signal tbStage1_Q		: std_logic_vector(15 downto 0) := (others => '0');
+	signal tbStage2_I		: std_logic_vector(15 downto 0) := (others => '0');
+	signal tbStage2_Q		: std_logic_vector(15 downto 0) := (others => '0');
+
+	signal tbSwitch			: std_logic_vector(31 downto 0) := (others => '0');
+
 	-- Debug!
 	-- signal tbCh0_I, tbCh0_Q, tbCh1_I, tbCh1_Q	: IQ_Array(1 to Num8/2)	:= (others => (others => '0'));
 	signal Chans_1_I, Chans_1_Q	: IQ_Array(1 to Num8)	:= (others => (others => '0'));
@@ -188,86 +199,86 @@ begin
 		
 		tbStart	<= '1';
 
--- 		-- Channel 0
--- 		mChanAddr	<= "000";
--- 		mDDS_TV		<= '0';
--- 		wait for 1 ns;
--- 		mFCW		<= x"0094f2";	-- 100k
--- --		mFCW		<= x"100000";
--- --		wait for PERIOD;
--- 		mDDS_TV		<= '1';
--- 		wait for 100*PERIOD;
-		
--- 		-- Channel 1		
--- 		mChanAddr	<= "001";
--- 		mDDS_TV		<= '0';
--- 		wait for 1 ns;
--- 		mFCW		<= x"0129e4";
--- --		mFCW		<= x"300000";
--- --		wait for PERIOD;
--- 		mDDS_TV		<= '1';
--- 		wait for 100*PERIOD;
-		
 -- 		-- Channel 2
 -- 		mChanAddr	<= "010";
--- 		mDDS_TV		<= '0';
+-- 		-- mDDS_TV		<= '0';
 -- 		wait for 1 ns;
 -- 		mFCW		<= x"01bed6";
 -- --		mFCW		<= x"500000";
 -- --		wait for PERIOD;
--- 		mDDS_TV		<= '1';
--- 		wait for 100*PERIOD;
-		
--- 		-- Channel 3		
--- 		mChanAddr	<= "011";
--- 		mDDS_TV		<= '0';
--- 		wait for 1 ns;
--- 		mFCW		<= x"0253c8";
--- --		mFCW		<= x"700000";
--- --		wait for PERIOD;
--- 		mDDS_TV		<= '1';
--- 		wait for 100*PERIOD;
-		
--- 		-- Channel 4
--- 		mChanAddr	<= "100";
--- 		mDDS_TV		<= '0';
--- 		wait for 1 ns;
--- 		mFCW		<= x"02e8ba";
--- --		mFCW		<= x"900000";
--- --		wait for PERIOD;
--- 		mDDS_TV		<= '1';
+-- 		-- mDDS_TV		<= '1';
 -- 		wait for 100*PERIOD;
 		
 -- 		-- Channel 5		
 -- 		mChanAddr	<= "101";
--- 		mDDS_TV		<= '0';
+-- 		-- mDDS_TV		<= '0';
 -- 		wait for 1 ns;
 -- 		mFCW		<= x"037dac";
 -- --		mFCW		<= x"b00000";
 -- --		wait for PERIOD;
--- 		mDDS_TV		<= '1';
+-- 		-- mDDS_TV		<= '1';
 -- 		wait for 100*PERIOD;
 		
-		-- Channel 6
-		mChanAddr	<= "110";
-		mDDS_TV		<= '0';
-		wait for 1 ns;
-		mFCW		<= x"04129e";
---		mFCW		<= x"d00000";
---		wait for PERIOD;
-		mDDS_TV		<= '1';
-		wait for 100*PERIOD;
-		
--- 		-- Channel 7		
--- 		mChanAddr	<= "111";
--- 		mDDS_TV		<= '0';
+-- 		-- Channel 0
+-- 		mChanAddr	<= "000";
+-- 		-- mDDS_TV		<= '0';
 -- 		wait for 1 ns;
--- 		mFCW		<= x"04a790";
--- --		mFCW		<= x"f00000";
--- --		wait for PERIOD;
--- 		mDDS_TV		<= '1';
+-- 		mFCW		<= x"0094f2";	-- 100k
+-- 		--		mFCW		<= x"100000";
+-- 		--		wait for PERIOD;
+-- 		-- mDDS_TV		<= '1';
 -- 		wait for 100*PERIOD;
-		
+
+		-- Channel 7		
+		mChanAddr	<= "111";
+		-- mDDS_TV		<= '0';
+		wait for 1 ns;
+		mFCW		<= x"04a790";
+--		mFCW		<= x"f00000";
+--		wait for PERIOD;
+		-- mDDS_TV		<= '1';
+		wait for 100*PERIOD;
+
+-- 		-- Channel 1		
+-- 		mChanAddr	<= "001";
+-- 		-- mDDS_TV		<= '0';
+-- 		wait for 1 ns;
+-- 		mFCW		<= x"0129e4";
+-- 		--		mFCW		<= x"300000";
+-- 		--		wait for PERIOD;
+-- 		-- mDDS_TV		<= '1';
+-- 		wait for 100*PERIOD;
+
+-- 		-- Channel 3		
+-- 		mChanAddr	<= "011";
+-- 		-- mDDS_TV		<= '0';
+-- 		wait for 1 ns;
+-- 		mFCW		<= x"0253c8";
+-- --		mFCW		<= x"700000";
+-- --		wait for PERIOD;
+-- 		-- mDDS_TV		<= '1';
+-- 		wait for 100*PERIOD;
+
+-- 		-- Channel 6
+-- 		mChanAddr	<= "110";
+-- 		-- mDDS_TV		<= '0';
+-- 		wait for 1 ns;
+-- 		mFCW		<= x"04129e";
+-- --		mFCW		<= x"d00000";
+-- --		wait for PERIOD;
+-- 		-- mDDS_TV		<= '1';
+-- 		wait for 100*PERIOD;
+
+-- 		-- Channel 4
+-- 		mChanAddr	<= "100";
+-- --		mDDS_TV		<= '0';
+-- 		wait for 1 ns;
+-- 		mFCW		<= x"02e8ba";
+-- --		mFCW		<= x"900000";
+-- --		wait for PERIOD;
+-- --		mDDS_TV		<= '1';
+-- 		wait for 100*PERIOD;
+
 		wait;
 	end process;
 	
@@ -303,37 +314,37 @@ begin
 	outp_chans: process begin
 		wait for PERIOD;
         
-        -- -- Channel 0
-		-- tbOutChanAddr	<= "000";
-		-- wait for 20 us;
-
-		-- -- Channel 1
-		-- tbOutChanAddr	<= "001";
-		-- wait for 20 us;
-
-		-- -- Channel 2
+        -- -- Channel 2
 		-- tbOutChanAddr	<= "010";
-		-- wait for 20 us;
-
-		-- -- Channel 3
-		-- tbOutChanAddr	<= "011";
-		-- wait for 20 us;
-
-		-- -- Channel 4
-		-- tbOutChanAddr	<= "100";
-		-- wait for 20 us;
+		-- wait for 10 us;
 
 		-- -- Channel 5
 		-- tbOutChanAddr	<= "101";
-		-- wait for 20 us;
+		-- wait for 10 us;
 
-		-- Channel 6
-		tbOutChanAddr	<= "110";
-		wait for 20 us;
+		-- -- Channel 0
+		-- tbOutChanAddr	<= "000";
+		-- wait for 10 us;
 
-		-- -- Channel 7
-		-- tbOutChanAddr	<= "111";
-		-- wait for 20 us;
+		-- Channel 7
+		tbOutChanAddr	<= "111";
+		wait for 10 us;
+
+		-- -- Channel 1
+		-- tbOutChanAddr	<= "001";
+		-- wait for 10 us;
+
+		-- -- Channel 3
+		-- tbOutChanAddr	<= "011";
+		-- wait for 10 us;
+
+		-- -- Channel 6
+		-- tbOutChanAddr	<= "110";
+		-- wait for 10 us;
+
+		-- -- Channel 4
+		-- tbOutChanAddr	<= "100";
+		-- wait for 10 us;
 
 		wait;
 
@@ -369,18 +380,15 @@ begin
 				FCW_1			=> mFCW,
 				InChanAddr		=> mChanAddr,
 				OutChanAddr		=> tbOutChanAddr,
-				-- Channel_Addr_1	=> mChanAddr,
-				DDS_TVALID_1	=> mDDS_TV,
+				SwitchAddr		=> tbSwAddr,
 				BitRvsCntr		=> mBitRvsCntr(7 downto 5),
-				
-				-- Debug!
-				-- Chan0_I			=> tbCh0_I,
-				-- Chan0_Q			=> tbCh0_Q,
-				-- Chan1_I			=> tbCh1_I,
-				-- Chan1_Q			=> tbCh1_Q,
-				
 				Stage1_Channels	=> Chans_1,
 				Stage2_Channels	=> Chans_2,
+				Stage1_I	=> tbStage1_I,
+				Stage1_Q	=> tbStage1_Q,
+				Stage2_I	=> tbStage2_I,
+				Stage2_Q	=> tbStage2_Q,
+				SwitchSignal	=> tbSwitch,
 				FIR2_TVALID		=> mFIR_TV_out
 				
 				);
