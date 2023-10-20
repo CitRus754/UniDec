@@ -141,7 +141,7 @@ dF = Fs/N;
 f = dF*(-N/2:N/2-1);
 %
 Din_Spectrum    = fftshift(fft(sa_int));
-DBG_Spectrum    = fftshift(fft(dbg_int(87:end)));
+DBG_Spectrum    = fftshift(fft(dbg_int(11:end)));
 % Mix_Spectrum    = fftshift(fft(mix_int));
 % vMix_Spectrum   = fftshift(fft(vMix_int));
 %

@@ -32,53 +32,8 @@ package UniDec_Package is
 	type DDS_Array		is array(integer range <>) of std_logic_vector(31 downto 0);
 	type SinCos_Array	is array(integer range <>) of std_logic_vector(11 downto 0);
 	
-	-- component Mixer_1 is
-		-- port(
-			-- Clk 		: in std_logic;
-			
-			-- Input_I		: in std_logic_vector(15 downto 0);		-- a
-			-- Input_Q		: in std_logic_vector(15 downto 0);		-- b
-			
-			-- DDS_I		: in std_logic_vector(11 downto 0);		-- c
-			-- DDS_Q		: in std_logic_vector(11 downto 0);		-- d
-			
-			-- Output_I	: out std_logic_vector(15 downto 0);	-- R
-			-- Output_Q	: out std_logic_vector(15 downto 0)		-- I
-		-- );
-	-- end component;
+	type Select_Array	is array(integer range <>) of std_logic_vector(6 downto 0);
 	
-	-- component dds_compiler_0 is				-- IP core
-		-- port (
-			-- aclk 				: IN STD_LOGIC;
-			-- s_axis_phase_tvalid : IN STD_LOGIC;
-			-- s_axis_phase_tdata 	: IN STD_LOGIC_VECTOR(23 DOWNTO 0);
-			-- m_axis_data_tvalid 	: OUT STD_LOGIC;
-			-- m_axis_data_tdata 	: OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
-		-- );
-	-- end component;
-	
-	-- component fir_compiler_0 is				-- IP core
-		-- PORT (
-			-- aclk 				: IN STD_LOGIC;
-			-- s_axis_data_tvalid 	: IN STD_LOGIC;
-			-- s_axis_data_tready 	: OUT STD_LOGIC;
-			-- s_axis_data_tdata 	: IN STD_LOGIC_VECTOR(63 DOWNTO 0);
-			-- m_axis_data_tvalid 	: OUT STD_LOGIC;
-			-- m_axis_data_tdata 	: OUT STD_LOGIC_VECTOR(63 DOWNTO 0)
-		-- );
-	-- end component;
-
-	-- component fir_compiler_1 is				-- IP core
-		-- PORT (
-			-- aclk 				: IN STD_LOGIC;
-			-- s_axis_data_tvalid 	: IN STD_LOGIC;
-			-- s_axis_data_tready 	: OUT STD_LOGIC;
-			-- s_axis_data_tdata 	: IN STD_LOGIC_VECTOR(127 DOWNTO 0);
-			-- m_axis_data_tvalid 	: OUT STD_LOGIC;
-			-- m_axis_data_tdata 	: OUT STD_LOGIC_VECTOR(127 DOWNTO 0)
-		-- );
-	-- end component;
-
 	function Merge_Signals (I_Arr, Q_Arr : IQ_Array) return std_logic_vector;
 	function Get_I (InpArr : std_logic_vector) return IQ_Array;
 	function Get_Q (InpArr : std_logic_vector) return IQ_Array;
@@ -159,7 +114,7 @@ package body UniDec_Package is
 		variable ToOut: std_logic_vector;
 	begin
 		for i in Din'range loop
-			ToOut(ToOut'left - i) <= Din(i);
+			ToOut(ToOut'left - i) := Din(i);
 		end loop;
 		return ToOut;
 	end function;
