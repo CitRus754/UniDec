@@ -48,7 +48,7 @@ architecture Behavioral of CORE_2 is
 		port(
 			Clk 		: in std_logic;							-- 88 MHz
 			
-			Input_I		: in std_logic_vector(15 downto 0);		-- a	Fs = 44 MHz
+			Input_I		: in std_logic_vector(15 downto 0);		-- a	Fs = 11 MHz
 			Input_Q		: in std_logic_vector(15 downto 0);		-- b
 			
 			DDS_TVALID	: in std_logic;
@@ -56,7 +56,7 @@ architecture Behavioral of CORE_2 is
 			DDS_Q		: in std_logic_vector(11 downto 0);		-- d
 			
 			Mix_TVALID	: out std_logic;
-			Output_I	: out std_logic_vector(15 downto 0);	-- R	Fs = 44 MHz
+			Output_I	: out std_logic_vector(15 downto 0);	-- R	Fs = 11 MHz, TDM
 			Output_Q	: out std_logic_vector(15 downto 0)		-- I
 		);
 	end component;
@@ -80,15 +80,7 @@ architecture Behavioral of CORE_2 is
 	
 	-- FIR signals
 	signal FIR_tr		: std_logic := '0';
-	signal FIR_TV_in 	: std_logic := '0';
 	signal FIR_Input 	: std_logic_vector(31 downto 0) := (others => '0');
-	
-	
-	------------------Debug!-------------------------
-	signal Sel       		: std_logic := '0';
-	signal Mix0_I, Mix0_Q	: std_logic_vector(15 downto 0) := (others => '0');
-	signal Mix1_I, Mix1_Q	: std_logic_vector(15 downto 0) := (others => '0');
-	-------------------------------------------------
 	
 begin
 
@@ -106,34 +98,15 @@ begin
 			Output_Q	=> Mix_Out_Q
 		);
 	
-	
-	-- MixDebug!
-	dbg: process (Clk) begin
-	   if rising_edge(Clk) then
-	       Sel <= not Sel;
-            if Sel = '1' then
-                Mix0_I	<= Mix_Out_I;
-                Mix0_Q	<= Mix_Out_Q;
-            else
-                Mix1_I	<= Mix_Out_I;
-                Mix1_Q	<= Mix_Out_Q;
-            end if;
-		end if;
-	end process;
-	
 	-- TVALID signal for FIR
 	process(Clk) begin
 		if rising_edge(Clk) then
 			Mix_TV_w1 	<= Mix_TV;
 		end if;
 	end process;
-	
-	process(Clk) begin
-		if rising_edge(Clk) then
-			FIR_TV_in <= Mix_TV or Mix_TV_w1;
-		end if;
-	end process;	
-	
+
+
+
 	-- FIR input forming
 	-- bit		|31-----16|15------0|	
 	-- content	|----Q----|----I----|	
@@ -144,23 +117,22 @@ begin
 	end process;
 	
 	
-	-- input mux
-	-- Clk is 88 MHz, samples (Sk) are fed with Fs = 44 MHz
+	-- Clk is 88 MHz, samples (Sk) are fed with Fs = 11 MHz
 	-- Designations: Sk(i) - k-th number of sample of i-th channel
-	-- FIR input is 4 channels: 2 parallel (Q-I) and 2 interleaved (mix_0-mix_1)
-	-- Clk Period	|	1	|	2	|	3	|	4	|	5	|	6	|	7	|
-	-------------------------------------------------------------------------
-	-- FIR_Input	| S1(0) | S1(1) | S2(0) | S2(1) | S3(0) | S3(1) | S4(0) |
-	-------------------------------------------------------------------------
-	-- FIR_Output	|	  S1(0)  	|	  S1(1)  	|	  S2(0)  	|	 S2(1)
-	-- Output Fs = 22 MHz
+	-- FIR input is 16 channels: 2 parallel (Q-I) and 8 interleaved (mix_0-mix_1-...-mix_7)
+	-- Clk Period	|	1	|	2	|	3	|	4	|	5	|	6	|	7	|	8	|	9	|	10	|	11	|	12	|	13	|	14	|
+	---------------------------------------------------------------------------------------------------------------------------------
+	-- FIR_Input	| S1(0) | S1(1) | S1(2) | S1(3) | S1(4) | S1(5) | S1(6) | S1(7) | S2(0) | S2(1) | S2(2) | S2(3) | S2(4) | S2(5) |
+	---------------------------------------------------------------------------------------------------------------------------------
+	-- FIR_Output	|	  S1(0)  	|	  S1(1)  	|	  S1(2)  	|	 S1(3)		|	  S1(4)  	|	  S1(5)  	|	  S1(6)  	|
+	-- Output Fs = 5.5 MHz
 	
 	
 	-- FIR instantiation
 	FIR_Inst: fir_compiler_2
 	port map(
 		aclk 				=> Clk,
-		s_axis_data_tvalid 	=> FIR_TV_in,
+		s_axis_data_tvalid 	=> Mix_TV_w1,
 		s_axis_data_tready 	=> FIR_tr,			-- not connected
 		s_axis_data_tdata 	=> FIR_Input,
 		m_axis_data_tvalid 	=> FIR_TVALID,

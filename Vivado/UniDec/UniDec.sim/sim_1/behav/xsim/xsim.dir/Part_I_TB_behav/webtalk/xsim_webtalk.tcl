@@ -1,6 +1,6 @@
 webtalk_init -webtalk_dir E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.sim/sim_1/behav/xsim/xsim.dir/Part_I_TB_behav/webtalk/
 webtalk_register_client -client project
-webtalk_add_data -client project -key date_generated -value "Wed Oct 18 16:12:55 2023" -context "software_version_and_target_device"
+webtalk_add_data -client project -key date_generated -value "Thu Oct 19 12:39:36 2023" -context "software_version_and_target_device"
 webtalk_add_data -client project -key product_version -value "XSIM v2020.2 (64-bit)" -context "software_version_and_target_device"
 webtalk_add_data -client project -key build_version -value "3064766" -context "software_version_and_target_device"
 webtalk_add_data -client project -key os_platform -value "WIN64" -context "software_version_and_target_device"
@@ -14,7 +14,7 @@ webtalk_add_data -client project -key target_package -value "not_applicable" -co
 webtalk_add_data -client project -key target_speed -value "not_applicable" -context "software_version_and_target_device"
 webtalk_add_data -client project -key random_id -value "87532642-61d3-4f86-a618-5c080a891350" -context "software_version_and_target_device"
 webtalk_add_data -client project -key project_id -value "de36fb7299004e42b23a94efd1097c97" -context "software_version_and_target_device"
-webtalk_add_data -client project -key project_iteration -value "529" -context "software_version_and_target_device"
+webtalk_add_data -client project -key project_iteration -value "536" -context "software_version_and_target_device"
 webtalk_add_data -client project -key os_name -value "Windows Server 2016 or Windows 10" -context "user_environment"
 webtalk_add_data -client project -key os_release -value "major release  (build 9200)" -context "user_environment"
 webtalk_add_data -client project -key cpu_name -value "Intel(R) Core(TM) i7-10700F CPU @ 2.90GHz" -context "user_environment"
@@ -27,6 +27,6 @@ webtalk_add_data -client xsim -key trace_waveform -value "true" -context "xsim\\
 webtalk_add_data -client xsim -key runtime -value "1 us" -context "xsim\\usage"
 webtalk_add_data -client xsim -key iteration -value "0" -context "xsim\\usage"
 webtalk_add_data -client xsim -key Simulation_Time -value "0.78_sec" -context "xsim\\usage"
-webtalk_add_data -client xsim -key Simulation_Memory -value "18088_KB" -context "xsim\\usage"
-webtalk_transmit -clientid 3857547808 -regid "" -xml E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.sim/sim_1/behav/xsim/xsim.dir/Part_I_TB_behav/webtalk/usage_statistics_ext_xsim.xml -html E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.sim/sim_1/behav/xsim/xsim.dir/Part_I_TB_behav/webtalk/usage_statistics_ext_xsim.html -wdm E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.sim/sim_1/behav/xsim/xsim.dir/Part_I_TB_behav/webtalk/usage_statistics_ext_xsim.wdm -intro "<H3>XSIM Usage Report</H3><BR>"
+webtalk_add_data -client xsim -key Simulation_Memory -value "18024_KB" -context "xsim\\usage"
+webtalk_transmit -clientid 1417211780 -regid "" -xml E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.sim/sim_1/behav/xsim/xsim.dir/Part_I_TB_behav/webtalk/usage_statistics_ext_xsim.xml -html E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.sim/sim_1/behav/xsim/xsim.dir/Part_I_TB_behav/webtalk/usage_statistics_ext_xsim.html -wdm E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.sim/sim_1/behav/xsim/xsim.dir/Part_I_TB_behav/webtalk/usage_statistics_ext_xsim.wdm -intro "<H3>XSIM Usage Report</H3><BR>"
 webtalk_terminate

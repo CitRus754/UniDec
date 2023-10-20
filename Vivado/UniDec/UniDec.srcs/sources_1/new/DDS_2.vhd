@@ -30,15 +30,15 @@ use work.UniDec_Package.all;
 
 entity DDS_2 is
 	generic(
-		Num_Signals	: integer := 80					-- TDM (10 = 80/8)
+		Num_Signals	: integer := 128				-- TDM (10 = 80/8)
 		);
 	port(
-		Clk 			: in std_logic;						
+		Clk				: in std_logic;						
 		
 		Start			: in std_logic;
 
 		FCW				: in std_logic_vector(23 downto 0);
-		Channel_Addr	: in std_logic_vector(6 downto 0);		-- 7 bits to cover 80 dds modules
+		Channel_Addr	: in std_logic_vector(6 downto 0);			-- 7 bits to cover up to 128 dds modules
 		
 		TVALID_OUT		: out DV_Bus(1 to Num_Signals/8);
 		Output_I		: out SinCos_Array(1 to Num_Signals/8);
@@ -48,7 +48,7 @@ end DDS_2;
 
 architecture Behavioral of DDS_2 is
 
-	component dds_compiler_2 is
+	component dds_compiler_2 is						-- 8 TDM channels
 		PORT (
 			aclk : IN STD_LOGIC;
 			s_axis_phase_tvalid : IN STD_LOGIC;
@@ -66,9 +66,8 @@ architecture Behavioral of DDS_2 is
 	signal Selector		: std_logic_vector(2 downto 0)	:= "000";
 	
 	-- Mux-demux signals
-	signal dmxFCW		: FCW_Array(1 to Num_Signals)	:= (others => (others => '0'));
-	
-	signal mxFCW		: FCW_Array(1 to Num_Signals/8) := (others => (others => '0'));
+	signal dmxFCW		: FCW_Array(1 to Num_Signals)	:= (others => (others => '0'));		-- 128
+	signal mxFCW		: FCW_Array(1 to Num_Signals/8) := (others => (others => '0'));		-- 128/8 = 16
 	
 	-- DDS signals
 	signal dds_tlast	: std_logic 					:= '0';
@@ -83,7 +82,11 @@ begin
 	-- counter
 	process(Clk) begin
 		if rising_edge(Clk) then
-			Cnt8 <= Cnt8 + 1;
+			if Cnt8 = 7 then
+				Cnt8 <= 0;
+			else
+				Cnt8 <= Cnt8 + 1;
+			end if;
 		end if;
 	end process;
 	
@@ -97,7 +100,7 @@ begin
 		end if;
 	end process;
 	
-	demux_180: process(Clk)
+	demux_1_128: process(Clk)
 		variable Addr	: integer;
 	begin
 		if rising_edge(Clk) then
@@ -108,25 +111,25 @@ begin
 	
 	
 	
-	mux_81: process(Clk) begin
+	mux_8_1_x16: process(Clk) begin
 		if rising_edge(Clk) then
 			for i in 1 to Num_Signals/8 loop
 				if 		Selector = "000" then
-					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/10 + 1);
+					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/16 + 1);
 				elsif	Selector = "001" then
-					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/10 + 2);
+					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/16 + 2);
 				elsif	Selector = "010" then
-					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/10 + 3);
+					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/16 + 3);
 				elsif	Selector = "011" then
-					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/10 + 4);
+					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/16 + 4);
 				elsif	Selector = "100" then
-					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/10 + 5);
+					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/16 + 5);
 				elsif	Selector = "101" then
-					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/10 + 6);
+					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/16 + 6);
 				elsif	Selector = "110" then
-					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/10 + 7);
+					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/16 + 7);
 				else
-					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/10 + 8);
+					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/16 + 8);
 				end if;
 			end loop;
 		end if;
@@ -148,7 +151,7 @@ begin
 	end process;
 	
 	
-	dds_inst: for i in 1 to Num_Signals/8 generate dds_2_channel: dds_compiler_2
+	dds_inst: for i in 1 to Num_Signals/8 generate dds_2_channel: dds_compiler_2		-- 128/8 = 16 cores
 		port map(
 			aclk							=> Clk,
 			s_axis_phase_tvalid				=> Start,

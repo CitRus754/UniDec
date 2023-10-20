@@ -80,7 +80,7 @@ architecture Behavioral of CORE_1 is
 	
 	-- FIR signals
 	signal FIR_tr		: std_logic := '0';
-	signal FIR_TV_in 	: std_logic := '0';
+	-- signal FIR_TV_in 	: std_logic := '0';
 	signal FIR_Input 	: std_logic_vector(31 downto 0) := (others => '0');
 	
 	
@@ -128,11 +128,11 @@ begin
 		end if;
 	end process;
 	
-	process(Clk) begin
-		if rising_edge(Clk) then
-			FIR_TV_in <= Mix_TV or Mix_TV_w1;
-		end if;
-	end process;	
+	-- process(Clk) begin
+	-- 	if rising_edge(Clk) then
+	-- 		FIR_TV_in <= Mix_TV or Mix_TV_w1;
+	-- 	end if;
+	-- end process;	
 	
 	-- FIR input forming
 	-- bit		|31-----16|15------0|	
@@ -185,7 +185,7 @@ begin
 	FIR_Inst: fir_compiler_0
 	port map(
 		aclk 				=> Clk,
-		s_axis_data_tvalid 	=> FIR_TV_in,
+		s_axis_data_tvalid 	=> Mix_TV_w1,
 		s_axis_data_tready 	=> FIR_tr,			-- not connected
 		s_axis_data_tdata 	=> FIR_Input,
 		m_axis_data_tvalid 	=> FIR_TVALID,

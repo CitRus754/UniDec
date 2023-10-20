@@ -84,7 +84,9 @@ package UniDec_Package is
 	function Get_Q (InpArr : std_logic_vector) return IQ_Array;
 	function Bus_AND (InpBus : DV_Bus) return std_logic;
 	function Bus_OR (InpBus : DV_Bus) return std_logic;
-	
+	function BitRev (Din: std_logic_vector) return std_logic_vector;
+
+
 
 end package UniDec_Package;
 
@@ -153,4 +155,14 @@ package body UniDec_Package is
 		return ToOut;
 	end function;
 	
+	function BitRev (Din: std_logic_vector) return std_logic_vector is
+		variable ToOut: std_logic_vector;
+	begin
+		for i in Din'range loop
+			ToOut(ToOut'left - i) <= Din(i);
+		end loop;
+		return ToOut;
+	end function;
+
+
 end UniDec_Package;

@@ -42,7 +42,8 @@ entity SwitchModule is
         DataIn      : in std_logic_vector(31 downto 0); 
 		SwAddr      : in std_logic_vector(6 downto 0);      -- to switch up to 128 channels
 
-        DataOut     : out DDS_Array(1 to NumChannels/8);
+        DataOut_I   : out IQ_Array(1 to NumChannels/8);
+        DataOut_Q   : out IQ_Array(1 to NumChannels/8);
 	);
 end SwitchModule;
 
@@ -87,6 +88,12 @@ begin
         end if;
     end process;
 
-    DataOut <= mx80_16;
+    process(mx80_16) begin
+        for i in 1 to NumChannels/8 loop
+            DataOut_I(i) <= mx80_16(i)(15 downto 0);
+            DataOut_Q(i) <= mx80_16(i)(31 downto 16);
+        end loop;
+        
+    end process;
 
 end Behavioral;
