@@ -200,7 +200,7 @@ BEGIN
       C_SYMMETRY => 1,
       C_NUM_FILTS => 1,
       C_NUM_TAPS => 24,
-      C_NUM_CHANNELS => 40,
+      C_NUM_CHANNELS => 32,
       C_CHANNEL_PATTERN => "fixed",
       C_ROUND_MODE => 4,
       C_COEF_RELOAD => 0,

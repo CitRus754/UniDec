@@ -21,7 +21,10 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.std_logic_arith.ALL;
+use IEEE.numeric_std.all;
+
+library work;
+use work.UniDec_Package.all;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -43,14 +46,14 @@ entity SwitchModule is
 		SwAddr      : in std_logic_vector(6 downto 0);      -- to switch up to 128 channels
 
         DataOut_I   : out IQ_Array(1 to NumChannels/8);
-        DataOut_Q   : out IQ_Array(1 to NumChannels/8);
+        DataOut_Q   : out IQ_Array(1 to NumChannels/8)
 	);
 end SwitchModule;
 
 architecture Behavioral of SwitchModule is
 
-	signal dmx1_80      : DDS_Array(1 to NumChannels)   := (others => (others => '0'));
-    signal mx80_16      : DDS_Array(1 to NumChannels/8)   := (others => (others => '0'));
+	signal dmx1_128      : DDS_Array(1 to NumChannels)   := (others => (others => '0'));
+    signal mx128_16      : DDS_Array(1 to NumChannels/8)   := (others => (others => '0'));
 
     signal mxCntr: integer    := 0;
 	
@@ -68,30 +71,30 @@ begin
         end if;
     end process;
 
-	-- demux 1-80
+	-- demux 1-128
     process(DataIn,SwAddr)
         variable Addr	: integer;
     begin
 		Addr := to_integer(unsigned(SwAddr));
-		dmx1_80(Addr+1)	<= DataIn;
+		dmx1_128(Addr+1)	<= DataIn;
 	end process;
 	
-    -- muxers 80-16: N channels of 11 MHz -> N/8 TDM-channels of 88 MHz
+    -- muxers 128-16: N channels of 11 MHz -> N/8 TDM-channels of 88 MHz
     process(Clk)
         variable cntr   : integer;
     begin
         cntr    := mxCntr;
         if rising_edge(Clk) then
             for i in 1 to NumChannels/8 loop
-                mx80_16(i)  <= dmx1_80((i-1)*8 + cntr + 1);
+                mx128_16(i)  <= dmx1_128((i-1)*8 + cntr + 1);
             end loop;
         end if;
     end process;
 
-    process(mx80_16) begin
+    process(mx128_16) begin
         for i in 1 to NumChannels/8 loop
-            DataOut_I(i) <= mx80_16(i)(15 downto 0);
-            DataOut_Q(i) <= mx80_16(i)(31 downto 16);
+            DataOut_I(i) <= mx128_16(i)(15 downto 0);
+            DataOut_Q(i) <= mx128_16(i)(31 downto 16);
         end loop;
         
     end process;

@@ -63,7 +63,7 @@ architecture Behavioral of DDS_2 is
 	
 	-- Counter
 	signal Cnt8			: integer := 0;
-	signal Selector		: std_logic_vector(2 downto 0)	:= "000";
+	signal Selector		: integer := 0;
 	
 	-- Mux-demux signals
 	signal dmxFCW		: FCW_Array(1 to Num_Signals)	:= (others => (others => '0'));		-- 128
@@ -93,9 +93,13 @@ begin
 	sel: process(Clk) begin
 		if rising_edge(Clk) then
 			if Start = '0' then
-				Selector	<= "000";
+				Selector	<= 0;
 			else
-				Selector	<= unsigned(Selector) + 1;
+				if Selector = 7 then
+					Selector	<= 0;
+				else
+					Selector	<= Selector + 1;
+				end if;
 			end if;
 		end if;
 	end process;
@@ -114,19 +118,19 @@ begin
 	mux_8_1_x16: process(Clk) begin
 		if rising_edge(Clk) then
 			for i in 1 to Num_Signals/8 loop
-				if 		Selector = "000" then
+				if 		Selector = 0 then
 					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/16 + 1);
-				elsif	Selector = "001" then
+				elsif	Selector = 1 then
 					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/16 + 2);
-				elsif	Selector = "010" then
+				elsif	Selector = 2 then
 					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/16 + 3);
-				elsif	Selector = "011" then
+				elsif	Selector = 3 then
 					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/16 + 4);
-				elsif	Selector = "100" then
+				elsif	Selector = 4 then
 					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/16 + 5);
-				elsif	Selector = "101" then
+				elsif	Selector = 5 then
 					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/16 + 6);
-				elsif	Selector = "110" then
+				elsif	Selector = 6 then
 					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/16 + 7);
 				else
 					mxFCW(i) 	<= dmxFCW((i-1)*Num_Signals/16 + 8);

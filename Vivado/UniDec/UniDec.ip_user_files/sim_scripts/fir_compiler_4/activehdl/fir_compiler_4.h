@@ -68,7 +68,7 @@
 // coeff_width: 16
 // coeff_fract_width: 17
 // chan_seq: 0
-// num_channels: 40
+// num_channels: 32
 // num_paths: 2
 // data_width: 16
 // data_fract_width: 11
@@ -99,7 +99,7 @@ static xip_fir_v7_2_config gen_fir_compiler_4_config() {
   config.coeff_width         = 16;
   config.coeff_fract_width   = 17;
   config.chan_seq            = XIP_FIR_BASIC_CHAN_SEQ;
-  config.num_channels        = 40;
+  config.num_channels        = 32;
   config.init_pattern        = fir_compiler_4_chanpats[0];
   config.num_paths           = 2;
   config.data_width          = 16;

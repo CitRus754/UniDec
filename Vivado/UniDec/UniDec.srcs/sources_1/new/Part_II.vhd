@@ -42,7 +42,7 @@ entity Part_II is
 		InChanAddr		: in std_logic_vector(6 downto 0);
 		OutChanAddr		: in std_logic_vector(6 downto 0);
 		
-		BitRvsCntr		: in std_logic_vector(6 downto 0);		-- bit-reversed counter (7 MSB bits)
+		-- BitRvsCntr		: in std_logic_vector(6 downto 0);		-- bit-reversed counter (7 MSB bits)
 
 		Stage3_Out		: out std_logic_vector(31 downto 0);
 		Stage4_Out		: out std_logic_vector(31 downto 0);
@@ -50,9 +50,7 @@ entity Part_II is
 		Stage6_Out		: out std_logic_vector(31 downto 0);
 		Stage7_Out		: out std_logic_vector(31 downto 0);
 		Stage8_Out		: out std_logic_vector(31 downto 0);
-		Stage9_Out		: out std_logic_vector(31 downto 0);
-
-		FIR_TVALID		: out std_logic
+		Stage9_Out		: out std_logic_vector(31 downto 0)
 		
 		);
 end Part_II;
@@ -170,9 +168,47 @@ architecture Behavioral of Part_II is
 			m_axis_data_tdata : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
 			);
 	end component;
+	
+	component SelectModule is
+		generic(
+			NumChannels	: integer;      -- total number of channels (128)
+			NumInputs   : integer      -- number of separate sets of channels
+		);
+		port(
+			Clk			: in std_logic;
+
+			Start		: in std_logic;
+			SelTable	: in Select_Array(1 to NumChannels);
+			ChanAddr	: in std_logic_vector(6 downto 0);
+			
+			InSignal	: in DDS_Array(1 to NumInputs);
+
+			OutSignal	: out std_logic_vector(31 downto 0)
+		);
+	end component;
+
+	component SelectModule_0 is
+		generic(
+			NumChannels	: integer      -- total number of channels (128)
+		);
+		port(
+			Clk			: in std_logic;
+
+			Start		: in std_logic;
+			SelTable	: in Select_Array(1 to NumChannels);
+			ChanAddr	: in std_logic_vector(6 downto 0);
+			
+			InSignal	: in std_logic_vector(31 downto 0);
+
+			OutSignal	: out std_logic_vector(31 downto 0)
+		);
+	end component;
+
+	-- constants
+	constant tbNumInputs	: integer := 128;
 
 	-- Tables
-    constant CORE_2_out     : Select_Array(1 to tbNumInputs) := (
+    constant CORE_2_table     : Select_Array(1 to tbNumInputs) := (
         "0000000", "0000001", "0000010", "0000011", "0000100", "0000101", "0000110", "0000111", "0001000", "0001001", "0001010", "0001011", "0001100", "0001101", "0001110", "0001111",
         "0010000", "0010001", "0010010", "0010011", "0010100", "0010101", "0010110", "0010111", "0011000", "0011001", "0011010", "0011011", "0011100", "0011101", "0011110", "0011111",
         "0100000", "0100001", "0100010", "0100011", "0100100", "0100101", "0100110", "0100111", "0101000", "0101001", "0101010", "0101011", "0101100", "0101101", "0101110", "0101111",
@@ -183,7 +219,7 @@ architecture Behavioral of Part_II is
         "1110000", "1110001", "1110010", "1110011", "1110100", "1110101", "1110110", "1110111", "1111000", "1111001", "1111010", "1111011", "1111100", "1111101", "1111110", "1111111"
     );
 
-    constant FIR3_out     : Select_Array(1 to tbNumInputs) := (
+    constant FIR3_table     : Select_Array(1 to tbNumInputs) := (
         "0000000", "0001000", "0000001", "0001001", "0000010", "0001010", "0000011", "0001011", "0000100", "0001100", "0000101", "0001101", "0000110", "0001110", "0000111", "0001111",
         "0010000", "0011000", "0010001", "0011001", "0010010", "0011010", "0010011", "0011011", "0010100", "0011100", "0010101", "0011101", "0010110", "0011110", "0010111", "0011111",
         "0100000", "0101000", "0100001", "0101001", "0100010", "0101010", "0100011", "0101011", "0100100", "0101100", "0100101", "0101101", "0100110", "0101110", "0100111", "0101111",
@@ -194,7 +230,7 @@ architecture Behavioral of Part_II is
         "1110000", "1111000", "1110001", "1111001", "1110010", "1111010", "1110011", "1111011", "1110100", "1111100", "1110101", "1111101", "1110110", "1111110", "1110111", "1111111"
     );
 
-    constant FIR4_out     : Select_Array(1 to tbNumInputs) := (
+    constant FIR4_table     : Select_Array(1 to tbNumInputs) := (
         "0000000", "0010000", "0001000", "0011000", "0000001", "0010001", "0001001", "0011001", "0000010", "0010010", "0001010", "0011010", "0000011", "0010011", "0001011", "0011011",
         "0000100", "0010100", "0001100", "0011100", "0000101", "0010101", "0001101", "0011101", "0000110", "0010110", "0001110", "0011110", "0000111", "0010111", "0001111", "0011111",
         "0100000", "0110000", "0101000", "0111000", "0100001", "0110001", "0101001", "0111001", "0100010", "0110010", "0101010", "0111010", "0100011", "0110011", "0101011", "0111011",
@@ -205,7 +241,7 @@ architecture Behavioral of Part_II is
         "1100100", "1110100", "1101100", "1111100", "1100101", "1110101", "1101101", "1111101", "1100110", "1110110", "1101110", "1111110", "1100111", "1110111", "1101111", "1111111"
     );
 
-    constant FIR5_out     : Select_Array(1 to tbNumInputs) := (
+    constant FIR5_table     : Select_Array(1 to tbNumInputs) := (
         "0000000", "0100000", "0010000", "0110000", "0001000", "0101000", "0011000", "0111000", "0000001", "0100001", "0010001", "0110001", "0001001", "0101001", "0011001", "0111001",
         "0000010", "0100010", "0010010", "0110010", "0001010", "0101010", "0011010", "0111010", "0000011", "0100011", "0010011", "0110011", "0001011", "0101011", "0011011", "0111011",
         "0000100", "0100100", "0010100", "0110100", "0001100", "0101100", "0011100", "0111100", "0000101", "0100101", "0010101", "0110101", "0001101", "0101101", "0011101", "0111101",
@@ -216,7 +252,7 @@ architecture Behavioral of Part_II is
         "1000110", "1100110", "1010110", "1110110", "1001110", "1101110", "1011110", "1111110", "1000111", "1100111", "1010111", "1110111", "1001111", "1101111", "1011111", "1111111"
     );
 
-    constant FIR6_out     : Select_Array(1 to tbNumInputs) := (
+    constant FIR6_table     : Select_Array(1 to tbNumInputs) := (
         "0000000", "1000000", "0100000", "1100000", "0010000", "1010000", "0110000", "1110000", "0001000", "1001000", "0101000", "1101000", "0011000", "1011000", "0111000", "1111000",
         "0000001", "1000001", "0100001", "1100001", "0010001", "1010001", "0110001", "1110001", "0001001", "1001001", "0101001", "1101001", "0011001", "1011001", "0111001", "1111001",
         "0000010", "1000010", "0100010", "1100010", "0010010", "1010010", "0110010", "1110010", "0001010", "1001010", "0101010", "1101010", "0011010", "1011010", "0111010", "1111010",
@@ -229,9 +265,9 @@ architecture Behavioral of Part_II is
 
 	-- Synchronous signals
 	signal SyncStart			: std_logic 		:= '0';
-	signal sFCW_2				: std_logic_vector(23 downto 0);
-	signal sInChanAddr			: std_logic_vector(2 downto 0);
-	signal sOutChanAddr			: std_logic_vector(2 downto 0);
+	signal sFCW_2				: std_logic_vector(23 downto 0)	:= (others => '0');
+	signal sInChanAddr			: std_logic_vector(6 downto 0)	:= (others => '0');
+	signal sOutChanAddr			: std_logic_vector(6 downto 0)	:= (others => '0');
 	
 	signal CORE2_I, CORE2_Q		: IQ_Array(1 to Num_Signals/8)	:= (others => (others => '0'));
 
@@ -240,14 +276,14 @@ architecture Behavioral of Part_II is
 	-- signal Sel1_w1              : std_logic 		:= '0';
 	
 	
-	signal Sel_0	: std_logic_vector(2 downto 0) 	:= "000";
-	signal Sel_1	: std_logic_vector(3 downto 0)	:= "0000";
+	-- signal Sel_0	: std_logic_vector(2 downto 0) 	:= "000";
+	-- signal Sel_1	: std_logic_vector(3 downto 0)	:= "0000";
 	
-	signal Sel_w1, Sel_w2, Sel_w3	: std_logic_vector(3 downto 0) 		:= "0000";
-	signal Sel2						: std_logic_vector(3 downto 0) 		:= "0000";
+	-- signal Sel_w1, Sel_w2, Sel_w3	: std_logic_vector(3 downto 0) 		:= "0000";
+	-- signal Sel2						: std_logic_vector(3 downto 0) 		:= "0000";
 
-	signal Sel3_w1, Sel3_w2, Sel3_w3, Sel3_w4, Sel3_w5	: std_logic_vector(2 downto 0) 		:= "000";
-	signal Sel3					: std_logic_vector(2 downto 0) 		:= "000";
+	-- signal Sel3_w1, Sel3_w2, Sel3_w3, Sel3_w4, Sel3_w5	: std_logic_vector(2 downto 0) 		:= "000";
+	-- signal Sel3					: std_logic_vector(2 downto 0) 		:= "000";
 
 	-- DDS signals
 	signal DDS_TV_out 			: DV_Bus(1 to Num_Signals/8) 		:= (others => '0');
@@ -257,7 +293,6 @@ architecture Behavioral of Part_II is
 	-- CORE_2 signals
 	signal FIR3_OutTV			: DV_Bus(1 to Num_Signals/8) 		:= (others => '0');					-- 128/8 = 16
 	signal FIR3_Out				: DDS_Array(1 to Num_Signals/8) 	:= (others => (others => '0'));
-	signal FIR3_Channels		: DDS_Array(1 to Num_Signals) 		:= (others => (others => '0'));
 	signal ToStage3_Out			: std_logic_vector(31 downto 0)		:= (others => '0');
 	
 	-- fir_compiler_3
@@ -265,7 +300,6 @@ architecture Behavioral of Part_II is
 	signal FIR4_Input			: DDS_Array(1 to Num_Signals/16) 	:= (others => (others => '0'));
 	signal FIR4_OutTV			: DV_Bus(1 to Num_Signals/16) 		:= (others => '0');
 	signal FIR4_Out				: DDS_Array(1 to Num_Signals/16) 	:= (others => (others => '0'));
-	signal FIR4_Channels		: DDS_Array(1 to Num_Signals) 		:= (others => (others => '0'));
 	signal fir4_tr              : DV_Bus(1 to Num_Signals/16) 		:= (others => '0');	
 	signal ToStage4_Out			: std_logic_vector(31 downto 0)		:= (others => '0');
 
@@ -274,7 +308,6 @@ architecture Behavioral of Part_II is
 	signal FIR5_Input			: DDS_Array(1 to Num_Signals/32) 	:= (others => (others => '0'));
 	signal FIR5_OutTV			: DV_Bus(1 to Num_Signals/32) 		:= (others => '0');
 	signal FIR5_Out				: DDS_Array(1 to Num_Signals/32) 	:= (others => (others => '0'));
-	signal FIR5_Channels		: DDS_Array(1 to Num_Signals) 		:= (others => (others => '0'));
 	signal fir5_tr              : DV_Bus(1 to Num_Signals/32) 		:= (others => '0');	
 	signal ToStage5_Out			: std_logic_vector(31 downto 0)		:= (others => '0');	
 
@@ -283,32 +316,28 @@ architecture Behavioral of Part_II is
 	signal FIR6_Input			: DDS_Array(1 to Num_Signals/64) 	:= (others => (others => '0'));
 	signal FIR6_OutTV			: DV_Bus(1 to Num_Signals/64) 		:= (others => '0');
 	signal FIR6_Out				: DDS_Array(1 to Num_Signals/64) 	:= (others => (others => '0'));
-	signal FIR6_Channels		: DDS_Array(1 to Num_Signals) 		:= (others => (others => '0'));
 	signal fir6_tr              : DV_Bus(1 to Num_Signals/64) 		:= (others => '0');	
 	signal ToStage6_Out			: std_logic_vector(31 downto 0)		:= (others => '0');
 
 	-- fir_compiler_6
 	signal FIR7_InTV			: std_logic						:= '0';
-	signal FIR7_Input			: std_logic_vector(2 downto 0)	:= (others => '0');
+	signal FIR7_Input			: std_logic_vector(31 downto 0)	:= (others => '0');
 	signal FIR7_OutTV			: std_logic						:= '0';
-	signal FIR7_Out				: std_logic_vector(2 downto 0)	:= (others => '0');
-	signal FIR7_Channels		: DDS_Array(1 to Num_Signals) 	:= (others => (others => '0'));
+	signal FIR7_Out				: std_logic_vector(31 downto 0)	:= (others => '0');
 	signal fir7_tr              : std_logic						:= '0';
 	signal ToStage7_Out			: std_logic_vector(31 downto 0)	:= (others => '0');
 
 	signal FIR8_InTV			: std_logic						:= '0';
-	signal FIR8_Input			: std_logic_vector(2 downto 0)	:= (others => '0');
+	signal FIR8_Input			: std_logic_vector(31 downto 0)	:= (others => '0');
 	signal FIR8_OutTV			: std_logic						:= '0';
-	signal FIR8_Out				: std_logic_vector(2 downto 0)	:= (others => '0');
-	signal FIR8_Channels		: DDS_Array(1 to Num_Signals) 	:= (others => (others => '0'));
+	signal FIR8_Out				: std_logic_vector(31 downto 0)	:= (others => '0');
 	signal fir8_tr              : std_logic						:= '0';
 	signal ToStage8_Out			: std_logic_vector(31 downto 0)	:= (others => '0');
 
 	signal FIR9_InTV			: std_logic						:= '0';
-	signal FIR9_Input			: std_logic_vector(2 downto 0)	:= (others => '0');
+	signal FIR9_Input			: std_logic_vector(31 downto 0)	:= (others => '0');
 	signal FIR9_OutTV			: std_logic						:= '0';
-	signal FIR9_Out				: std_logic_vector(2 downto 0)	:= (others => '0');
-	signal FIR9_Channels		: DDS_Array(1 to Num_Signals) 	:= (others => (others => '0'));
+	signal FIR9_Out				: std_logic_vector(31 downto 0)	:= (others => '0');
 	signal fir9_tr              : std_logic						:= '0';
 	signal ToStage9_Out			: std_logic_vector(31 downto 0)	:= (others => '0');
 
@@ -320,8 +349,8 @@ begin
 			SyncStart	<= AsyncStart;
 			if SyncStart = '0' then
 				sFCW_2			<= (others => '0');
-				sInChanAddr		<= "000";
-				sOutChanAddr	<= "000";
+				sInChanAddr		<= (others => '0');
+				sOutChanAddr	<= (others => '0');
 			else
 				sFCW_2			<= FCW_2;
 				sInChanAddr		<= InChanAddr;
@@ -345,31 +374,31 @@ begin
 	end process;
 	
 	-- selectors
-	process(Clk) begin
-		if rising_edge(Clk) then
-			if SyncStart = '0' then
-				Sel1 	<= '1';
-			else
-				Sel1 	<= BitRvsCntr(6);
-			end if;
-		end if;
-	end process;
+	-- process(Clk) begin
+	-- 	if rising_edge(Clk) then
+	-- 		if SyncStart = '0' then
+	-- 			Sel1 	<= '1';
+	-- 		else
+	-- 			Sel1 	<= BitRvsCntr(6);
+	-- 		end if;
+	-- 	end if;
+	-- end process;
 
-	process(Clk) begin
-		if rising_edge(Clk) then
-			if SyncStart = '0' then
-				Sel_w1	<= "0000";
-				Sel_w2	<= "0000";
-				Sel_w3	<= "0000";
-				Sel2 	<= "0000";
-			else
-				Sel_w1	<= BitRvsCntr(6 downto 3);	-- select 16 channels
-				Sel_w2	<= Sel_w1;
-				Sel_w3	<= Sel_w2;
-				Sel2	<= Sel_w3;
-			end if;
-		end if;
-	end process;
+	-- process(Clk) begin
+	-- 	if rising_edge(Clk) then
+	-- 		if SyncStart = '0' then
+	-- 			Sel_w1	<= "0000";
+	-- 			Sel_w2	<= "0000";
+	-- 			Sel_w3	<= "0000";
+	-- 			Sel2 	<= "0000";
+	-- 		else
+	-- 			Sel_w1	<= BitRvsCntr(6 downto 3);	-- select 16 channels
+	-- 			Sel_w2	<= Sel_w1;
+	-- 			Sel_w3	<= Sel_w2;
+	-- 			Sel2	<= Sel_w3;
+	-- 		end if;
+	-- 	end if;
+	-- end process;
 	
 	-- dds instantiation
 	dds_inst: DDS_2
@@ -411,36 +440,40 @@ begin
 	-- channel number:	0-64-32-96-...-127
 		
 	-- for FIR4_Input selection
-	Sel_0	<= sOutChanAddr(6 downto 4);
-	Sel_1	<= sOutChanAddr(3 downto 0);
+	-- Sel_0	<= sOutChanAddr(6 downto 4);
+	-- Sel_1	<= sOutChanAddr(3 downto 0);
 	
-	process(Clk)
-		variable vSel16		: integer;
-	begin
-		vSel16		:= to_integer(unsigned(Sel2));
-		if rising_edge(Clk) then
-			for i in 1 to Num_Signals/16 loop
-				FIR3_Channels((i-1)*16 + vSel16 + 1)	<= FIR4_Input(i);
-			end loop;
-		end if;
-	end process;
-	
-	
-	-- Stage_1 mux
-	process(Clk)
-		variable vSel0, vSel1, vSel16	: integer;
-	begin
-		vSel0	:= to_integer(unsigned(Sel_0));
-		vSel1	:= to_integer(unsigned(BitRev(Sel_1)));
-		vSel16	:= to_integer(unsigned(Sel2));
-		if rising_edge(Clk) then
-			ToStage3_Out	<= FIR3_Channels(vSel1 + 16*vSel0 + 1);	-- bit-reversed order!
-		end if;
-	end process;
-	
-	Stage3_Out	<= ToStage3_Out;	
+	-- process(Clk)
+	-- 	variable vSel16		: integer;
+	-- begin
+	-- 	vSel16		:= to_integer(unsigned(Sel2));
+	-- 	if rising_edge(Clk) then
+	-- 		for i in 1 to Num_Signals/16 loop
+	-- 			FIR3_Channels((i-1)*16 + vSel16 + 1)	<= FIR4_Input(i);
+	-- 		end loop;
+	-- 	end if;
+	-- end process;
 	
 	
+	-- -- Stage_1 mux
+	-- process(Clk)
+	-- 	variable vSel0, vSel1, vSel16	: integer;
+	-- begin
+	-- 	vSel0	:= to_integer(unsigned(Sel_0));
+	-- 	vSel1	:= to_integer(unsigned(BitRev(Sel_1)));
+	-- 	vSel16	:= to_integer(unsigned(Sel2));
+	-- 	if rising_edge(Clk) then
+	-- 		ToStage3_Out	<= FIR3_Channels(vSel1 + 16*vSel0 + 1);	-- bit-reversed order!
+	-- 	end if;
+	-- end process;
+	
+	-- Stage3_Out	<= ToStage3_Out;	
+	
+	
+
+	------------------------------------
+	---------FIRs instantiation---------
+	------------------------------------
 	fir3_inst: for i in 1 to Num_Signals/16 generate FIRs: fir_compiler_3
 		port map(
 			aclk 				=> Clk,
@@ -504,10 +537,14 @@ begin
 		m_axis_data_tdata 	=> FIR9_Out
 	);
 
-	-- Select separate channels from FIR TDM outputs
-	-- Clk is 88 MHz, output Fs = 1.1 MHz
-	
-	tdm_inst1: TDM_Matcher
+
+
+
+
+	------------------------------------
+	-----TDM matchers instantiation-----
+	------------------------------------
+	tdm_inst3: TDM_Matcher
 	generic map(NumInps	=> Num_Signals/8)
 	port map(
 			Clk			=> Clk,
@@ -518,7 +555,7 @@ begin
 			OutSignal	=> FIR4_Input
 	);
 	
-	tdm_inst2: TDM_Matcher
+	tdm_inst4: TDM_Matcher
 	generic map(NumInps	=> Num_Signals/16)
 	port map(
 			Clk			=> Clk,
@@ -529,7 +566,7 @@ begin
 			OutSignal	=> FIR5_Input
 	);
 	
-	tdm_inst3: TDM_Matcher
+	tdm_inst5: TDM_Matcher
 	generic map(NumInps	=> Num_Signals/32)
 	port map(
 			Clk			=> Clk,
@@ -540,7 +577,7 @@ begin
 			OutSignal	=> FIR6_Input
 	);
 	
-	tdm_inst4: TDM_Matcher_2
+	tdm_inst6: TDM_Matcher_2
 	port map(
 			Clk			=> Clk,
 			Sel			=> Sel1,
@@ -550,29 +587,87 @@ begin
 			OutSignal	=> FIR7_Input
 	);
 
-	tdm_inst5: TDM_Matcher_2
-	port map(
-			Clk			=> Clk,
-			Sel			=> Sel1,
-			InTV		=> FIR7_OutTV,
-			InSignal	=> FIR7_Out,
-			OutTV		=> FIR8_TV,
-			OutSignal	=> FIR8_Output
-	);
-
-	tdm_inst6: TDM_Matcher_2
-	port map(
-			Clk			=> Clk,
-			Sel			=> Sel1,
-			InTV		=> FIR8_OutTV,
-			InSignal	=> FIR8_Out,
-			OutTV		=> FIR9_TV,
-			OutSignal	=> FIR9_Output
-	);
-
 	-- for FIR4_Output selection
-	Sel3	<= BitRvsCntr;
+	-- Sel3	<= BitRvsCntr;
 	
-	-- Selections!!!
+	------------------------------------
+	-----SelectModules instantiation----
+	------------------------------------
+	sel_stage3: SelectModule
+	generic map(NumChannels	=> 128, NumInputs	=> 8)
+	port map(
+			Clk			=> Clk,
+			Start		=> SyncStart,
+			SelTable	=> CORE_2_table,
+			ChanAddr	=> sOutChanAddr,
+			InSignal	=> FIR4_Input,
+			OutSignal	=> ToStage3_Out
+	);
+
+	sel_stage4: SelectModule
+	generic map(NumChannels	=> 128, NumInputs	=> 4)
+	port map(
+			Clk			=> Clk,
+			Start		=> SyncStart,
+			SelTable	=> FIR3_table,
+			ChanAddr	=> sOutChanAddr,
+			InSignal	=> FIR5_Input,
+			OutSignal	=> ToStage4_Out
+	);
+
+	sel_stage5: SelectModule
+	generic map(NumChannels	=> 128, NumInputs	=> 2)
+	port map(
+			Clk			=> Clk,
+			Start		=> SyncStart,
+			SelTable	=> FIR4_table,
+			ChanAddr	=> sOutChanAddr,
+			InSignal	=> FIR6_Input,
+			OutSignal	=> ToStage5_Out
+	);
+
+	sel_stage6: SelectModule_0
+	generic map(NumChannels	=> 128)
+	port map(
+			Clk			=> Clk,
+			Start		=> SyncStart,
+			SelTable	=> FIR5_table,
+			ChanAddr	=> sOutChanAddr,
+			InSignal	=> FIR7_Input,
+			OutSignal	=> ToStage6_Out
+	);
+
+	sel_stage7: SelectModule_0
+	generic map(NumChannels	=> 128)
+	port map(
+			Clk			=> Clk,
+			Start		=> SyncStart,
+			SelTable	=> FIR6_table,
+			ChanAddr	=> sOutChanAddr,
+			InSignal	=> FIR7_Out,
+			OutSignal	=> ToStage7_Out
+	);
+
+	sel_stage8: SelectModule_0
+	generic map(NumChannels	=> 128)
+	port map(
+			Clk			=> Clk,
+			Start		=> SyncStart,
+			SelTable	=> FIR6_table,			-- the same table
+			ChanAddr	=> sOutChanAddr,
+			InSignal	=> FIR8_Out,
+			OutSignal	=> ToStage8_Out
+	);
+
+	sel_stage9: SelectModule_0
+	generic map(NumChannels	=> 128)
+	port map(
+			Clk			=> Clk,
+			Start		=> SyncStart,
+			SelTable	=> FIR6_table,			-- the same table
+			ChanAddr	=> sOutChanAddr,
+			InSignal	=> FIR9_Out,
+			OutSignal	=> ToStage9_Out
+	);
 
 end Behavioral;

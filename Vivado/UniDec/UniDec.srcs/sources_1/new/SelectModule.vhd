@@ -14,16 +14,15 @@ use work.UniDec_Package.all;
 
 entity SelectModule is
 	generic(
-		NumChannels	: integer;      -- total number of channels
-        NumInputs   : integer;      -- number of separate sets of channels
-        dmxWidth    : integer;
-        mxWidth     : integer
+		NumChannels	: integer;      -- total number of channels (128)
+        NumInputs   : integer      -- number of separate sets of channels
 	);
 	port(
 		Clk			: in std_logic;
-		
-		dmxSel		: in std_logic_vector(dmxWidth-1 downto 0);
-        mxSel		: in std_logic_vector(mxWidth-1 downto 0);
+
+		Start		: in std_logic;
+		SelTable	: in Select_Array(1 to NumChannels);
+		ChanAddr	: in std_logic_vector(6 downto 0);
 		
 		InSignal	: in DDS_Array(1 to NumInputs);
 
@@ -33,21 +32,50 @@ end SelectModule;
 
 architecture Behavioral of SelectModule is
 
-    signal FIR_Channels : DDS_Array(1 to NumChannels)   := (others => (others => '0'));
+    signal cntr	: integer := 0;
+
+	signal FIR_Channels : DDS_Array(1 to NumChannels)   := (others => (others => '0'));
+
+	signal ToOut 		: std_logic_vector(31 downto 0)	:= (others => '0');
 
 begin
 
-	process(Clk)
-        variable vSel   : integer;
-    begin
-        vSel    := to_integer(unsigned(dmxSel));
+	-- cntr
+	process(Clk) begin
+		if rising_edge(Clk) then
+			if Start = '0' then
+				cntr 			<= 0;
+				FIR_Channels	<= (others => (others => '0'));
+			else
+				if cntr = NumChannels/NumInputs then
+					cntr <= 0;
+				else
+					cntr <= cntr + 1;
+				end if;
+			end if;
+		end if;
+	end process;
+	
+	process(Clk) begin
 		if rising_edge(Clk) then
 			for i in 1 to NumInputs loop
-				FIR_Channels((i-1)*NumChannels/NumInputs + vSel + 1) <= InSignal(i);
+				FIR_Channels((i-1)*NumChannels/NumInputs + cntr + 1) <= InSignal(i);
 			end loop;
 		end if;
 	end process;	
     
-    OutSignal   <= FIR_Channels(1);
+    -- select output channel
+	process(Clk) begin
+		if rising_edge(Clk) then
+			for i in 1 to NumChannels loop
+				if ChanAddr = SelTable(i) then
+					ToOut	<= FIR_Channels(i);
+					exit;
+				end if;
+			end loop;
+		end if;
+	end process;
+
+	OutSignal	<= ToOut;
 
 end Behavioral;

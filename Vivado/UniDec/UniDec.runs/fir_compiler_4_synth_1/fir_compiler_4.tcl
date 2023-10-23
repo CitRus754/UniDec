@@ -90,7 +90,7 @@ set_property ip_output_repo e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.c
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
-read_ip -quiet e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/ip/fir_compiler_4/fir_compiler_4.xci
+read_ip -quiet E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/ip/fir_compiler_4/fir_compiler_4.xci
 set_property used_in_implementation false [get_files -all e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_4/constraints/fir_compiler_v7_2.xdc]
 set_property used_in_implementation false [get_files -all e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_4/fir_compiler_4_ooc.xdc]
 

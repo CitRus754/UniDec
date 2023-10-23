@@ -185,7 +185,7 @@ begin
 
     -- Procedure to drive an impulse and let the impulse response emerge on the data master channel
     -- samples is the number of input samples to drive; default is enough for impulse response output to emerge
-    procedure drive_impulse ( samples : natural := 1840 ) is
+    procedure drive_impulse ( samples : natural := 1472 ) is
       variable impulse : std_logic_vector(31 downto 0);
     begin
       impulse := (others => '0');  -- initialize unused bits to zero
@@ -215,7 +215,7 @@ begin
     drive_zeros(2);  -- 2 normal input samples
     s_axis_data_tvalid <= '1';
     wait for CLOCK_PERIOD * 10;  -- provide data as fast as the core can accept it for 5 input samples worth
-    drive_zeros(1831);  -- back to normal operation
+    drive_zeros(1463);  -- back to normal operation
 
     -- Drive a set of impulses of different magnitudes on each path
     -- Path inputs are provided in parallel, in different fields of s_axis_data_tdata
@@ -223,7 +223,7 @@ begin
     data(15 downto 0) := "0100000000000000";  -- path 0: impulse >> 0
     data(31 downto 16) := "0010000000000000";  -- path 1: impulse >> 1
     drive_data(data);
-    drive_zeros(1839);
+    drive_zeros(1471);
 
     -- Drive a set of impulses of different magnitudes on each channel
     -- Channel inputs are provided in TDM fashion
@@ -292,23 +292,7 @@ begin
     drive_data(data);
     data(15 downto 0) := "0010000000000000";  -- channel 31: impulse >> 1
     drive_data(data);
-    data(15 downto 0) := "0001000000000000";  -- channel 32: impulse >> 2
-    drive_data(data);
-    data(15 downto 0) := "0000100000000000";  -- channel 33: impulse >> 3
-    drive_data(data);
-    data(15 downto 0) := "0000010000000000";  -- channel 34: impulse >> 4
-    drive_data(data);
-    data(15 downto 0) := "0000001000000000";  -- channel 35: impulse >> 5
-    drive_data(data);
-    data(15 downto 0) := "0000000100000000";  -- channel 36: impulse >> 6
-    drive_data(data);
-    data(15 downto 0) := "0000000010000000";  -- channel 37: impulse >> 7
-    drive_data(data);
-    data(15 downto 0) := "0000000001000000";  -- channel 38: impulse >> 8
-    drive_data(data);
-    data(15 downto 0) := "0000000000100000";  -- channel 39: impulse >> 9
-    drive_data(data);
-    drive_zeros(1800);
+    drive_zeros(1440);
 
     -- End of test
     report "Not a real failure. Simulation finished successfully. Test completed successfully" severity failure;

@@ -169,9 +169,9 @@ begin
         end loop;
         ip_count := ip_count + 1;
         wait for T_HOLD;
-      -- Input rate is 1 input each 5 clock cycles: drive valid inputs at this rate
+      -- Input rate is 1 input each 6 clock cycles: drive valid inputs at this rate
         s_axis_data_tvalid <= '0';
-        wait for CLOCK_PERIOD * 4;
+        wait for CLOCK_PERIOD * 5;
         exit when ip_count >= samples;
       end loop;
     end procedure drive_data;
@@ -185,7 +185,7 @@ begin
 
     -- Procedure to drive an impulse and let the impulse response emerge on the data master channel
     -- samples is the number of input samples to drive; default is enough for impulse response output to emerge
-    procedure drive_impulse ( samples : natural := 1280 ) is
+    procedure drive_impulse ( samples : natural := 1024 ) is
       variable impulse : std_logic_vector(31 downto 0);
     begin
       impulse := (others => '0');  -- initialize unused bits to zero
@@ -211,11 +211,11 @@ begin
     -- Drive another impulse, during which demonstrate use and effect of AXI handshaking signals
     drive_impulse(2);  -- start of impulse; data is now zero
     s_axis_data_tvalid <= '0';
-    wait for CLOCK_PERIOD * 25;  -- provide no data for 5 input samples worth
+    wait for CLOCK_PERIOD * 30;  -- provide no data for 5 input samples worth
     drive_zeros(2);  -- 2 normal input samples
     s_axis_data_tvalid <= '1';
-    wait for CLOCK_PERIOD * 25;  -- provide data as fast as the core can accept it for 5 input samples worth
-    drive_zeros(1271);  -- back to normal operation
+    wait for CLOCK_PERIOD * 30;  -- provide data as fast as the core can accept it for 5 input samples worth
+    drive_zeros(1015);  -- back to normal operation
 
     -- Drive a set of impulses of different magnitudes on each path
     -- Path inputs are provided in parallel, in different fields of s_axis_data_tdata
@@ -223,7 +223,7 @@ begin
     data(15 downto 0) := "0100000000000000";  -- path 0: impulse >> 0
     data(31 downto 16) := "0010000000000000";  -- path 1: impulse >> 1
     drive_data(data);
-    drive_zeros(1279);
+    drive_zeros(1023);
 
     -- Drive a set of impulses of different magnitudes on each channel
     -- Channel inputs are provided in TDM fashion
@@ -356,39 +356,7 @@ begin
     drive_data(data);
     data(15 downto 0) := "0000100000000000";  -- channel 63: impulse >> 3
     drive_data(data);
-    data(15 downto 0) := "0000010000000000";  -- channel 64: impulse >> 4
-    drive_data(data);
-    data(15 downto 0) := "0000001000000000";  -- channel 65: impulse >> 5
-    drive_data(data);
-    data(15 downto 0) := "0000000100000000";  -- channel 66: impulse >> 6
-    drive_data(data);
-    data(15 downto 0) := "0000000010000000";  -- channel 67: impulse >> 7
-    drive_data(data);
-    data(15 downto 0) := "0000000001000000";  -- channel 68: impulse >> 8
-    drive_data(data);
-    data(15 downto 0) := "0000000000100000";  -- channel 69: impulse >> 9
-    drive_data(data);
-    data(15 downto 0) := "0000000000010000";  -- channel 70: impulse >> 10
-    drive_data(data);
-    data(15 downto 0) := "0000000000001000";  -- channel 71: impulse >> 11
-    drive_data(data);
-    data(15 downto 0) := "0000000000000100";  -- channel 72: impulse >> 12
-    drive_data(data);
-    data(15 downto 0) := "0000000000000010";  -- channel 73: impulse >> 13
-    drive_data(data);
-    data(15 downto 0) := "0000000000000001";  -- channel 74: impulse >> 14
-    drive_data(data);
-    data(15 downto 0) := "0100000000000000";  -- channel 75: impulse >> 0
-    drive_data(data);
-    data(15 downto 0) := "0010000000000000";  -- channel 76: impulse >> 1
-    drive_data(data);
-    data(15 downto 0) := "0001000000000000";  -- channel 77: impulse >> 2
-    drive_data(data);
-    data(15 downto 0) := "0000100000000000";  -- channel 78: impulse >> 3
-    drive_data(data);
-    data(15 downto 0) := "0000010000000000";  -- channel 79: impulse >> 4
-    drive_data(data);
-    drive_zeros(1200);
+    drive_zeros(960);
 
     -- End of test
     report "Not a real failure. Simulation finished successfully. Test completed successfully" severity failure;

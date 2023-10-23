@@ -17,9 +17,9 @@ INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xczu9eg
 INFO: [Device 21-403] Loading part xczu9eg-ffvb1156-2-e
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 10916
+INFO: [Synth 8-7075] Helper process launched with PID 5528
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1701.961 ; gain = 116.484
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 1702.477 ; gain = 116.711
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-638] synthesizing module 'fir_compiler_4' [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_4/synth/fir_compiler_4.vhd:70]
 	Parameter C_XDEVICEFAMILY bound to: zynquplus - type: string 
@@ -34,7 +34,7 @@ INFO: [Synth 8-638] synthesizing module 'fir_compiler_4' [e:/NTT/WorkingDirector
 	Parameter C_SYMMETRY bound to: 1 - type: integer 
 	Parameter C_NUM_FILTS bound to: 1 - type: integer 
 	Parameter C_NUM_TAPS bound to: 24 - type: integer 
-	Parameter C_NUM_CHANNELS bound to: 40 - type: integer 
+	Parameter C_NUM_CHANNELS bound to: 32 - type: integer 
 	Parameter C_CHANNEL_PATTERN bound to: fixed - type: string 
 	Parameter C_ROUND_MODE bound to: 4 - type: integer 
 	Parameter C_COEF_RELOAD bound to: 0 - type: integer 
@@ -95,18 +95,18 @@ INFO: [Synth 8-638] synthesizing module 'fir_compiler_4' [e:/NTT/WorkingDirector
 INFO: [Synth 8-3491] module 'fir_compiler_v7_2_15' declared at 'e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_4/hdl/fir_compiler_v7_2_vh_rfs.vhd:67113' bound to instance 'U0' of component 'fir_compiler_v7_2_15' [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_4/synth/fir_compiler_4.vhd:198]
 INFO: [Synth 8-256] done synthesizing module 'fir_compiler_4' (17#1) [e:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.gen/sources_1/ip/fir_compiler_4/synth/fir_compiler_4.vhd:70]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:10 ; elapsed = 00:00:11 . Memory (MB): peak = 1879.465 ; gain = 293.988
+Finished RTL Elaboration : Time (s): cpu = 00:00:10 ; elapsed = 00:00:11 . Memory (MB): peak = 1882.336 ; gain = 296.570
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1879.465 ; gain = 293.988
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1900.250 ; gain = 314.484
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1879.465 ; gain = 293.988
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1900.250 ; gain = 314.484
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.438 . Memory (MB): peak = 1879.465 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.358 . Memory (MB): peak = 1900.250 ; gain = 0.000
 INFO: [Netlist 29-17] Analyzing 4 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
@@ -121,14 +121,14 @@ Parsing XDC File [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/fir_co
 Finished Parsing XDC File [E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/fir_compiler_4_synth_1/dont_touch.xdc]
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.007 . Memory (MB): peak = 1971.371 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.006 . Memory (MB): peak = 1971.875 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
   A total of 4 instances were transformed.
   DSP48E2 => DSP48E2 (DSP_ALU, DSP_A_B_DATA, DSP_C_DATA, DSP_MULTIPLIER, DSP_M_DATA, DSP_OUTPUT, DSP_PREADD, DSP_PREADD_DATA): 4 instances
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.451 . Memory (MB): peak = 1983.859 ; gain = 12.488
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.388 . Memory (MB): peak = 1977.633 ; gain = 5.758
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:27 ; elapsed = 00:00:28 . Memory (MB): peak = 1983.859 ; gain = 398.383
+Finished Constraint Validation : Time (s): cpu = 00:00:26 ; elapsed = 00:00:27 . Memory (MB): peak = 1977.633 ; gain = 391.867
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
@@ -136,14 +136,14 @@ Start Loading Part and Timing Information
 Loading part: xczu9eg-ffvb1156-2-e
 INFO: [Synth 8-6742] Reading net delay rules and data
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:27 ; elapsed = 00:00:28 . Memory (MB): peak = 1983.859 ; gain = 398.383
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:26 ; elapsed = 00:00:27 . Memory (MB): peak = 1977.633 ; gain = 391.867
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 Applied set_property KEEP_HIERARCHY = SOFT for U0. (constraint file  E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/fir_compiler_4_synth_1/dont_touch.xdc, line 9).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:27 ; elapsed = 00:00:28 . Memory (MB): peak = 1983.859 ; gain = 398.383
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:26 ; elapsed = 00:00:27 . Memory (MB): peak = 1977.633 ; gain = 391.867
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-5779] Default cascade height of 1 will be used for BRAM '"dpt_mem:/gen_bram.gen_write_first.gen_double_reg.ram_reg"'.
 INFO: [Synth 8-7030] Implemented Non-Cascaded Block Ram (cascade_height = 1) of width 16 for RAM "dpt_mem:/gen_bram.gen_write_first.gen_double_reg.ram_reg"
@@ -151,7 +151,7 @@ INFO: [Synth 8-3971] The signal "dpt_mem:/gen_bram.gen_write_first.gen_double_re
 INFO: [Synth 8-5779] Default cascade height of 1 will be used for BRAM '"dpr_mem:/gen_bram.gen_write_first.gen_double_reg.ram_reg"'.
 INFO: [Synth 8-7030] Implemented Non-Cascaded Block Ram (cascade_height = 1) of width 16 for RAM "dpr_mem:/gen_bram.gen_write_first.gen_double_reg.ram_reg"
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:30 ; elapsed = 00:00:31 . Memory (MB): peak = 1983.859 ; gain = 398.383
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:28 ; elapsed = 00:00:29 . Memory (MB): peak = 1977.633 ; gain = 391.867
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-223] decloning instance 'U0/i_synth/g_polyphase_decimation.i_polyphase_decimation/g_semi_parallel_and_smac.g_cntrl_signals[4].g_others.i_delay' (delay__parameterized5) to 'U0/i_synth/g_polyphase_decimation.i_polyphase_decimation/g_semi_parallel_and_smac.g_cntrl_signals[5].g_others.i_delay'
 INFO: [Synth 8-223] decloning instance 'U0/i_synth/g_polyphase_decimation.i_polyphase_decimation/g_semi_parallel_and_smac.g_cntrl_signals[0].g_others.i_delay' (delay__parameterized7) to 'U0/i_synth/g_polyphase_decimation.i_polyphase_decimation/g_semi_parallel_and_smac.g_cntrl_signals[1].g_others.i_delay'
@@ -185,25 +185,25 @@ INFO: [Synth 8-5779] Default cascade height of 1 will be used for BRAM '"dpt_mem
 INFO: [Synth 8-7030] Implemented Non-Cascaded Block Ram (cascade_height = 1) of width 16 for RAM "dpt_mem:/gen_bram.gen_write_first.gen_double_reg.ram_reg"
 INFO: [Synth 8-3971] The signal "dpt_mem:/gen_bram.gen_write_first.gen_double_reg.ram_reg" was recognized as a true dual port RAM template.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:38 ; elapsed = 00:00:40 . Memory (MB): peak = 1983.859 ; gain = 398.383
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:35 ; elapsed = 00:00:36 . Memory (MB): peak = 1977.633 ; gain = 391.867
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:49 ; elapsed = 00:00:51 . Memory (MB): peak = 2502.180 ; gain = 916.703
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:46 ; elapsed = 00:00:49 . Memory (MB): peak = 2481.934 ; gain = 896.168
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:52 ; elapsed = 00:00:54 . Memory (MB): peak = 2571.719 ; gain = 986.242
+Finished Timing Optimization : Time (s): cpu = 00:00:48 ; elapsed = 00:00:51 . Memory (MB): peak = 2532.430 ; gain = 946.664
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:54 ; elapsed = 00:00:56 . Memory (MB): peak = 2596.098 ; gain = 1010.621
+Finished Technology Mapping : Time (s): cpu = 00:00:50 ; elapsed = 00:00:54 . Memory (MB): peak = 2548.918 ; gain = 963.152
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -221,37 +221,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:57 ; elapsed = 00:00:59 . Memory (MB): peak = 2596.098 ; gain = 1010.621
+Finished IO Insertion : Time (s): cpu = 00:00:53 ; elapsed = 00:00:57 . Memory (MB): peak = 2548.918 ; gain = 963.152
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:57 ; elapsed = 00:00:59 . Memory (MB): peak = 2596.098 ; gain = 1010.621
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:53 ; elapsed = 00:00:57 . Memory (MB): peak = 2548.918 ; gain = 963.152
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:57 ; elapsed = 00:01:00 . Memory (MB): peak = 2596.098 ; gain = 1010.621
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:53 ; elapsed = 00:00:57 . Memory (MB): peak = 2548.918 ; gain = 963.152
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:58 ; elapsed = 00:01:00 . Memory (MB): peak = 2596.098 ; gain = 1010.621
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:53 ; elapsed = 00:00:57 . Memory (MB): peak = 2548.918 ; gain = 963.152
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:58 ; elapsed = 00:01:00 . Memory (MB): peak = 2596.098 ; gain = 1010.621
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:53 ; elapsed = 00:00:57 . Memory (MB): peak = 2548.918 ; gain = 963.152
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:58 ; elapsed = 00:01:00 . Memory (MB): peak = 2596.098 ; gain = 1010.621
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:54 ; elapsed = 00:00:57 . Memory (MB): peak = 2548.918 ; gain = 963.152
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -276,32 +276,31 @@ Report Cell Usage:
 |7     |DSP_OUTPUT      |     4|
 |9     |DSP_PREADD      |     4|
 |10    |DSP_PREADD_DATA |     4|
-|11    |LUT1            |    10|
-|12    |LUT2            |    52|
+|11    |LUT1            |    15|
+|12    |LUT2            |    43|
 |13    |LUT3            |    30|
-|14    |LUT4            |    38|
-|15    |LUT5            |    14|
-|16    |LUT6            |    21|
-|17    |MUXF7           |    64|
-|18    |RAMB18E2        |     6|
-|20    |SRL16E          |    46|
-|21    |SRLC32E         |   904|
-|22    |FDRE            |   543|
-|23    |FDSE            |     1|
+|14    |LUT4            |    32|
+|15    |LUT5            |    18|
+|16    |LUT6            |    12|
+|17    |RAMB18E2        |     6|
+|19    |SRL16E          |    46|
+|20    |SRLC32E         |   612|
+|21    |FDRE            |   534|
+|22    |FDSE            |     1|
 +------+----------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:58 ; elapsed = 00:01:00 . Memory (MB): peak = 2596.098 ; gain = 1010.621
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:54 ; elapsed = 00:00:57 . Memory (MB): peak = 2548.918 ; gain = 963.152
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:35 ; elapsed = 00:00:47 . Memory (MB): peak = 2596.098 ; gain = 906.227
-Synthesis Optimization Complete : Time (s): cpu = 00:00:58 ; elapsed = 00:01:00 . Memory (MB): peak = 2596.098 ; gain = 1010.621
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:32 ; elapsed = 00:00:45 . Memory (MB): peak = 2548.918 ; gain = 885.770
+Synthesis Optimization Complete : Time (s): cpu = 00:00:54 ; elapsed = 00:00:57 . Memory (MB): peak = 2548.918 ; gain = 963.152
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.054 . Memory (MB): peak = 2596.098 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 78 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.044 . Memory (MB): peak = 2548.918 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 14 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 2607.641 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 2566.074 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
   A total of 4 instances were transformed.
   DSP48E2 => DSP48E2 (DSP_ALU, DSP_A_B_DATA, DSP_C_DATA, DSP_MULTIPLIER, DSP_M_DATA, DSP_OUTPUT, DSP_PREADD, DSP_PREADD_DATA): 4 instances
@@ -309,11 +308,11 @@ INFO: [Project 1-111] Unisim Transformation Summary:
 INFO: [Common 17-83] Releasing license: Synthesis
 38 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:01:05 ; elapsed = 00:01:09 . Memory (MB): peak = 2607.641 ; gain = 1481.230
+synth_design: Time (s): cpu = 00:01:01 ; elapsed = 00:01:11 . Memory (MB): peak = 2566.074 ; gain = 1439.578
 INFO: [Common 17-1381] The checkpoint 'E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/fir_compiler_4_synth_1/fir_compiler_4.dcp' has been generated.
 WARNING: [Common 17-576] 'use_project_ipc' is deprecated. This option is deprecated and no longer used.
-INFO: [Coretcl 2-1648] Added synthesis output to IP cache for IP fir_compiler_4, cache-ID = 0bc9db1546e2e670
+INFO: [Coretcl 2-1648] Added synthesis output to IP cache for IP fir_compiler_4, cache-ID = e06158fa21120614
 INFO: [Coretcl 2-1174] Renamed 62 cell refs.
 INFO: [Common 17-1381] The checkpoint 'E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/fir_compiler_4_synth_1/fir_compiler_4.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file fir_compiler_4_utilization_synth.rpt -pb fir_compiler_4_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Thu Oct 12 13:00:38 2023...
+INFO: [Common 17-206] Exiting Vivado at Mon Oct 23 12:02:17 2023...

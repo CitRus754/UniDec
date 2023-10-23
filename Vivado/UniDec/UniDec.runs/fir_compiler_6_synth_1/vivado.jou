@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Mon Oct 23 12:03:48 2023
+# Process ID: 15180
+# Current directory: E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/fir_compiler_6_synth_1
+# Command line: vivado.exe -log fir_compiler_6.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source fir_compiler_6.tcl
+# Log file: E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/fir_compiler_6_synth_1/fir_compiler_6.vds
+# Journal file: E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.runs/fir_compiler_6_synth_1\vivado.jou
+#-----------------------------------------------------------
+source fir_compiler_6.tcl -notrace

@@ -44,16 +44,9 @@ entity Part_I is
 		SwitchAddr		: in std_logic_vector(2 downto 0);
 		
 		BitRvsCntr		: in std_logic_vector(2 downto 0);		-- bit-reversed counter (3 MSB bits)
-		
-		-- Stages 1-2 outputs: only for debug!
-		Stage1_Channels	: out DDS_Array(1 to Num_Signals);
-		Stage2_Channels	: out DDS_Array(1 to Num_Signals);
 
-		Stage1_I	: out std_logic_vector(15 downto 0);
-		Stage1_Q	: out std_logic_vector(15 downto 0);
-
-		Stage2_I	: out std_logic_vector(15 downto 0);
-		Stage2_Q	: out std_logic_vector(15 downto 0);
+		Stage1_Out		: out std_logic_vector(31 downto 0);
+		Stage2_Out		: out std_logic_vector(31 downto 0);
 
 		SwitchSignal	: out std_logic_vector(31 downto 0);
 
@@ -178,31 +171,11 @@ architecture Behavioral of Part_I is
 	
 	-- CORE_1 signals
 	signal FIR1_OutTV			: DV_Bus(1 to Num_Signals/2) 		:= (others => '0');
-	-- signal FIR1_OutTV_w1		: DV_Bus(1 to Num_Signals/4) 		:= (others => '0');
-	-- signal FIR1_xor				: DV_Bus(1 to Num_Signals/4) 		:= (others => '0');
 	
 	signal FIR1_Out				: DDS_Array(1 to Num_Signals/2) 	:= (others => (others => '0'));
-	-- signal FIR1_Out_w1			: DDS_Array(1 to Num_Signals/4) 	:= (others => (others => '0'));
-	-- signal FIR1_Out_d			: DDS_Array(1 to Num_Signals/4) 	:= (others => (others => '0'));
 	
-	signal Stage1_Out			: std_logic_vector(31 downto 0)		:= (others => '0');	
-	signal Stage2_Out			: std_logic_vector(31 downto 0)		:= (others => '0');
-	
-	
-	-- for Dbg!
-	signal DDS_Cos0, DDS_Cos1	: SinCos_Array(1 to Num_Signals/2) 	:= (others => (others => '0'));
-	signal DDS_Sin0, DDS_Sin1	: SinCos_Array(1 to Num_Signals/2) 	:= (others => (others => '0'));
-	
-	signal FIR10_I, FIR10_Q		: IQ_Array(1 to Num_Signals/2) 	:= (others => (others => '0'));
-	signal FIR11_I, FIR11_Q		: IQ_Array(1 to Num_Signals/2) 	:= (others => (others => '0'));
-	
-	-- signal Dbg0_I, Dbg0_Q       : IQ_Array(1 to Num_Signals/2) 	:= (others => (others => '0'));
-	-- signal Dbg1_I, Dbg1_Q       : IQ_Array(1 to Num_Signals/2) 	:= (others => (others => '0'));
-	-------------------
-		
-	signal FIR2_In0_I, FIR2_In1_I, FIR2_In2_I, FIR2_In3_I  : std_logic_vector(15 downto 0)		:= (others => '0');
-	signal FIR2_In0_Q, FIR2_In1_Q, FIR2_In2_Q, FIR2_In3_Q  : std_logic_vector(15 downto 0)		:= (others => '0');
-	
+	signal ToStage1_Out			: std_logic_vector(31 downto 0)		:= (others => '0');	
+	signal ToStage2_Out			: std_logic_vector(31 downto 0)		:= (others => '0');
 	
 	signal FIR2_InTV			: DV_Bus(1 to Num_Signals/4) 		:= (others => '0');
 	signal FIR2_Input			: DDS_Array(1 to Num_Signals/4) 	:= (others => (others => '0'));
@@ -213,12 +186,8 @@ architecture Behavioral of Part_I is
 	signal fir2_tr              : DV_Bus(1 to Num_Signals/4) 		:= (others => '0');
 	
 	signal FIR2_OutTV			: DV_Bus(1 to Num_Signals/4) 		:= (others => '0');
---	signal FIR2_OutTV_w1        : std_logic := '0';
---	signal FIR2_xor				: std_logic := '0';
 	
 	signal FIR2_Out				: DDS_Array(1 to Num_Signals/4) 	:= (others => (others => '0'));
---	signal FIR2_Out_w1			: std_logic_vector(31 downto 0)		:= (others => '0');
---	signal FIR2_Out_d			: std_logic_vector(31 downto 0)		:= (others => '0');
 	
 	signal FIR2_TV				: std_logic 						:= '0';
 	signal FIR2_Output			: std_logic_vector(31 downto 0)		:= (others => '0');
@@ -257,33 +226,6 @@ begin
 			end if;
 		end if;
 	end process;
-
-	-- Dbg!
---	process(Clk) begin
---	   if rising_edge(Clk) then
---           if Sel2 = "00" then
---                FIR10_I(1)	<= FIR1_Out(1)(15 downto 0);
---				FIR10_I(2)	<= FIR1_Out_d(1)(15 downto 0);
---				FIR10_I(3)	<= FIR1_Out(3)(15 downto 0);
---				FIR10_I(4)	<= FIR1_Out_d(2)(15 downto 0);
-				
---				FIR10_Q(1)	<= FIR1_Out(1)(31 downto 16);
---				FIR10_Q(2)	<= FIR1_Out_d(1)(31 downto 16);
---				FIR10_Q(3)	<= FIR1_Out(3)(31 downto 16);
---				FIR10_Q(4)	<= FIR1_Out_d(2)(31 downto 16);
---            else
---				FIR11_I(1)	<= FIR1_Out(1)(15 downto 0);
---				FIR11_I(2)	<= FIR1_Out_d(1)(15 downto 0);
---				FIR11_I(3)	<= FIR1_Out(3)(15 downto 0);
---				FIR11_I(4)	<= FIR1_Out_d(2)(15 downto 0);
-				
---				FIR11_Q(1)	<= FIR1_Out(1)(31 downto 16);
---				FIR11_Q(2)	<= FIR1_Out_d(1)(31 downto 16);
---				FIR11_Q(3)	<= FIR1_Out(3)(31 downto 16);
---				FIR11_Q(4)	<= FIR1_Out_d(2)(31 downto 16);
---            end if;
---          end if;
---	end process;
 	
 	-- selectors
 	process(Clk) begin
@@ -346,28 +288,6 @@ begin
 		Output_I		=> DDS_Cos,
 		Output_Q		=> DDS_Sin
 		);
-	
-	
-	
-	---------only for Debug!------
-	-- queue: Chan0-Chan1-Chan0-Chan1-...
-	-- Selector:
-	-- '1' - for DDS
-	-- '0' - for Mix
-	process(Clk) begin
-		if rising_edge(Clk) then
-			if Sel1 = '0' then
-				DDS_Cos0	<= DDS_Cos;
-				DDS_Sin0	<= DDS_Sin;
-			else
-				DDS_Cos1	<= DDS_Cos;
-				DDS_Sin1	<= DDS_Sin;
-			end if;
-		end if;
-	end process;
-	-------------------------------
-	
-	
 	
 	-- core_1 instantiation
 	core_1_inst: for i in 1 to Num_Signals/2 generate core: CORE_1
@@ -433,76 +353,7 @@ begin
 			OutTV		=> FIR2_InTV,
 			OutSignal	=> FIR2_Input
 	);
-	
-	
-	
-	/* -- delay for even channels
-	process(Clk) begin
-		if rising_edge(Clk) then
-			for i in 1 to Num_Signals/4 loop
-				FIR1_OutTV_w1(i)	<= FIR1_OutTV(Num_Signals/4*i);
-				FIR1_Out_w1(i) 		<= FIR1_Out(Num_Signals/4*i);
-			end loop;
-		end if;
-	end process;
-	
-	
-	-- or for TV
-	process(Clk) begin
-		if rising_edge(Clk) then
-			for i in 1 to Num_Signals/4 loop
-				FIR2_InTV(i) <= FIR1_OutTV((i-1)*Num_Signals/4 + 1) or FIR1_OutTV((i-1)*Num_Signals/4 + 2) or FIR1_OutTV_w1(i);
-			end loop;
-		end if;
-	end process;
-	
-	FIR1_xor(1)	<= FIR1_OutTV(1) xor FIR1_OutTV(2);
-	FIR1_xor(2)	<= FIR1_OutTV(3) xor FIR1_OutTV(4);
-	
-	-- mux for FIR_xor
-	process(FIR1_Out_w1, FIR1_Out, FIR1_xor) begin
---		if rising_edge(Clk) then
-			for i in 1 to Num_Signals/4 loop
-				if FIR1_xor(i)	= '1' then
-					FIR1_Out_d(i)	<= FIR1_Out(2*i);
-				else
-					FIR1_Out_d(i)	<= FIR1_Out_w1(i);
-				end if;
-			end loop;
---		end if;
-	end process;
-	
-	-- mux for FIR2 Input
-	process(Clk) begin
-		if rising_edge(Clk) then
-			for i in 1 to Num_Signals/4 loop
-				if 		Sel1 = '0' then
-					FIR2_Input(i) <= FIR1_Out((i-1)*Num_Signals/4 + 1);
-				else
-					FIR2_Input(i) <= FIR1_Out_d(i);
-				end if;
-			end loop;
-		end if;
-	end process;	 */
-	
-	
-	-- FIR2_inpDbg!
-    -- process(Clk) begin
-		-- if rising_edge(Clk) then
-            -- if 		Sel2 = "00" then
-                -- FIR2_In0_I <= FIR2_Input(1)(15 downto 0);
-            -- elsif	Sel2 = "10" then
-                -- FIR2_In1_I <= FIR2_Input(1)(15 downto 0);
-            -- elsif	Sel2 = "01" then
-                -- FIR2_In2_I <= FIR2_Input(1)(15 downto 0);
-            -- else
-                -- FIR2_In3_I <= FIR2_Input(1)(15 downto 0);
-            -- end if;
-		-- end if;
-	-- end process;
-	
-	
-	
+		
 	
 	-- Stage 1 outputs; bit-reversed order in array FIR1_Channels
 	-- array index:		1-2-3-4		5-6-7-8
@@ -545,50 +396,29 @@ begin
 		if rising_edge(Clk) then
 			if Sel_0 = '0' then
 				if 		Sel_1 = "00" then
-					Stage1_Out	<= FIR1_Channels(0 + 1);
+					ToStage1_Out	<= FIR1_Channels(0 + 1);
 				elsif	Sel_1 = "01" then
-					Stage1_Out	<= FIR1_Channels(2 + 1);	-- bit-reversed order!
+					ToStage1_Out	<= FIR1_Channels(2 + 1);	-- bit-reversed order!
 				elsif	Sel_1 = "10" then
-					Stage1_Out	<= FIR1_Channels(1 + 1);	-- bit-reversed order!
+					ToStage1_Out	<= FIR1_Channels(1 + 1);	-- bit-reversed order!
 				else
-					Stage1_Out	<= FIR1_Channels(3 + 1);
+					ToStage1_Out	<= FIR1_Channels(3 + 1);
 				end if;
 			else
 				if 		Sel_1 = "00" then
-					Stage1_Out	<= FIR1_Channels(4 + 1);
+					ToStage1_Out	<= FIR1_Channels(4 + 1);
 				elsif	Sel_1 = "01" then
-					Stage1_Out	<= FIR1_Channels(6 + 1);	-- bit-reversed order!
+					ToStage1_Out	<= FIR1_Channels(6 + 1);	-- bit-reversed order!
 				elsif	Sel_1 = "10" then
-					Stage1_Out	<= FIR1_Channels(5 + 1);	-- bit-reversed order!
+					ToStage1_Out	<= FIR1_Channels(5 + 1);	-- bit-reversed order!
 				else
-					Stage1_Out	<= FIR1_Channels(7 + 1);
+					ToStage1_Out	<= FIR1_Channels(7 + 1);
 				end if;
 			end if;
 		end if;
 	end process;
 	
-	Stage1_I	<= Stage1_Out(15 downto 0);
-	Stage1_Q	<= Stage1_Out(31 downto 16);
-	
-	-- process(Clk) begin
-		-- if rising_edge(Clk) then
-			-- for i in 1 to Num_Signals/4 loop
-				-- if 		Sel2 = "00" then
-					-- FIR1_Channels((i-1)*Num_Signals/2 + 1) <= FIR2_Input(i);
-				-- elsif	Sel2 = "10" then
-					-- FIR1_Channels((i-1)*Num_Signals/2 + 2) <= FIR2_Input(i);
-				-- elsif	Sel2 = "01" then
-					-- FIR1_Channels((i-1)*Num_Signals/2 + 3) <= FIR2_Input(i);
-				-- else
-					-- FIR1_Channels((i-1)*Num_Signals/2 + 4) <= FIR2_Input(i);
-				-- end if;
-			-- end loop;
-		-- end if;
-	-- end process;
-	
-	Stage1_Channels <= FIR1_Channels;
-	
-	
+	Stage1_Out	<= ToStage1_Out;	
 	
 	fir_inst: for i in 1 to Num_Signals/4 generate FIRs: fir_compiler_1
 		port map(
@@ -645,24 +475,6 @@ begin
 			OutSignal	=> FIR2_Output
 	);
 	
-	
-	
---	-- delay for even channel
---	process(Clk) begin
---		if rising_edge(Clk) then
---			FIR2_OutTV_w1	<= FIR2_OutTV(2);
---			FIR2_Out_w1 <= FIR2_Out(2);
---		end if;
---	end process;
-	
-	
---	-- or for TV
---	process(Clk) begin
---		if rising_edge(Clk) then
---			FIR2_TV <= FIR2_OutTV(1) or FIR2_OutTV(2) or FIR2_OutTV_w1;
---		end if;
---	end process;
-	
 	FIR2_TVALID		<= FIR2_TV;
 	
 	-- for FIR2_Output selection
@@ -695,29 +507,26 @@ begin
 	process(Clk) begin
 		if rising_edge(Clk) then
 			if 		sOutChanAddr = "000" then
-				Stage2_Out	<= FIR2_Channels(0 + 1);
+				ToStage2_Out	<= FIR2_Channels(0 + 1);
 			elsif	sOutChanAddr = "001" then
-				Stage2_Out	<= FIR2_Channels(4 + 1);		-- bit-reversed order!
+				ToStage2_Out	<= FIR2_Channels(4 + 1);		-- bit-reversed order!
 			elsif	sOutChanAddr = "010" then
-				Stage2_Out	<= FIR2_Channels(2 + 1);		-- bit-reversed order!
+				ToStage2_Out	<= FIR2_Channels(2 + 1);		-- bit-reversed order!
 			elsif	sOutChanAddr = "011" then
-				Stage2_Out	<= FIR2_Channels(6 + 1);		-- bit-reversed order!
+				ToStage2_Out	<= FIR2_Channels(6 + 1);		-- bit-reversed order!
 			elsif	sOutChanAddr = "100" then
-				Stage2_Out	<= FIR2_Channels(1 + 1);		-- bit-reversed order!
+				ToStage2_Out	<= FIR2_Channels(1 + 1);		-- bit-reversed order!
 			elsif	sOutChanAddr = "101" then
-				Stage2_Out	<= FIR2_Channels(5 + 1);		-- bit-reversed order!
+				ToStage2_Out	<= FIR2_Channels(5 + 1);		-- bit-reversed order!
 			elsif	sOutChanAddr = "110" then
-				Stage2_Out	<= FIR2_Channels(3 + 1);		-- bit-reversed order!
+				ToStage2_Out	<= FIR2_Channels(3 + 1);		-- bit-reversed order!
 			else
-				Stage2_Out	<= FIR2_Channels(7 + 1);
+				ToStage2_Out	<= FIR2_Channels(7 + 1);
 			end if;
 		end if;
 	end process;
 	
-	Stage2_I	<= Stage2_Out(15 downto 0);
-	Stage2_Q	<= Stage2_Out(31 downto 16);
-	
-	Stage2_Channels <= FIR2_Channels;
+	Stage2_Out	<= ToStage2_Out;
 	
 	-- switch mux
 	process(Clk) begin
