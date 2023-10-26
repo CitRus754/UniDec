@@ -32,7 +32,7 @@ end SelectModule;
 
 architecture Behavioral of SelectModule is
 
-    signal cntr	: integer := 0;
+    signal cntr	        : integer := 0;
 
 	signal FIR_Channels : DDS_Array(1 to NumChannels)   := (others => (others => '0'));
 
@@ -44,10 +44,9 @@ begin
 	process(Clk) begin
 		if rising_edge(Clk) then
 			if Start = '0' then
-				cntr 			<= 0;
-				FIR_Channels	<= (others => (others => '0'));
+				cntr 	<= 0;
 			else
-				if cntr = NumChannels/NumInputs then
+				if cntr = NumChannels/NumInputs - 1 then
 					cntr <= 0;
 				else
 					cntr <= cntr + 1;
@@ -56,11 +55,18 @@ begin
 		end if;
 	end process;
 	
-	process(Clk) begin
+	process(Clk)
+		variable vCntr: integer;
+	begin
+		vCntr	:= cntr;
 		if rising_edge(Clk) then
-			for i in 1 to NumInputs loop
-				FIR_Channels((i-1)*NumChannels/NumInputs + cntr + 1) <= InSignal(i);
-			end loop;
+			if Start = '0' then
+				FIR_Channels	<= (others => (others => '0'));
+			else
+				for i in 1 to NumInputs loop
+					FIR_Channels((i-1)*NumChannels/NumInputs + vCntr + 1) <= InSignal(i);
+				end loop;
+			end if;			
 		end if;
 	end process;	
     

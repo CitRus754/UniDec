@@ -52,13 +52,20 @@ end SwitchModule;
 
 architecture Behavioral of SwitchModule is
 
-	signal dmx1_128      : DDS_Array(1 to NumChannels)   := (others => (others => '0'));
-    signal mx128_16      : DDS_Array(1 to NumChannels/8)   := (others => (others => '0'));
+	signal DataI, DataQ     : std_logic_vector(15 downto 0); 
+    
+    signal dmx1_128         : DDS_Array(1 to NumChannels)   := (others => (others => '0'));
+    signal dmx_I, dmx_Q     : IQ_Array(1 to NumChannels)    := (others => (others => '0'));
 
-    signal mxCntr: integer    := 0;
+    signal mx128_16         : DDS_Array(1 to NumChannels/8)   := (others => (others => '0'));
+
+    signal mxCntr: integer  := 0;
 	
 begin
 
+    DataI   <= DataIn(15 downto 0);
+    DataQ   <= DataIn(31 downto 16);
+    
     -- cntr
     process(Clk)
     begin
@@ -78,6 +85,13 @@ begin
 		Addr := to_integer(unsigned(SwAddr));
 		dmx1_128(Addr+1)	<= DataIn;
 	end process;
+
+    process(dmx1_128) begin
+        for i in 1 to NumChannels loop
+            dmx_I(i)    <= dmx1_128(i)(15 downto 0);
+            dmx_Q(i)    <= dmx1_128(i)(31 downto 16);
+        end loop;
+    end process;
 	
     -- muxers 128-16: N channels of 11 MHz -> N/8 TDM-channels of 88 MHz
     process(Clk)

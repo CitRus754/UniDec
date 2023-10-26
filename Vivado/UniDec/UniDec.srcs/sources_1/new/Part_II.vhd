@@ -294,6 +294,7 @@ architecture Behavioral of Part_II is
 	signal FIR3_OutTV			: DV_Bus(1 to Num_Signals/8) 		:= (others => '0');					-- 128/8 = 16
 	signal FIR3_Out				: DDS_Array(1 to Num_Signals/8) 	:= (others => (others => '0'));
 	signal ToStage3_Out			: std_logic_vector(31 downto 0)		:= (others => '0');
+	signal Stage3_I, Stage3_Q	: std_logic_vector(15 downto 0)		:= (others => '0');
 	
 	-- fir_compiler_3
 	signal FIR4_InTV			: DV_Bus(1 to Num_Signals/16) 		:= (others => '0');					-- 128/16 = 8
@@ -302,6 +303,7 @@ architecture Behavioral of Part_II is
 	signal FIR4_Out				: DDS_Array(1 to Num_Signals/16) 	:= (others => (others => '0'));
 	signal fir4_tr              : DV_Bus(1 to Num_Signals/16) 		:= (others => '0');	
 	signal ToStage4_Out			: std_logic_vector(31 downto 0)		:= (others => '0');
+	signal Stage4_I, Stage4_Q	: std_logic_vector(15 downto 0)		:= (others => '0');
 
 	-- fir_compiler_4
 	signal FIR5_InTV			: DV_Bus(1 to Num_Signals/32) 		:= (others => '0');					-- 128/32 = 4
@@ -374,15 +376,15 @@ begin
 	end process;
 	
 	-- selectors
-	-- process(Clk) begin
-	-- 	if rising_edge(Clk) then
-	-- 		if SyncStart = '0' then
-	-- 			Sel1 	<= '1';
-	-- 		else
-	-- 			Sel1 	<= BitRvsCntr(6);
-	-- 		end if;
-	-- 	end if;
-	-- end process;
+	process(Clk) begin
+		if rising_edge(Clk) then
+			if SyncStart = '0' then
+				Sel1 	<= '0';
+			else
+				Sel1 	<= not Sel1;
+			end if;
+		end if;
+	end process;
 
 	-- process(Clk) begin
 	-- 	if rising_edge(Clk) then
@@ -604,6 +606,9 @@ begin
 			OutSignal	=> ToStage3_Out
 	);
 
+	Stage3_I	<= ToStage3_Out(15 downto 0);
+	Stage3_Q	<= ToStage3_Out(31 downto 16);
+
 	sel_stage4: SelectModule
 	generic map(NumChannels	=> 128, NumInputs	=> 4)
 	port map(
@@ -615,59 +620,62 @@ begin
 			OutSignal	=> ToStage4_Out
 	);
 
-	sel_stage5: SelectModule
-	generic map(NumChannels	=> 128, NumInputs	=> 2)
-	port map(
-			Clk			=> Clk,
-			Start		=> SyncStart,
-			SelTable	=> FIR4_table,
-			ChanAddr	=> sOutChanAddr,
-			InSignal	=> FIR6_Input,
-			OutSignal	=> ToStage5_Out
-	);
+	Stage4_I	<= ToStage4_Out(15 downto 0);
+	Stage4_Q	<= ToStage4_Out(31 downto 16);
 
-	sel_stage6: SelectModule_0
-	generic map(NumChannels	=> 128)
-	port map(
-			Clk			=> Clk,
-			Start		=> SyncStart,
-			SelTable	=> FIR5_table,
-			ChanAddr	=> sOutChanAddr,
-			InSignal	=> FIR7_Input,
-			OutSignal	=> ToStage6_Out
-	);
+	-- sel_stage5: SelectModule
+	-- generic map(NumChannels	=> 128, NumInputs	=> 2)
+	-- port map(
+	-- 		Clk			=> Clk,
+	-- 		Start		=> SyncStart,
+	-- 		SelTable	=> FIR4_table,
+	-- 		ChanAddr	=> sOutChanAddr,
+	-- 		InSignal	=> FIR6_Input,
+	-- 		OutSignal	=> ToStage5_Out
+	-- );
 
-	sel_stage7: SelectModule_0
-	generic map(NumChannels	=> 128)
-	port map(
-			Clk			=> Clk,
-			Start		=> SyncStart,
-			SelTable	=> FIR6_table,
-			ChanAddr	=> sOutChanAddr,
-			InSignal	=> FIR7_Out,
-			OutSignal	=> ToStage7_Out
-	);
+	-- sel_stage6: SelectModule_0
+	-- generic map(NumChannels	=> 128)
+	-- port map(
+	-- 		Clk			=> Clk,
+	-- 		Start		=> SyncStart,
+	-- 		SelTable	=> FIR5_table,
+	-- 		ChanAddr	=> sOutChanAddr,
+	-- 		InSignal	=> FIR7_Input,
+	-- 		OutSignal	=> ToStage6_Out
+	-- );
 
-	sel_stage8: SelectModule_0
-	generic map(NumChannels	=> 128)
-	port map(
-			Clk			=> Clk,
-			Start		=> SyncStart,
-			SelTable	=> FIR6_table,			-- the same table
-			ChanAddr	=> sOutChanAddr,
-			InSignal	=> FIR8_Out,
-			OutSignal	=> ToStage8_Out
-	);
+	-- sel_stage7: SelectModule_0
+	-- generic map(NumChannels	=> 128)
+	-- port map(
+	-- 		Clk			=> Clk,
+	-- 		Start		=> SyncStart,
+	-- 		SelTable	=> FIR6_table,
+	-- 		ChanAddr	=> sOutChanAddr,
+	-- 		InSignal	=> FIR7_Out,
+	-- 		OutSignal	=> ToStage7_Out
+	-- );
 
-	sel_stage9: SelectModule_0
-	generic map(NumChannels	=> 128)
-	port map(
-			Clk			=> Clk,
-			Start		=> SyncStart,
-			SelTable	=> FIR6_table,			-- the same table
-			ChanAddr	=> sOutChanAddr,
-			InSignal	=> FIR9_Out,
-			OutSignal	=> ToStage9_Out
-	);
+	-- sel_stage8: SelectModule_0
+	-- generic map(NumChannels	=> 128)
+	-- port map(
+	-- 		Clk			=> Clk,
+	-- 		Start		=> SyncStart,
+	-- 		SelTable	=> FIR6_table,			-- the same table
+	-- 		ChanAddr	=> sOutChanAddr,
+	-- 		InSignal	=> FIR8_Out,
+	-- 		OutSignal	=> ToStage8_Out
+	-- );
+
+	-- sel_stage9: SelectModule_0
+	-- generic map(NumChannels	=> 128)
+	-- port map(
+	-- 		Clk			=> Clk,
+	-- 		Start		=> SyncStart,
+	-- 		SelTable	=> FIR6_table,			-- the same table
+	-- 		ChanAddr	=> sOutChanAddr,
+	-- 		InSignal	=> FIR9_Out,
+	-- 		OutSignal	=> ToStage9_Out
+	-- );
 
 end Behavioral;

@@ -9,30 +9,23 @@ vhdl xil_defaultlib  \
 "../../../../UniDec.gen/sources_1/ip/fir_compiler_1/sim/fir_compiler_1.vhd" \
 "../../../../UniDec.gen/sources_1/ip/fir_compiler_0/sim/fir_compiler_0.vhd" \
 "../../../../UniDec.gen/sources_1/ip/dds_compiler_1/sim/dds_compiler_1.vhd" \
-"../../../../UniDec.srcs/sources_1/new/BitReversedCounter_8.vhd" \
 
 vhdl2008 xil_defaultlib  \
+"../../../../UniDec.srcs/sources_1/new/BitReversedCounter_8.vhd" \
 "../../../../UniDec.srcs/sources_1/new/UniDec_Package.vhd" \
-
-vhdl xil_defaultlib  \
+"../../../../UniDec.srcs/sources_1/new/CORE_1.vhd" \
+"../../../../UniDec.srcs/sources_1/new/CORE_2.vhd" \
 "../../../../UniDec.srcs/sources_1/new/DDS.vhd" \
 "../../../../UniDec.srcs/sources_1/new/DDS_2.vhd" \
+"../../../../UniDec.srcs/sources_1/new/Mixer_1.vhd" \
+"../../../../UniDec.srcs/sources_1/new/Part_I.vhd" \
 "../../../../UniDec.srcs/sources_1/new/Part_II.vhd" \
+"../../../../UniDec.srcs/sources_1/new/ReadFile.vhd" \
 "../../../../UniDec.srcs/sources_1/new/SelectModule.vhd" \
-"../../../../UniDec.srcs/sources_1/new/SelectModule_0.vhd" \
 "../../../../UniDec.srcs/sources_1/new/SwitchModule.vhd" \
 "../../../../UniDec.srcs/sources_1/new/TDM_Matcher.vhd" \
 "../../../../UniDec.srcs/sources_1/new/TDM_Matcher_2.vhd" \
-
-vhdl2008 xil_defaultlib  \
-"../../../../UniDec.srcs/sources_1/new/CORE_1.vhd" \
-"../../../../UniDec.srcs/sources_1/new/CORE_2.vhd" \
-"../../../../UniDec.srcs/sources_1/new/Mixer_1.vhd" \
-"../../../../UniDec.srcs/sources_1/new/Part_I.vhd" \
-"../../../../UniDec.srcs/sources_1/new/ReadFile.vhd" \
 "../../../../UniDec.srcs/sources_1/new/UniDec.vhd" \
-
-vhdl xil_defaultlib  \
 "../../../../UniDec.srcs/sources_1/new/UniDec_TB.vhd" \
 
 # Do not sort compile order

@@ -46,7 +46,7 @@ begin
 				cntr 			<= 0;
 				FIR_Channels	<= (others => (others => '0'));
 			else
-				if cntr = NumChannels then
+				if cntr = NumChannels - 1 then
 					cntr <= 0;
 				else
 					cntr <= cntr + 1;

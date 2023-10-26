@@ -1,2 +1,2 @@
-INFO: [VRFC 10-163] Analyzing VHDL file "E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/Part_I.vhd" into library xil_defaultlib
-INFO: [VRFC 10-3107] analyzing entity 'Part_I'
+INFO: [VRFC 10-163] Analyzing VHDL file "E:/NTT/WorkingDirectory/09.23/Vivado/UniDec/UniDec.srcs/sources_1/new/UniDec_TB.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'UniDec_TB'

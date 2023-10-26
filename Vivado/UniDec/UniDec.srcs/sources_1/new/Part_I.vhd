@@ -193,6 +193,7 @@ architecture Behavioral of Part_I is
 	signal FIR2_Output			: std_logic_vector(31 downto 0)		:= (others => '0');
 	
 	signal FIR2_Channels		: DDS_Array(1 to Num_Signals) 		:= (others => (others => '0'));
+	signal FIR2_ChI, FIR2_ChQ	: IQ_Array(1 to Num_Signals)		:= (others => (others => '0'));
 	
 	signal ToSwitch				: std_logic_vector(31 downto 0)		:= (others => '0');
 
@@ -502,6 +503,12 @@ begin
 		end if;
 	end process;
 	
+	process(FIR2_Channels) begin
+		for i in 1 to Num_Signals loop
+            FIR2_ChI(i)    <= FIR2_Channels(i)(15 downto 0);
+            FIR2_ChQ(i)    <= FIR2_Channels(i)(31 downto 16);
+        end loop;
+	end process;
 	
 	-- Stage_2 mux
 	process(Clk) begin
@@ -546,7 +553,7 @@ begin
 			elsif	sSwitchAddr = "110" then
 				ToSwitch	<= FIR2_Channels(3 + 1);		-- bit-reversed order!
 			else
-			ToSwitch	<= FIR2_Channels(7 + 1);
+				ToSwitch	<= FIR2_Channels(7 + 1);
 			end if;
 		end if;
 	end process;
